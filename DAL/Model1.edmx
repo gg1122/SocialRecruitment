@@ -1,0 +1,1152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="InviteCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="InviteCodeUser" Type="nvarchar" MaxLength="36" />
+          <Property Name="InviteCodeDatetime" Type="datetime" />
+          <Property Name="InviteCode2" Type="nvarchar" MaxLength="200" />
+          <Property Name="InviteCode2User" Type="nvarchar" MaxLength="36" />
+          <Property Name="InviteCode2Datetime" Type="datetime" />
+          <Property Name="LogonIP" Type="nvarchar" MaxLength="200" />
+          <Property Name="MyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="200" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="AnmeldenProvince" Type="nvarchar" MaxLength="200" />
+          <Property Name="AnmeldenCity" Type="nvarchar" MaxLength="200" />
+          <Property Name="LiveProvince" Type="nvarchar" MaxLength="200" />
+          <Property Name="LiveCity" Type="nvarchar" MaxLength="200" />
+          <Property Name="PersonalAssessment" Type="nvarchar" MaxLength="400" />
+          <Property Name="Email" Type="nvarchar" MaxLength="400" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="CommentNumber" Type="int" />
+          <Property Name="ReadNumber" Type="int" />
+          <Property Name="Picture3" Type="nvarchar" MaxLength="200" />
+          <Property Name="Picture2" Type="nvarchar" MaxLength="200" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="200" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="BlogId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="AgreeNumber" Type="int" />
+          <Property Name="MyPicture" Type="nvarchar" MaxLength="200" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="DegreeSchool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="BeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsNow" Type="char" MaxLength="1" />
+          <Property Name="SchoolArea" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ProfessionalType1" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProfessionalType2" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Education" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Degree" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="FileUploader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="PictureUrl" Type="nvarchar" MaxLength="400" />
+          <Property Name="ResumeUrl" Type="nvarchar" MaxLength="400" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="InternshipExperience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="BeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsNow" Type="char" MaxLength="1" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompanyNature" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompanyScale" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Job" Type="nvarchar" MaxLength="200" />
+          <Property Name="JobType" Type="nvarchar" MaxLength="200" />
+          <Property Name="JobDescription" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="ITAbility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Ability" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="UseTime" Type="nvarchar" MaxLength="200" />
+          <Property Name="Proficiency" Type="nvarchar" MaxLength="200" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="LanguageCompetence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Language" Type="nvarchar" MaxLength="200" />
+          <Property Name="Level" Type="nvarchar" MaxLength="200" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="ProjectExperience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="BeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsNow" Type="char" MaxLength="1" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Job" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProjectDescription" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Resume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="AccountId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="400" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysAnnouncement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Message" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysException">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="LeiXing" Type="nvarchar" MaxLength="200" />
+          <Property Name="Message" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Result" Type="nvarchar" MaxLength="200" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysField">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="ParentId" Type="nvarchar" MaxLength="36" />
+          <Property Name="MyTexts" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MyTables" Type="nvarchar" MaxLength="200" />
+          <Property Name="MyColums" Type="nvarchar" MaxLength="200" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="PersonId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Message" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Result" Type="nvarchar" MaxLength="200" />
+          <Property Name="MenuId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Ip" Type="nvarchar" MaxLength="200" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysNotice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="AccountId" Type="nvarchar" MaxLength="36" />
+          <Property Name="Message" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LostTime" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_DEGREESC_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="DegreeSchool" Type="Self.DegreeSchool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DegreeSchool">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FILEUPLO_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="FileUploader" Type="Self.FileUploader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FileUploader">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INTERNSH_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="InternshipExperience" Type="Self.InternshipExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InternshipExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ITABILIT_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="ITAbility" Type="Self.ITAbility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ITAbility">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LANGUAGE_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="LanguageCompetence" Type="Self.LanguageCompetence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LanguageCompetence">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECTE_REFERENCE_RESUME">
+          <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
+          <End Role="ProjectExperience" Type="Self.ProjectExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SysModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DegreeSchool" EntityType="Self.DegreeSchool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileUploader" EntityType="Self.FileUploader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InternshipExperience" EntityType="Self.InternshipExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITAbility" EntityType="Self.ITAbility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LanguageCompetence" EntityType="Self.LanguageCompetence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectExperience" EntityType="Self.ProjectExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resume" EntityType="Self.Resume" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysAnnouncement" EntityType="Self.SysAnnouncement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysException" EntityType="Self.SysException" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysField" EntityType="Self.SysField" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysLog" EntityType="Self.SysLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysNotice" EntityType="Self.SysNotice" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DEGREESC_REFERENCE_RESUME" Association="Self.FK_DEGREESC_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="DegreeSchool" EntitySet="DegreeSchool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FILEUPLO_REFERENCE_RESUME" Association="Self.FK_FILEUPLO_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="FileUploader" EntitySet="FileUploader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INTERNSH_REFERENCE_RESUME" Association="Self.FK_INTERNSH_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="InternshipExperience" EntitySet="InternshipExperience" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ITABILIT_REFERENCE_RESUME" Association="Self.FK_ITABILIT_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="ITAbility" EntitySet="ITAbility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LANGUAGE_REFERENCE_RESUME" Association="Self.FK_LANGUAGE_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="LanguageCompetence" EntitySet="LanguageCompetence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECTE_REFERENCE_RESUME" Association="Self.FK_PROJECTE_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="ProjectExperience" EntitySet="ProjectExperience" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SysEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="SysModel.Account" />
+          <EntitySet Name="Blog" EntityType="SysModel.Blog" />
+          <EntitySet Name="Comment" EntityType="SysModel.Comment" />
+          <EntitySet Name="DegreeSchool" EntityType="SysModel.DegreeSchool" />
+          <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
+          <EntitySet Name="InternshipExperience" EntityType="SysModel.InternshipExperience" />
+          <EntitySet Name="LanguageCompetence" EntityType="SysModel.LanguageCompetence" />
+          <EntitySet Name="ProjectExperience" EntityType="SysModel.ProjectExperience" />
+          <EntitySet Name="Resume" EntityType="SysModel.Resume" />
+          <EntitySet Name="SysAnnouncement" EntityType="SysModel.SysAnnouncement" />
+          <EntitySet Name="SysException" EntityType="SysModel.SysException" />
+          <EntitySet Name="SysField" EntityType="SysModel.SysField" />
+          <EntitySet Name="SysLog" EntityType="SysModel.SysLog" />
+          <EntitySet Name="SysNotice" EntityType="SysModel.SysNotice" />
+          <AssociationSet Name="FK_DEGREESC_REFERENCE_RESUME" Association="SysModel.FK_DEGREESC_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="DegreeSchool" EntitySet="DegreeSchool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FILEUPLO_REFERENCE_RESUME" Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="FileUploader" EntitySet="FileUploader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INTERNSH_REFERENCE_RESUME" Association="SysModel.FK_INTERNSH_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="InternshipExperience" EntitySet="InternshipExperience" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LANGUAGE_REFERENCE_RESUME" Association="SysModel.FK_LANGUAGE_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="LanguageCompetence" EntitySet="LanguageCompetence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROJECTE_REFERENCE_RESUME" Association="SysModel.FK_PROJECTE_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="ProjectExperience" EntitySet="ProjectExperience" />
+          </AssociationSet>
+          <EntitySet Name="ITAbility" EntityType="SysModel.ITAbility" />
+          <AssociationSet Name="FK_ITABILIT_REFERENCE_RESUME" Association="SysModel.FK_ITABILIT_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="ITAbility" EntitySet="ITAbility" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="InviteCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="InviteCodeUser" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="InviteCodeDatetime" Type="DateTime" Precision="3" />
+          <Property Name="InviteCode2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="InviteCode2User" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="InviteCode2Datetime" Type="DateTime" Precision="3" />
+          <Property Name="LogonIP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="AnmeldenProvince" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AnmeldenCity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LiveProvince" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LiveCity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PersonalAssessment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CommentNumber" Type="Int32" />
+          <Property Name="ReadNumber" Type="Int32" />
+          <Property Name="Picture3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="BlogId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="AgreeNumber" Type="Int32" />
+          <Property Name="MyPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="DegreeSchool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsNow" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SchoolArea" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProfessionalType1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProfessionalType2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Education" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Degree" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="DegreeSchool" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="FileUploader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="PictureUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="FileUploader" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="InternshipExperience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsNow" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyNature" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyScale" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Job" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobDescription" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="InternshipExperience" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="LanguageCompetence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Language" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Level" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_LANGUAGE_REFERENCE_RESUME" FromRole="LanguageCompetence" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="ProjectExperience">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsNow" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Job" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectDescription" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_PROJECTE_REFERENCE_RESUME" FromRole="ProjectExperience" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="Resume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="DegreeSchool" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="Resume" ToRole="DegreeSchool" />
+          <NavigationProperty Name="FileUploader" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="Resume" ToRole="FileUploader" />
+          <NavigationProperty Name="InternshipExperience" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="Resume" ToRole="InternshipExperience" />
+          <NavigationProperty Name="LanguageCompetence" Relationship="SysModel.FK_LANGUAGE_REFERENCE_RESUME" FromRole="Resume" ToRole="LanguageCompetence" />
+          <NavigationProperty Name="ProjectExperience" Relationship="SysModel.FK_PROJECTE_REFERENCE_RESUME" FromRole="Resume" ToRole="ProjectExperience" />
+          <NavigationProperty Name="ITAbility" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="Resume" ToRole="ITAbility" />
+        </EntityType>
+        <EntityType Name="SysAnnouncement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysException">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="LeiXing" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysField">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="MyTexts" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MyTables" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MyColums" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="PersonId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MenuId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Ip" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="SysNotice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LostTime" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_DEGREESC_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.DegreeSchool" Role="DegreeSchool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DegreeSchool">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FILEUPLO_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.FileUploader" Role="FileUploader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FileUploader">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INTERNSH_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.InternshipExperience" Role="InternshipExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InternshipExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LANGUAGE_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.LanguageCompetence" Role="LanguageCompetence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LanguageCompetence">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROJECTE_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.ProjectExperience" Role="ProjectExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectExperience">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ITAbility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Ability" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UseTime" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Proficiency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="ITAbility" ToRole="Resume" />
+        </EntityType>
+        <Association Name="FK_ITABILIT_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.ITAbility" Role="ITAbility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ITAbility">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SysModelStoreContainer" CdmEntityContainer="SysEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="SysModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PersonalAssessment" ColumnName="PersonalAssessment" />
+                <ScalarProperty Name="LiveCity" ColumnName="LiveCity" />
+                <ScalarProperty Name="LiveProvince" ColumnName="LiveProvince" />
+                <ScalarProperty Name="AnmeldenCity" ColumnName="AnmeldenCity" />
+                <ScalarProperty Name="AnmeldenProvince" ColumnName="AnmeldenProvince" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="MyName" ColumnName="MyName" />
+                <ScalarProperty Name="LogonIP" ColumnName="LogonIP" />
+                <ScalarProperty Name="InviteCode2Datetime" ColumnName="InviteCode2Datetime" />
+                <ScalarProperty Name="InviteCode2User" ColumnName="InviteCode2User" />
+                <ScalarProperty Name="InviteCode2" ColumnName="InviteCode2" />
+                <ScalarProperty Name="InviteCodeDatetime" ColumnName="InviteCodeDatetime" />
+                <ScalarProperty Name="InviteCodeUser" ColumnName="InviteCodeUser" />
+                <ScalarProperty Name="InviteCode" ColumnName="InviteCode" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="SysModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Picture2" ColumnName="Picture2" />
+                <ScalarProperty Name="Picture3" ColumnName="Picture3" />
+                <ScalarProperty Name="ReadNumber" ColumnName="ReadNumber" />
+                <ScalarProperty Name="CommentNumber" ColumnName="CommentNumber" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="SysModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="MyPicture" ColumnName="MyPicture" />
+                <ScalarProperty Name="AgreeNumber" ColumnName="AgreeNumber" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DegreeSchool">
+            <EntityTypeMapping TypeName="SysModel.DegreeSchool">
+              <MappingFragment StoreEntitySet="DegreeSchool">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="ProfessionalType2" ColumnName="ProfessionalType2" />
+                <ScalarProperty Name="ProfessionalType1" ColumnName="ProfessionalType1" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolArea" ColumnName="SchoolArea" />
+                <ScalarProperty Name="IsNow" ColumnName="IsNow" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileUploader">
+            <EntityTypeMapping TypeName="SysModel.FileUploader">
+              <MappingFragment StoreEntitySet="FileUploader">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ResumeUrl" ColumnName="ResumeUrl" />
+                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InternshipExperience">
+            <EntityTypeMapping TypeName="SysModel.InternshipExperience">
+              <MappingFragment StoreEntitySet="InternshipExperience">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="JobType" ColumnName="JobType" />
+                <ScalarProperty Name="Job" ColumnName="Job" />
+                <ScalarProperty Name="CompanyScale" ColumnName="CompanyScale" />
+                <ScalarProperty Name="CompanyNature" ColumnName="CompanyNature" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="IsNow" ColumnName="IsNow" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanguageCompetence">
+            <EntityTypeMapping TypeName="SysModel.LanguageCompetence">
+              <MappingFragment StoreEntitySet="LanguageCompetence">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectExperience">
+            <EntityTypeMapping TypeName="SysModel.ProjectExperience">
+              <MappingFragment StoreEntitySet="ProjectExperience">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
+                <ScalarProperty Name="Job" ColumnName="Job" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="IsNow" ColumnName="IsNow" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resume">
+            <EntityTypeMapping TypeName="SysModel.Resume">
+              <MappingFragment StoreEntitySet="Resume">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysAnnouncement">
+            <EntityTypeMapping TypeName="SysModel.SysAnnouncement">
+              <MappingFragment StoreEntitySet="SysAnnouncement">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysException">
+            <EntityTypeMapping TypeName="SysModel.SysException">
+              <MappingFragment StoreEntitySet="SysException">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LeiXing" ColumnName="LeiXing" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysField">
+            <EntityTypeMapping TypeName="SysModel.SysField">
+              <MappingFragment StoreEntitySet="SysField">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="MyColums" ColumnName="MyColums" />
+                <ScalarProperty Name="MyTables" ColumnName="MyTables" />
+                <ScalarProperty Name="MyTexts" ColumnName="MyTexts" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysLog">
+            <EntityTypeMapping TypeName="SysModel.SysLog">
+              <MappingFragment StoreEntitySet="SysLog">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysNotice">
+            <EntityTypeMapping TypeName="SysModel.SysNotice">
+              <MappingFragment StoreEntitySet="SysNotice">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="LostTime" ColumnName="LostTime" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITAbility">
+            <EntityTypeMapping TypeName="SysModel.ITAbility">
+              <MappingFragment StoreEntitySet="ITAbility">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Proficiency" ColumnName="Proficiency" />
+                <ScalarProperty Name="UseTime" ColumnName="UseTime" />
+                <ScalarProperty Name="Ability" ColumnName="Ability" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
