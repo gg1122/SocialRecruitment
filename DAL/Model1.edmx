@@ -415,6 +415,7 @@
           <EntitySet Name="DegreeSchool" EntityType="SysModel.DegreeSchool" />
           <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
           <EntitySet Name="InternshipExperience" EntityType="SysModel.InternshipExperience" />
+          <EntitySet Name="ITAbility" EntityType="SysModel.ITAbility" />
           <EntitySet Name="LanguageCompetence" EntityType="SysModel.LanguageCompetence" />
           <EntitySet Name="ProjectExperience" EntityType="SysModel.ProjectExperience" />
           <EntitySet Name="Resume" EntityType="SysModel.Resume" />
@@ -435,6 +436,10 @@
             <End Role="Resume" EntitySet="Resume" />
             <End Role="InternshipExperience" EntitySet="InternshipExperience" />
           </AssociationSet>
+          <AssociationSet Name="FK_ITABILIT_REFERENCE_RESUME" Association="SysModel.FK_ITABILIT_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="ITAbility" EntitySet="ITAbility" />
+          </AssociationSet>
           <AssociationSet Name="FK_LANGUAGE_REFERENCE_RESUME" Association="SysModel.FK_LANGUAGE_REFERENCE_RESUME">
             <End Role="Resume" EntitySet="Resume" />
             <End Role="LanguageCompetence" EntitySet="LanguageCompetence" />
@@ -442,11 +447,6 @@
           <AssociationSet Name="FK_PROJECTE_REFERENCE_RESUME" Association="SysModel.FK_PROJECTE_REFERENCE_RESUME">
             <End Role="Resume" EntitySet="Resume" />
             <End Role="ProjectExperience" EntitySet="ProjectExperience" />
-          </AssociationSet>
-          <EntitySet Name="ITAbility" EntityType="SysModel.ITAbility" />
-          <AssociationSet Name="FK_ITABILIT_REFERENCE_RESUME" Association="SysModel.FK_ITABILIT_REFERENCE_RESUME">
-            <End Role="Resume" EntitySet="Resume" />
-            <End Role="ITAbility" EntitySet="ITAbility" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -583,6 +583,24 @@
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Resume" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="InternshipExperience" ToRole="Resume" />
         </EntityType>
+        <EntityType Name="ITAbility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Ability" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UseTime" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Proficiency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="ITAbility" ToRole="Resume" />
+        </EntityType>
         <EntityType Name="LanguageCompetence">
           <Key>
             <PropertyRef Name="Id" />
@@ -639,9 +657,9 @@
           <NavigationProperty Name="DegreeSchool" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="Resume" ToRole="DegreeSchool" />
           <NavigationProperty Name="FileUploader" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="Resume" ToRole="FileUploader" />
           <NavigationProperty Name="InternshipExperience" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="Resume" ToRole="InternshipExperience" />
+          <NavigationProperty Name="ITAbility" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="Resume" ToRole="ITAbility" />
           <NavigationProperty Name="LanguageCompetence" Relationship="SysModel.FK_LANGUAGE_REFERENCE_RESUME" FromRole="Resume" ToRole="LanguageCompetence" />
           <NavigationProperty Name="ProjectExperience" Relationship="SysModel.FK_PROJECTE_REFERENCE_RESUME" FromRole="Resume" ToRole="ProjectExperience" />
-          <NavigationProperty Name="ITAbility" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="Resume" ToRole="ITAbility" />
         </EntityType>
         <EntityType Name="SysAnnouncement">
           <Key>
@@ -765,6 +783,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ITABILIT_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.ITAbility" Role="ITAbility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ITAbility">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LANGUAGE_REFERENCE_RESUME">
           <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
           <End Type="SysModel.LanguageCompetence" Role="LanguageCompetence" Multiplicity="*" />
@@ -785,36 +815,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProjectExperience">
-              <PropertyRef Name="ResumeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ITAbility">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="Ability" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UseTime" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Proficiency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Sort" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Resume" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="ITAbility" ToRole="Resume" />
-        </EntityType>
-        <Association Name="FK_ITABILIT_REFERENCE_RESUME">
-          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
-          <End Type="SysModel.ITAbility" Role="ITAbility" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resume">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ITAbility">
               <PropertyRef Name="ResumeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -962,6 +962,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ITAbility">
+            <EntityTypeMapping TypeName="SysModel.ITAbility">
+              <MappingFragment StoreEntitySet="ITAbility">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Proficiency" ColumnName="Proficiency" />
+                <ScalarProperty Name="UseTime" ColumnName="UseTime" />
+                <ScalarProperty Name="Ability" ColumnName="Ability" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LanguageCompetence">
             <EntityTypeMapping TypeName="SysModel.LanguageCompetence">
               <MappingFragment StoreEntitySet="LanguageCompetence">
@@ -1104,24 +1122,6 @@
                 <ScalarProperty Name="LostTime" ColumnName="LostTime" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ITAbility">
-            <EntityTypeMapping TypeName="SysModel.ITAbility">
-              <MappingFragment StoreEntitySet="ITAbility">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="Proficiency" ColumnName="Proficiency" />
-                <ScalarProperty Name="UseTime" ColumnName="UseTime" />
-                <ScalarProperty Name="Ability" ColumnName="Ability" />
-                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

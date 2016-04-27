@@ -4,15 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="06cfbae2dc4f47a3923564e6abd36d81" Name="Diagram1">
+      <Diagram DiagramId="06cfbae2dc4f47a3923564e6abd36d81" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="SysModel.Account" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="SysModel.Blog" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="SysModel.Comment" Width="1.5" PointX="7.75" PointY="5.75" />
-        <EntityTypeShape EntityType="SysModel.DegreeSchool" Width="1.5" PointX="3" PointY="11.375" />
-        <EntityTypeShape EntityType="SysModel.FileUploader" Width="1.5" PointX="3" PointY="7.375" />
-        <EntityTypeShape EntityType="SysModel.InternshipExperience" Width="1.5" PointX="3" PointY="2.125" />
-        <EntityTypeShape EntityType="SysModel.LanguageCompetence" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SysModel.ProjectExperience" Width="1.5" PointX="3" PointY="16.625" />
+        <EntityTypeShape EntityType="SysModel.DegreeSchool" Width="1.5" PointX="3" PointY="6.875" />
+        <EntityTypeShape EntityType="SysModel.FileUploader" Width="1.5" PointX="3" PointY="25.5" />
+        <EntityTypeShape EntityType="SysModel.InternshipExperience" Width="1.5" PointX="3" PointY="16.25" />
+        <EntityTypeShape EntityType="SysModel.ITAbility" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="SysModel.LanguageCompetence" Width="1.5" PointX="3" PointY="21.5" />
+        <EntityTypeShape EntityType="SysModel.ProjectExperience" Width="1.5" PointX="3" PointY="2.125" />
         <EntityTypeShape EntityType="SysModel.Resume" Width="1.5" PointX="0.75" PointY="13.375" />
         <EntityTypeShape EntityType="SysModel.SysAnnouncement" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="SysModel.SysException" Width="1.5" PointX="9.75" PointY="4.75" />
@@ -22,10 +23,9 @@
         <AssociationConnector Association="SysModel.FK_DEGREESC_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_INTERNSH_REFERENCE_RESUME" />
+        <AssociationConnector Association="SysModel.FK_ITABILIT_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_LANGUAGE_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_PROJECTE_REFERENCE_RESUME" />
-        <EntityTypeShape EntityType="SysModel.ITAbility" Width="1.5" PointX="3" PointY="25.75" />
-        <AssociationConnector Association="SysModel.FK_ITABILIT_REFERENCE_RESUME" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
