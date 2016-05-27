@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using System.Data;
+using System.Text;
 namespace Langben.DAL
 {
     /// <summary>

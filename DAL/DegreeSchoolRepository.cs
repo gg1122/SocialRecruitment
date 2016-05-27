@@ -155,7 +155,7 @@ namespace Langben.DAL
         public IQueryable<DegreeSchool> GetByRefResumeId(SysEntities db, string id)
         {
             return from c in db.DegreeSchool
-                        where c.ResumeId == id
+                        where ( c.ResumeId == id &&c.State==StateEnums.QY)
                         select c;
                       
         }

@@ -71,7 +71,7 @@ namespace Langben.DAL
         /// <param name="entity">一个对象</param>
         /// <returns></returns>
         public virtual int Create(T entity)
-        {
+        {            
             using (SysEntities db = new SysEntities())
             {
                 Create(db, entity);

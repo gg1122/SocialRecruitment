@@ -41,6 +41,23 @@ namespace Langben.IBLL
         [OperationContract]
         List<DAL.Account> GetByParam(string id, string order, string sort, string search); /*在6.0版本中 新增*/
         /// <summary>
+        /// 获取账户信息
+        /// </summary>
+        /// <param name="arg">查询条件</param>
+        /// <returns></returns>
+        [OperationContract]
+        DAL.Account GetByParam(AccountArg arg);
+        /// <summary>
+        /// 验证数据是否存在
+        /// </summary>
+        /// <param name="arg">查询条件</param>
+        /// <param name="err">返回提示信息</param>
+        /// <param name="result">存在返回对象</param>
+        /// <returns></returns>
+        [OperationContract]
+        bool IsExist(DAL.AccountArg arg, ref string err, ref DAL.Account result);
+        
+        /// <summary>
         /// 获取所有
         /// </summary>
         /// <returns></returns>

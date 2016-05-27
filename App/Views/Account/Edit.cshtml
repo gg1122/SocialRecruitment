@@ -1,0 +1,119 @@
+﻿@model Langben.DAL.Account
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Personal.cshtml";
+}
+@using Common
+@using Models
+
+@using (Html.BeginForm("", "api/AccountApi/Edit"))
+{ 
+    <div class="col-md-9 column">
+        <ul class="breadcrumb">
+            <li><a>首页</a> </li>
+            <li class="active">个人信息 </li>
+        </ul>        
+        <!--表单开始 -->       
+        <div class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">姓名<span class="required">*</span></label>
+                <div class="col-sm-5 col-md-5">
+                    @Html.EditorFor(model => model.MyName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MyName)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">性别<span class="required">*</span></label>
+                <div class="col-sm-5">
+                    @Html.RadioButtonListFor(model => model.Sex, Models.SysFieldModels.GetSysField("Account", "Sex"), true)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">户口所在地<span class="required">*</span></label>
+                <div class="col-sm-5">
+
+                    @Html.DropDownListFor(model => model.AnmeldenProvince, Models.SysFieldModels.GetSysField("Account", "AnmeldenProvince"), "请选择", new { @class = "form-control  input-inline" })
+                    @*<select id="AnmeldenCity" name="AnmeldenCity" class="form-control  input-inline"></select>*@
+                    @Html.DropDownListFor(model => model.AnmeldenCity, Models.SysFieldModels.GetSysField("Account", "AnmeldenCity", Model.AnmeldenProvince), "请选择", new { @class = "form-control  input-inline" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">现在所在地<span class="required">*</span></label>
+                <div class="col-sm-5">
+                    @Html.DropDownListFor(model => model.LiveProvince, Models.SysFieldModels.GetSysField("Account", "LiveProvince"), "请选择", new { @class = "form-control  input-inline" })
+                    @*<select id="LiveCity" name="LiveCity" class="form-control  input-inline"></select>*@
+                    @Html.DropDownListFor(model => model.LiveCity, Models.SysFieldModels.GetSysField("Account", "LiveCity", Model.LiveProvince), "请选择", new { @class = "form-control  input-inline" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">个人评价<span class="required">*</span></label>
+                <div class="col-sm-9">
+                    @*<textarea class="form-control" rows="3"  id="txtPersonalAssessment"></textarea>*@
+                    @Html.TextAreaFor(model => model.PersonalAssessment, new { @class = "form-control", @rows = "3" })
+
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">电子邮件<span class="required"></span></label>
+                <div class="col-sm-5 col-md-5">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-5">                   
+                    <input class="btn btn-primary" type="submit" value="保存跳转下一步" />                    
+                    <input class="btn btn-default" type="button" onclick="BackList('DegreeSchool/Index')" value="下一步" />
+                </div>
+            </div>
+        </div>
+
+        <!--表单结束 -->
+    </div>
+
+
+
+}
+<div>
+  
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+
+        //getAnmeldenCity("#AnmeldenCity");
+        $("#AnmeldenProvince").change(function () { getAnmeldenCity("#AnmeldenCity"); });
+
+        //getLiveCity("#LiveCity");
+        $("#LiveProvince").change(function () { getLiveCity("#LiveCity"); });
+
+    });
+
+    function getAnmeldenCity(AnmeldenCity) {
+        $(AnmeldenCity).empty();
+        $("<option></option>")
+                .val("")
+                .text("请选择")
+                .appendTo($(AnmeldenCity));
+        bindDropDownList(AnmeldenCity, "#AnmeldenProvince");
+        $(AnmeldenCity).change();
+    }
+
+    function getLiveCity(LiveCity) {
+        $(LiveCity).empty();
+        $("<option></option>")
+                .val("")
+                .text("请选择")
+                .appendTo($(LiveCity));
+        bindDropDownList(LiveCity, "#LiveProvince");
+        $(LiveCity).change();
+    }
+
+
+</script>

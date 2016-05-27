@@ -26,7 +26,11 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-        
+            if(CurrentAccount.resume!=null)
+            {
+                List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
+                return View(list);
+            }
             return View();
         }
          /// <summary>
@@ -74,7 +78,18 @@ namespace Langben.App.Controllers
             ViewBag.Id = id;
             return View();
         }
-     
+        IBLL.IDegreeSchoolBLL m_BLL;
+
+        ValidationErrors validationErrors = new ValidationErrors();
+
+        public DegreeSchoolController()
+            : this(new DegreeSchoolBLL()) { }
+
+        public DegreeSchoolController(DegreeSchoolBLL bll)
+        {
+            m_BLL = bll;
+        }
+
     }
 }
 

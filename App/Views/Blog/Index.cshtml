@@ -1,0 +1,50 @@
+﻿@model PagedList<Langben.DAL.Blog>
+@{ Layout = "~/Views/Shared/Blog.cshtml"; }
+@using Webdiyer.WebControls.Mvc
+@using Common
+@using Models
+
+@if (Model != null && Model.Count>0)
+{
+    foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-3">
+                <a href="./Details?Op=Read&ID=@item.Id">
+                    @if(string.IsNullOrEmpty(item.Picture))
+                    {
+                       item.Picture="../images/portfolio_2_column_img_01.jpg";
+                    }                    
+                    @if(item.ReadNumber==null)
+                    {
+                        item.ReadNumber=0;
+                    }
+                    @if(item.CommentNumber==null)
+                    {
+                        item.CommentNumber=0;
+                    }
+                    <img src="@item.Picture" alt="" class="img-rounded img-responsive" />
+
+                </a>
+            </div>
+
+            <div class="col-md-9">
+                <div class="portofolio-imageGridTitle">
+                    <h3><a href="./Details?Op=Read&ID=@item.Id">@item.Title</a></h3>
+                </div>
+                <div class="portofolio-projectMeta">
+                    @item.CreateTime.Value.ToString("yyyy年MM月dd日") 发榜，围观：@item.ReadNumber，评论：@item.CommentNumber
+                </div>
+                <div class="portofolio-imageGridContent">
+                    @item.Content
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "pageIndex", ContainerTagName = "pageIndex", PrevPageText = "上页", NextPageText = "下页", FirstPageText = "首页", LastPageText = "尾页", CssClass = "pagination", PagerItemsSeperator = "", CurrentPagerItemWrapperFormatString = "<li class=\"active\"><a href=\"#\">{0}</a></li>", PagerItemWrapperFormatString = "<li>{0}</li>" }, new { id = "bootstrappager", @class = "pagination" })  
+
+}
+
+
+

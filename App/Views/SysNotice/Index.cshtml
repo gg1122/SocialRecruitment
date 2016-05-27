@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Langben.DAL.SysNotice>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Blog.cshtml";
+}
+
+<table class="table">
+    <tr style="width:90%">
+        <th>
+           序号
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null && Model.Count() > 0)
+    {
+        var IndexNo = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @IndexNo
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateTime)
+                </td>
+
+                <td>                  
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+            IndexNo = IndexNo + 1;
+        }
+    }
+
+</table>

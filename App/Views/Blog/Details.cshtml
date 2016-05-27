@@ -1,0 +1,124 @@
+﻿@model  Langben.App.Models.BlogDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/Blog.cshtml";    
+}
+
+<div class="row">
+    <div id="content" class="col-md-9">
+        @if (Model != null && Model.blog != null)
+        {
+            <article class="post">
+                <header class="entry-header" style="position:relative; margin-bottom:10px;">
+
+                    <hgroup>
+                        <h3>
+                            <a href="#" rel="bookmark">@Model.blog.Title</a>
+                        </h3>
+                    </hgroup>
+                    <div class="entry-meta">
+                        <span>
+                            发榜：@Model.blog.CreateTime.Value.ToString("yyyy年MM月dd日")
+                        </span>
+                        <span>
+                            围观：@Model.blog.ReadNumber
+                        </span>
+                    </div>
+                </header>
+
+                <div class="entry-content">
+                    <p>
+                        @Model.blog.Content
+                    </p>
+                </div>
+            </article>
+        }
+
+        <div class="comments">
+        @if (Model != null && Model.blog != null)
+        {
+            <h5 class="comments-title">          
+           
+            @Model.blog.CommentNumber 个码农在码砖</h5>
+        }
+            @if (Model != null && Model.commentList != null && Model.commentList.Count > 0)
+            {
+                <ol class="comment-list">
+                    @foreach (var item in Model.commentList)
+                    {
+                        if(string.IsNullOrEmpty(item.MyPicture))
+                        {
+                            item.MyPicture = "../images/thumb-1.jpg";
+                        }
+                        <li>
+                            <article>
+                                <footer>
+                                    <img class="img-rounded img-responsive" src="@item.MyPicture" alt="" />
+                                    <cite><a href="#">@item.CreatePerson</a></cite>
+                                    <div class="comment-meta">
+                                        <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
+                                        <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
+                                    </div>
+                                </footer>
+                                <div class="comment-content">
+                                    @item.Content
+                                </div>
+                            </article>
+                        </li>
+                    }
+                </ol>
+            }
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+        <aside>
+            <h3>砖头</h3>
+            <a href="#">搜才代码生成器</a>
+            <a style="font-size: 1.2em" href="#">权限管理系统</a>
+            <a style="font-size: 1.3em" href="#">MVC架构</a>
+        </aside>
+
+        <aside>
+            <h3>码农有话说</h3>
+            <textarea class="form-control" rows="3" id="txtContent"></textarea>
+            <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent(@Model.blog.Id);">码砖</button>
+        </aside>
+    </div>
+
+</div>
+<script type="text/javascript">
+    //添加评论
+    function AddContent(blogId) {
+        var Content = $('#txtContent').val();        
+        if (trimStr(Content)=="")
+        {
+            alert("请输入码转内容");
+            return;
+        }
+        $.ajax({
+            async: false,
+            url: '@Url.Action("Create", "Comment")',
+            type: "Post",
+            data: "blogId=" + blogId + "&Content=" + Content,
+            dataType: "json",
+            success: function (data) {
+                if (data.Status == "Y") {
+                    alert("提交成功！");
+                    window.location.href = "/Blog/Details/id?=" + blogId;
+                    location.reload();
+                }
+                else {
+                    alert("提交失败！"+data.Message);
+                }
+                
+            },
+            error: function (data) {
+                alert("提交失败！");
+            }
+        });
+    }
+
+</script>

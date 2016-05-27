@@ -66,6 +66,33 @@ namespace Langben.BLL
             return queryData.ToList();
         }
         /// <summary>
+        /// 根据账户ID获取简历信息
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public List<Resume> GetByAccountID(string AccountID)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("AccountId{0}&{1}^", ArgEnums.DDL_String, AccountID);
+            sb.AppendFormat("State{0}&{1}^", ArgEnums.DDL_String, StateEnums.QY);
+            IQueryable<Resume> queryData = repository.GetData(db, "desc", "CreateTime", sb.ToString());            
+            return queryData.ToList();
+        }
+        /// <summary>
+        /// 根据账户ID获取第一个简历信息
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public Resume GetFirstByAccountID(string AccountID)
+        {
+            List<Resume> list = GetByAccountID(AccountID);
+            if(list!=null && list.Count>0)
+            {
+                return list[0];
+            }
+            return null;
+        }
+        /// <summary>
         /// 查询的数据 /*在6.0版本中 新增*/
         /// </summary>
         /// <param name="id">额外的参数</param>

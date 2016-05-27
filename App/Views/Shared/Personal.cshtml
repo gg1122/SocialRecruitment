@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/Resumes.cshtml";
+}
+@RenderBody()
+@section SubMenu{
+
+<div class="col-md-3 column visible-md visible-lg ">
+    <ul class="nav nav-pills nav-stacked pinned" role="tablist" id="menuList" >
+        <li id="liPersonalInformation" ><a href="~/Account/Edit">个人信息</a></li>
+        <li id="liDegreeSchool" ><a href="~/DegreeSchool/Index">学历、学校</a></li>
+        <li id="liLanguageCompetence" ><a href="/WebManage/LanguageCompetence.aspx">语言能力</a></li>
+        <li id="liRewardsEvent" ><a href="/WebManage/RewardsEvent.aspx">奖励、活动</a></li>
+        <li id="liITAbility" ><a href="/WebManage/ITAbility.aspx">IT技能爱好</a></li>
+        <li id="liProjectExperience" ><a href="/WebManage/ProjectExperience.aspx">项目经验</a></li>
+        <li id="liInternshipExperience" ><a href="/WebManage/InternshipExperience.aspx">实习经验</a></li>
+        <li id="liFamilyMember" ><a href="/WebManage/FamilyMember.aspx">家庭成员</a></li>
+        <li id="liUploadFiles" ><a href="/WebManage/UploadFiles.aspx">上传文件</a></li>
+        <li id="liPreview" ><a href="/WebManage/Preview.aspx">简历预览</a></li>
+    </ul>
+</div>
+    }
+
+

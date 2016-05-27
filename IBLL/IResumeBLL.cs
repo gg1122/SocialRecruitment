@@ -40,6 +40,25 @@ namespace Langben.IBLL
         /// <returns>结果集</returns>
         [OperationContract]
         List<Resume> GetByParam(string id, string order, string sort, string search); /*在6.0版本中 新增*/
+
+
+        /// <summary>
+        /// 根据账户ID获取简历信息
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        [OperationContract]
+        List<Resume> GetByAccountID(string AccountID);
+
+        /// <summary>
+        /// 根据账户ID获取第一个简历信息
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        [OperationContract]
+        Resume GetFirstByAccountID(string AccountID);
+        
+
         /// <summary>
         /// 获取所有
         /// </summary>

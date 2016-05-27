@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using System.Data;
+using System.Text;
+
 namespace Langben.DAL
 {
     /// <summary>
@@ -17,21 +19,26 @@ namespace Langben.DAL
         /// <param name="order">排序字段</param>
         /// <param name="sort">升序asc（默认）还是降序desc</param>
         /// <param name="search">查询条件</param>
-        /// <param name="listQuery">额外的参数</param>
+        /// <param name="andOr">与或</param>
         /// <returns></returns>      
-        public IQueryable<Account> GetData(SysEntities db, string order, string sort, string search, params object[] listQuery)
+        public IQueryable<Account> GetData(SysEntities db, string order, string sort, string search, string andOr="and")
         {
             string where = string.Empty;
             int flagWhere = 0;
 
             Dictionary<string, string> queryDic = ValueConvert.StringToDictionary(search.GetString());
+           // string andOr = " and ";
+            //if(listQuery!=null && listQuery.Length==1 && listQuery[0].)
+            //{
+            //    andOr = " or ";
+            //}
             if (queryDic != null && queryDic.Count > 0)
             {
                 foreach (var item in queryDic)
                 {
                     if (flagWhere != 0)
                     {
-                        where += " and ";
+                        where += " "+andOr+" ";
                     }
                     flagWhere++;
                     
@@ -70,12 +77,21 @@ namespace Langben.DAL
                     where += "it.[" + item.Key + "] like '%" + item.Value + "%'";//模糊查询
                 }
             }
+            if (string.IsNullOrEmpty(sort))
+            {
+                sort = "desc";
+            }
+            if(string.IsNullOrEmpty(order))
+            {
+                order = "CreateTime";
+            }
             return ((System.Data.Entity.Infrastructure.IObjectContextAdapter)db).ObjectContext 
                      .CreateObjectSet<Account>().Where(string.IsNullOrEmpty(where) ? "true" : where)
                      .OrderBy("it.[" + sort.GetString() + "] " + order.GetString())
                      .AsQueryable(); 
 
         }
+
         /// <summary>
         /// 通过主键id，获取会员---查看详细，首次编辑
         /// </summary>

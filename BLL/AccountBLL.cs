@@ -48,7 +48,7 @@ namespace Langben.BLL
         /// <param name="total">结果集的总数</param>
         /// <returns>结果集</returns>
         public List<DAL.Account> GetByParam(string id, int page, int rows, string order, string sort, string search, ref int total)
-        {
+        {            
             IQueryable<DAL.Account> queryData = repository.GetData(db, order, sort, search);
             total = queryData.Count();
             if (total > 0)
@@ -83,6 +83,139 @@ namespace Langben.BLL
             return queryData.ToList();
         }
         /// <summary>
+        /// 获取账户信息
+        /// </summary>
+        /// <param name="arg">查询条件</param>
+        /// <returns></returns>
+        public DAL.Account GetByParam(DAL.AccountArg arg)
+        {
+            DAL.Account result = new DAL.Account();
+            if (arg != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                if (!string.IsNullOrEmpty(arg.Id) && arg.Id.Trim() != "")
+                {                   
+                    sb.AppendFormat("Id{0}&{1}^", ArgEnums.DDL_String,arg.Id);
+                }
+                if (!string.IsNullOrEmpty(arg.Name) && arg.Name.Trim() != "")
+                {                   
+                    sb.AppendFormat("Name{0}&{1}^", ArgEnums.DDL_String, arg.Name.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.Email) && arg.Email.Trim() != "")
+                {                   
+                    sb.AppendFormat("Email{0}&{1}^", ArgEnums.DDL_String, arg.Email.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.MyName) && arg.MyName.Trim() != "")
+                {                   
+                    sb.AppendFormat("MyName{0}&{1}^", ArgEnums.DDL_String, arg.MyName.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.PhoneNumber) && arg.PhoneNumber.Trim() != "")
+                {                   
+                    sb.AppendFormat("PhoneNumber{0}&{1}^", ArgEnums.DDL_String, arg.PhoneNumber.ToLower());
+                }
+                if (sb.ToString().Trim() != "")
+                {
+                    sb = sb.Remove(sb.ToString().Length - 1, 1);
+                    List<DAL.Account> list = repository.GetData(db, "desc", "CreateTime", sb.ToString()).ToList();
+                    if (list == null || list.Count == 0)
+                    {
+                        result = null;
+                    }
+                    else
+                    {
+                        result = list[0];
+                    }
+
+                }
+                else
+                {
+                    result = null;
+                }
+
+
+            }
+            else
+            {
+                result = null;
+            }
+            return result;
+        }
+        /// <summary>
+        /// 验证数据是否存在
+        /// </summary>
+        /// <param name="arg">查询条件</param>
+        /// <param name="err">返回提示信息</param>
+        /// <param name="result">存在返回对象</param>
+        /// <returns></returns>
+        public bool IsExist(DAL.AccountArg arg, ref string err,ref DAL.Account result)
+        {
+            //DAL.Account result = new DAL.Account();
+            if (arg != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                if (!string.IsNullOrEmpty(arg.Id) && arg.Id.Trim() != "")
+                {
+                    sb.AppendFormat("Id{0}&{1}^", ArgEnums.DDL_String, arg.Id);
+                }
+                if (!string.IsNullOrEmpty(arg.Name) && arg.Name.Trim() != "")
+                {
+                    sb.AppendFormat("Name{0}&{1}^", ArgEnums.DDL_String, arg.Name.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.Email) && arg.Email.Trim() != "")
+                {
+                    sb.AppendFormat("Email{0}&{1}^", ArgEnums.DDL_String, arg.Email.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.MyName) && arg.MyName.Trim() != "")
+                {
+                    sb.AppendFormat("MyName{0}&{1}^", ArgEnums.DDL_String, arg.MyName.ToLower());
+                }
+                if (!string.IsNullOrEmpty(arg.PhoneNumber) && arg.PhoneNumber.Trim() != "")
+                {
+                    sb.AppendFormat("PhoneNumber{0}&{1}^", ArgEnums.DDL_String, arg.PhoneNumber.ToLower());
+                }
+                if (sb.ToString().Trim() != "")
+                {
+                    sb = sb.Remove(sb.ToString().Length - 1, 1);                    
+                    List<DAL.Account> list = repository.GetData(db, "desc", "CreateTime", sb.ToString(),"or").ToList();
+                    if (list == null || list.Count == 0)
+                    {
+                        result = null;
+                    }
+                    else
+                    {
+                        result = list[0];
+                    }
+
+                }
+                else
+                {
+                    result = null;
+                }
+
+
+            }
+            else
+            {
+                result = null;
+            }
+            if (result == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (result.Name == arg.Name)
+                {
+                    err = "绰号已存在！";
+                }
+                else if (result.PhoneNumber == arg.PhoneNumber)
+                {
+                    err = "手机已存在！";
+                }
+                return true;
+            }
+        }
+        /// <summary>
         /// 创建一个会员
         /// </summary>
         /// <param name="validationErrors">返回的错误信息</param>
@@ -93,13 +226,29 @@ namespace Langben.BLL
         {
             try
             {
-                repository.Create(entity);
-                return true;
+                AccountArg arg = new AccountArg();
+                arg.Name = entity.Name;
+                arg.PhoneNumber = entity.PhoneNumber;
+                string err = string.Empty;
+                DAL.Account model = null;                
+                if (!IsExist(arg, ref err,ref model))
+                {
+                    entity.State = StateEnums.QY;
+                    entity.CreateTime = DateTime.Now;
+                    entity.UpdateTime = entity.CreateTime;
+                    repository.Create(entity);
+                    return true;
+                }
+                else
+                {
+                    validationErrors.Add(err);
+                    return false;
+                }
             }
             catch (Exception ex)
             {
                 validationErrors.Add(ex.Message);
-                ExceptionsHander.WriteExceptions(ex);                
+                ExceptionsHander.WriteExceptions(ex);
             }
             return false;
         }

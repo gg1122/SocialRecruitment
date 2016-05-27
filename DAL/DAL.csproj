@@ -57,6 +57,8 @@
     <Compile Include="Account.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AccountArg.cs" />
+    <Compile Include="ArgEnums.cs" />
     <Compile Include="Blog.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -109,6 +111,7 @@
     <Compile Include="Resume.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="StateEnums.cs" />
     <Compile Include="SysAnnouncement.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

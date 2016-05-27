@@ -1,0 +1,185 @@
+﻿@model IEnumerable<Langben.DAL.DegreeSchool>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Personal.cshtml";
+}
+
+
+
+<div class="col-md-9 column">
+    <ul class="breadcrumb">
+        <li><a>首页</a> </li>
+        <li class="active">学历、学校 </li>
+    </ul>
+    <!--列表开始 -->
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>序号</th>
+            <th>开始日期</th>
+            <th>结束日期</th>
+            <th>学校</th>
+            <th>专业</th>
+            <th>学位</th>
+            <th>操作</th>
+        </tr>
+        @if (Model != null && Model.Count() > 0)
+        {
+            var IndexNo = 1;
+            foreach (var item in Model)
+            {
+
+
+                <tr>
+                    <td>@IndexNo</td>
+                    <td>
+                        @item.BeginDate.ToString("yyyy-MM-dd")
+                    </td>
+                    <td>
+                        @if (item.IsNow != "Y" && item.EndDate != null)
+                    {
+
+                            @Convert.ToDateTime(item.EndDate).ToString("yyyy-MM-dd")
+                        }
+                    </td>
+                    <td>
+                        @item.SchoolName
+                    </td>
+                    <td>
+                        @item.ProfessionalType1【@item.ProfessionalType2】
+                    </td>
+                    <td>
+                        @item.Education【@item.Degree】
+                    </td>
+                    <td>
+                        <a href="javascript:Edit(@item.Id)" class="btn btn-link btn-xs" title="编辑"><i class="fa fa-pencil-square-o"></i> <span class="sr-only">编辑</span></a> | <a href="javascript;Delete(@item.Id)" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a>
+                    </td>
+                </tr>
+                IndexNo = @IndexNo + 1;
+            }
+        }
+
+    </table>
+    <p>
+        <input class="btn btn-primary" type="button" value="添 加" onclick="Add()" />        
+    </p>
+    <div class="form-horizontal" role="form" id="divAdd" style="display:none">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开始日期<span class="required">* </span></label>
+            <div class=" col-sm-5">
+                <div class="input-group">
+                    <input type="text" class="form-control input-inline" id="txtBeginDate" onclick="WdatePicker()" />
+                    <span class="input-group-addon" onclick="WdatePicker({ el: 'txtBeginDate' })"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">结束日期<span class="required">*</span></label>
+            <div class=" col-sm-6">
+                <div class="input-group">
+                    <input type="text" class="form-control input-inline" id="txtEndDate" onclick="WdatePicker()" />
+                    <span class="input-group-addon" onclick="WdatePicker({ el: 'txtBeginDate' })"><i class="fa fa-calendar"></i></span>
+                    <div style="float: left">&nbsp;<input name="cbIsNow" id="cbIsNow" type="checkbox" />至今</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学校</label>
+            <div class="col-sm-5">
+
+                <select class="form-control  input-inline" id="SchoolArea">
+                    <option>--请选择--</option>
+                    <option>北京</option>
+                    <option>河北</option>
+                </select>
+                <select class="form-control  input-inline" id="SchoolName">
+                    <option>--请选择--</option>
+                    <option>北京大学</option>
+                    <option>清华大学</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">专业</label>
+            <div class="col-sm-5">
+                <select class="form-control  input-inline" id="ddlProfessionalType1">
+                    <option>--请选择--</option>
+                    <option>哲学类</option>
+                    <option>经济学类</option>
+                </select>
+                <select class="form-control  input-inline" id="ddlProfessionalType2">
+                    <option>--请选择--</option>
+                    <option>哲学</option>
+                    <option>逻辑学</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学历</label>
+            <div class="col-sm-5">
+                <select class="form-control input-inline" id="ddlEducation">
+                    <option value="10">无</option>
+                    <option value="20">专科</option>
+                    <option value="30">本科</option>
+                    <option value="40">双学士</option>
+                    <option value="50">硕士研究生</option>
+                    <option value="60">MBA</option>
+                    <option value="70">博士研究生</option>
+                    <option value="80">博士后及以上</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学位<span class="required"> </span></label>
+            <div class="col-sm-9">
+                <select class="form-control  input-inline" id="ddlDegree">
+                    <option value="">-- 请选择 --</option>
+                    <option value="10">无</option>
+                    <option value="20">学士</option>
+                    <option value="30">双学士</option>
+                    <option value="40">硕士</option>
+                    <option value="50">MBA</option>
+                    <option value="60">博士（后）</option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-5">
+                <input class="btn btn-primary" type="submit" value="保存继续添加" />
+                <input class="btn btn-primary" type="submit" value="保存跳转下一步" />
+                <input class="btn btn-default" type="button" onclick="BackList('DegreeSchool/Index')" value="下一步" />
+            </div>
+        </div>
+
+    </div>    
+   
+</div>
+<script type="text/javascript">
+
+    $(function () {
+
+        bindDropDownList("#SchoolArea", "DegreeSchool", "SchoolArea");       
+        $("#SchoolArea").change(function () { bindDropDownList("#SchoolName", "#SchoolArea", "SchoolName", "SchoolArea");});
+       
+
+    });
+
+    //添加
+    function Add() {
+        $('#divAdd').show();
+    }
+    //修改
+    function Edit(Id) {
+
+    }
+    //删除
+    function Delete(Id) {
+    }
+
+</script>

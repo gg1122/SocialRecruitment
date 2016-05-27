@@ -1,0 +1,111 @@
+﻿@fontsizesmall: 11px;
+@fontsizebig: 14px;
+
+.marginbottom(@bottom:10px) {
+    margin-bottom: @bottom;
+}
+
+body {
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: @fontsizebig;
+    color: #777777;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #333;
+}
+
+h3 {
+    color: black;
+    font-size: 24px;
+    font-weight: 300 !important;
+    .marginbottom();
+}
+
+h5 {
+    color: #404040;
+    font-size: @fontsizebig;
+    font-weight: 400;
+}
+
+
+.portofolio-projectMeta {
+    .marginbottom(10px);
+}
+
+.portofolio-imageGridContent {
+    font-size: @fontsizebig+2px;
+}
+
+.footer {
+    border-top: 1px solid #ececec;
+    font-size: @fontsizesmall;
+    margin: 50px 0 50px;
+    padding-top: 10px;
+}
+
+.footer-right {
+    position: absolute;
+    right: 0;
+}
+
+.comments-title {
+    border-bottom: 1px solid #dddddd;
+    margin-right: 15px;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+.comment-list {
+    img {
+        float: left;
+        height: 50px;
+        margin-right: 20px;
+        margin-top: 6px;
+        width: 50px;
+    }
+    .comment-content {
+        margin-left: 70px;
+    }
+    li {
+        padding-bottom: 30px;
+        padding-right: 15px;
+        padding-top: 10px;
+
+        &:hover {
+            a.comment-reply {
+                color: #df2020;
+            }
+        }
+    }
+}
+ 
+
+/*
+            嵌套
+             
+        .comment-list img {
+            float: left;
+            height: 50px;
+            margin-right: 20px;
+            margin-top: 6px;
+            width: 50px;
+        }
+
+        .comment-list .comment-content {
+            margin-left: 70px;
+        }
+
+        .comment-list li:hover a.comment-reply {
+            color: #df2020;
+        }
+
+        .comment-list li {
+            padding-bottom: 30px;
+            padding-right: 15px;
+            padding-top: 10px;
+        }
+        */
