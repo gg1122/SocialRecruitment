@@ -43,7 +43,7 @@ function CompareTime(StartTime, EndTime) {
 }
 
 //根据表名字段名获取列表绑定数据
-function bindDropDownList(id, table, colum) {
+function GetSysField(id, table, colum) {
 
     $(id).empty();
     $("<option></option>")
@@ -75,7 +75,7 @@ function bindDropDownList(id, table, colum) {
 //parentid父类ID
 //colums需要绑定的列名称
 //parentcolums父类的列名称
-function bindDropDownList(id, parentid, colums, parentcolums) {
+function GetSysFieldByParent(id, parentid, colums, parentcolums) {
 
     $(id).empty();
     $("<option></option>")
@@ -83,7 +83,9 @@ function bindDropDownList(id, parentid, colums, parentcolums) {
             .text("请选择")
             .appendTo($(id));
     var url = "/SysField/GetSysFieldByParent";
+    $.ajaxSetup({ cache: false, async:false});
     $.ajaxSetup({ cache: false });
+   // $.ajaxSetting.async = false;
     $.getJSON(url, { id: colums, parentid: parentcolums, value: $(parentid).val() }, function (data) {
         if (data == null) {
             return;
@@ -534,4 +536,30 @@ function createEditor(ckid, html) {
     $("#" + ckid).attr("editorName", editor.name);
 
     return editor.name;
+}
+//日期格式
+function jsonDateFormat(jsonDate) {//json日期格式转换为正常格式
+    try {
+        var date = new Date(parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10));
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();       
+        return date.getFullYear() + "-" + month + "-" + day;
+    } catch (ex) {
+        return "";
+    }
+}
+//日期时间格式
+function jsonDateTimeFormat(jsonDate) {//json日期格式转换为正常格式
+    try {
+        var date = new Date(parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10));
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var milliseconds = date.getMilliseconds();
+        return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    } catch (ex) {
+        return "";
+    }
 }

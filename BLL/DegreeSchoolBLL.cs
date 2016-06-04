@@ -283,7 +283,8 @@ namespace Langben.BLL
         /// <param name="id">学历学校的主键</param>
         /// <returns>一个学历学校</returns>
         public DegreeSchool GetById(string id)
-        {           
+        {
+            db.Configuration.ProxyCreationEnabled = false;
             return repository.GetById(db, id);           
         }
 

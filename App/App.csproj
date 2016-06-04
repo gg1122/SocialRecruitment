@@ -610,6 +610,7 @@
     <Content Include="Views\Shared\Personal.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\DegreeSchool\Index.cshtml" />
+    <Content Include="Views\LanguageCompetence\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
