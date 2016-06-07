@@ -56,25 +56,20 @@ namespace Langben.App.Controllers
         [SupportFilter]  
         public ActionResult Details(string id,string Op)
         {
+             
+            var blog = m_BLL.GetById(id);
             
-            ViewBag.Id = id;
-            IBLL.ICommentBLL c_BLL = new CommentBLL();
-            Langben.App.Models.BlogDetailsModel model = new BlogDetailsModel();
-            model.blog = m_BLL.GetById(id);
-            StringBuilder search = new StringBuilder();
-            search.AppendFormat("BlogId{0}&{1}^State{0}&{2}", ArgEnums.DDL_String,id, StateEnums.QY);
-            model.commentList = c_BLL.GetByParam("", "desc", "CreateTime", search.ToString());
-            if (Op == "Read" && model.blog!=null)//浏览
+            if (Op == "Read" && blog!=null)//浏览
             {
                 try
                 {
-                    if(model.blog.ReadNumber==null)
+                    if(blog.ReadNumber==null)
                     {
-                        model.blog.ReadNumber = 0;
+                        blog.ReadNumber = 0;
                     }
-                    model.blog.ReadNumber++;
+                    blog.ReadNumber++;
                     ValidationErrors err = new ValidationErrors();
-                    m_BLL.Edit(ref err, model.blog);
+                    m_BLL.Edit(ref err, blog);
                 }
                 catch(Exception ex)
                 {
@@ -82,10 +77,36 @@ namespace Langben.App.Controllers
                 }
 
             }
-            return View(model);
+            return View(blog);
+            /* 原来的代码，增加blog和comment外键之后
+              ViewBag.Id = id;
+                        IBLL.ICommentBLL c_BLL = new CommentBLL();
+                        Langben.App.Models.BlogDetailsModel model = new BlogDetailsModel();
+                        model.blog = m_BLL.GetById(id);
+                        StringBuilder search = new StringBuilder();
+                        search.AppendFormat("BlogId{0}&{1}^State{0}&{2}", ArgEnums.DDL_String,id, StateEnums.QY);
+                        model.commentList = c_BLL.GetByParam("", "desc", "CreateTime", search.ToString());
+                        if (Op == "Read" && model.blog!=null)//浏览
+                        {
+                            try
+                            {
+                                if(model.blog.ReadNumber==null)
+                                {
+                                    model.blog.ReadNumber = 0;
+                                }
+                                model.blog.ReadNumber++;
+                                ValidationErrors err = new ValidationErrors();
+                                m_BLL.Edit(ref err, model.blog);
+                            }
+                            catch(Exception ex)
+                            {
 
+                            }
+
+                        }
+                        */
         }
- 
+
         /// <summary>
         /// 首次创建
         /// </summary>

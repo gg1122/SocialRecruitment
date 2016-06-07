@@ -1,73 +1,71 @@
-﻿@model  Langben.App.Models.BlogDetailsModel
+﻿@model  Langben.DAL.Blog
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/Blog.cshtml";    
+    Layout = "~/Views/Shared/Blog.cshtml";
 }
 
 <div class="row">
     <div id="content" class="col-md-9">
-        @if (Model != null && Model.blog != null)
+        @if (Model != null)
         {
             <article class="post">
                 <header class="entry-header" style="position:relative; margin-bottom:10px;">
 
                     <hgroup>
                         <h3>
-                            <a href="#" rel="bookmark">@Model.blog.Title</a>
+                            <a href="#" rel="bookmark">@Model.Title</a>
                         </h3>
                     </hgroup>
                     <div class="entry-meta">
                         <span>
-                            发榜：@Model.blog.CreateTime.Value.ToString("yyyy年MM月dd日")
+                            发榜：@Model.CreateTime.Value.ToString("yyyy年MM月dd日")
                         </span>
                         <span>
-                            围观：@Model.blog.ReadNumber
+                            围观：@Model.ReadNumber
                         </span>
                     </div>
                 </header>
 
                 <div class="entry-content">
                     <p>
-                        @Model.blog.Content
+                        @Model.Content
                     </p>
                 </div>
             </article>
         }
 
         <div class="comments">
-        @if (Model != null && Model.blog != null)
-        {
-            <h5 class="comments-title">          
-           
-            @Model.blog.CommentNumber 个码农在码砖</h5>
-        }
-            @if (Model != null && Model.commentList != null && Model.commentList.Count > 0)
-            {
-                <ol class="comment-list">
-                    @foreach (var item in Model.commentList)
+
+            @if (Model != null && Model.Comment != null && Model.Comment.Count > 0)
+            {<h5 class="comments-title">
+
+                @Model.Comment.Count 个码农在码砖
+            </h5>
+            <ol class="comment-list">
+                @foreach (var item in Model.Comment)
+                {
+                    if (string.IsNullOrEmpty(item.MyPicture))
                     {
-                        if(string.IsNullOrEmpty(item.MyPicture))
-                        {
-                            item.MyPicture = "../images/thumb-1.jpg";
-                        }
-                        <li>
-                            <article>
-                                <footer>
-                                    <img class="img-rounded img-responsive" src="@item.MyPicture" alt="" />
-                                    <cite><a href="#">@item.CreatePerson</a></cite>
-                                    <div class="comment-meta">
-                                        <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
-                                        <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
-                                    </div>
-                                </footer>
-                                <div class="comment-content">
-                                    @item.Content
-                                </div>
-                            </article>
-                        </li>
+                        item.MyPicture = "../images/thumb-1.jpg";
                     }
-                </ol>
+                    <li>
+                        <article>
+                            <footer>
+                                <img class="img-rounded img-responsive" src="@item.MyPicture" alt="" />
+                                <cite><a href="#">@item.CreatePerson</a></cite>
+                                <div class="comment-meta">
+                                    <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
+                                    <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
+                                </div>
+                            </footer>
+                            <div class="comment-content">
+                                @item.Content
+                            </div>
+                        </article>
+                    </li>
+                }
+            </ol>
             }
         </div>
 
@@ -84,7 +82,7 @@
         <aside>
             <h3>码农有话说</h3>
             <textarea class="form-control" rows="3" id="txtContent"></textarea>
-            <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent(@Model.blog.Id);">码砖</button>
+            <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent(@Model.Id);">码砖</button>
         </aside>
     </div>
 
@@ -92,9 +90,8 @@
 <script type="text/javascript">
     //添加评论
     function AddContent(blogId) {
-        var Content = $('#txtContent').val();        
-        if (trimStr(Content)=="")
-        {
+        var Content = $('#txtContent').val();
+        if (trimStr(Content) == "") {
             alert("请输入码转内容");
             return;
         }
@@ -106,10 +103,10 @@
             dataType: "json",
             success: function (data) {
                 alert(data.Message);
-                
-                    window.location.href = "/Blog/Details/id?=" + blogId;
-                    location.reload();
-                
+
+                window.location.href = "/Blog/Details/id?=" + blogId;
+                location.reload();
+
             },
             error: function (data) {
                 debugger;

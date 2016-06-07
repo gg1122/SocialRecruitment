@@ -22,11 +22,17 @@ namespace  Models
     //[SupportFilter]//此处如果去掉注释，则全部继承BaseController的Controller，都将执行SupportFilter过滤
     public class BaseController : Controller
     {
-        /// <summary>
-        /// 获取当前登陆人的名称
-        /// </summary>
-        /// <returns></returns>
-        public string CurrentPerson
+        public string GetCurrentPerson()
+        {
+            return CurrentPerson;
+
+        }
+
+    /// <summary>
+    /// 获取当前登陆人的名称
+    /// </summary>
+    /// <returns></returns>
+    public string CurrentPerson
         {
             get
             {
