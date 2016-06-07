@@ -181,6 +181,7 @@
     <Content Include="Content\main.css" />
     <Content Include="Content\pagerstyles.css" />
     <Content Include="Content\StyleSheet.css" />
+    <Content Include="Doc\表结构初始化.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -575,6 +576,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Doc\社交招聘 20160426.pdm" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
