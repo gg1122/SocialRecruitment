@@ -26,5 +26,7 @@ namespace Langben.DAL
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public byte[] Version { get; set; }
+    
+        public virtual Blog Blog { get; set; }
     }
 }

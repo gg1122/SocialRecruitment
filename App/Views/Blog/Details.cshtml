@@ -100,23 +100,20 @@
         }
         $.ajax({
             async: false,
-            url: '@Url.Action("Create", "Comment")',
+            url: "/api/CommentApi/Post",
             type: "Post",
             data: "blogId=" + blogId + "&Content=" + Content,
             dataType: "json",
             success: function (data) {
-                if (data.Status == "Y") {
-                    alert("提交成功！");
+                alert(data.Message);
+                
                     window.location.href = "/Blog/Details/id?=" + blogId;
                     location.reload();
-                }
-                else {
-                    alert("提交失败！"+data.Message);
-                }
                 
             },
             error: function (data) {
-                alert("提交失败！");
+                debugger;
+                alert("提交失败！" + data);
             }
         });
     }
