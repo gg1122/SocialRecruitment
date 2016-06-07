@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
@@ -291,6 +291,18 @@
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <Association Name="FK_COMMENT_REFERENCE_BLOG">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DEGREESC_REFERENCE_RESUME">
           <End Role="Resume" Type="Self.Resume" Multiplicity="0..1" />
           <End Role="DegreeSchool" Type="Self.DegreeSchool" Multiplicity="*" />
@@ -379,6 +391,10 @@
           <EntitySet Name="SysField" EntityType="Self.SysField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysLog" EntityType="Self.SysLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysNotice" EntityType="Self.SysNotice" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_COMMENT_REFERENCE_BLOG" Association="Self.FK_COMMENT_REFERENCE_BLOG">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
           <AssociationSet Name="FK_DEGREESC_REFERENCE_RESUME" Association="Self.FK_DEGREESC_REFERENCE_RESUME">
             <End Role="Resume" EntitySet="Resume" />
             <End Role="DegreeSchool" EntitySet="DegreeSchool" />
@@ -410,8 +426,6 @@
       <Schema Namespace="SysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SysEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Account" EntityType="SysModel.Account" />
-          <EntitySet Name="Blog" EntityType="SysModel.Blog" />
-          <EntitySet Name="Comment" EntityType="SysModel.Comment" />
           <EntitySet Name="DegreeSchool" EntityType="SysModel.DegreeSchool" />
           <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
           <EntitySet Name="InternshipExperience" EntityType="SysModel.InternshipExperience" />
@@ -448,6 +462,12 @@
             <End Role="Resume" EntitySet="Resume" />
             <End Role="ProjectExperience" EntitySet="ProjectExperience" />
           </AssociationSet>
+          <EntitySet Name="Blog" EntityType="SysModel.Blog" />
+          <EntitySet Name="Comment" EntityType="SysModel.Comment" />
+          <AssociationSet Name="FK_COMMENT_REFERENCE_BLOG" Association="SysModel.FK_COMMENT_REFERENCE_BLOG">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -473,43 +493,6 @@
           <Property Name="LiveCity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PersonalAssessment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Sort" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="Blog">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="CommentNumber" Type="Int32" />
-          <Property Name="ReadNumber" Type="Int32" />
-          <Property Name="Picture3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Picture2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Sort" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="BlogId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="AgreeNumber" Type="Int32" />
-          <Property Name="MyPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Sort" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
@@ -819,6 +802,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CommentNumber" Type="Int32" />
+          <Property Name="ReadNumber" Type="Int32" />
+          <Property Name="Picture3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Comment" Relationship="SysModel.FK_COMMENT_REFERENCE_BLOG" FromRole="Blog" ToRole="Comment" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="BlogId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="AgreeNumber" Type="Int32" />
+          <Property Name="MyPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Blog" Relationship="SysModel.FK_COMMENT_REFERENCE_BLOG" FromRole="Comment" ToRole="Blog" />
+        </EntityType>
+        <Association Name="FK_COMMENT_REFERENCE_BLOG">
+          <End Type="SysModel.Blog" Role="Blog" Multiplicity="0..1" />
+          <End Type="SysModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -854,45 +888,6 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Blog">
-            <EntityTypeMapping TypeName="SysModel.Blog">
-              <MappingFragment StoreEntitySet="Blog">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="Picture2" ColumnName="Picture2" />
-                <ScalarProperty Name="Picture3" ColumnName="Picture3" />
-                <ScalarProperty Name="ReadNumber" ColumnName="ReadNumber" />
-                <ScalarProperty Name="CommentNumber" ColumnName="CommentNumber" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comment">
-            <EntityTypeMapping TypeName="SysModel.Comment">
-              <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="MyPicture" ColumnName="MyPicture" />
-                <ScalarProperty Name="AgreeNumber" ColumnName="AgreeNumber" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1122,6 +1117,45 @@
                 <ScalarProperty Name="LostTime" ColumnName="LostTime" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="SysModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Picture2" ColumnName="Picture2" />
+                <ScalarProperty Name="Picture3" ColumnName="Picture3" />
+                <ScalarProperty Name="ReadNumber" ColumnName="ReadNumber" />
+                <ScalarProperty Name="CommentNumber" ColumnName="CommentNumber" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="SysModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="MyPicture" ColumnName="MyPicture" />
+                <ScalarProperty Name="AgreeNumber" ColumnName="AgreeNumber" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

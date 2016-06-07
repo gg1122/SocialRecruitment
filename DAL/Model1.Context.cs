@@ -26,8 +26,6 @@ namespace Langben.DAL
         }
     
         public virtual DbSet<Account> Account { get; set; }
-        public virtual DbSet<Blog> Blog { get; set; }
-        public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<DegreeSchool> DegreeSchool { get; set; }
         public virtual DbSet<FileUploader> FileUploader { get; set; }
         public virtual DbSet<InternshipExperience> InternshipExperience { get; set; }
@@ -40,5 +38,7 @@ namespace Langben.DAL
         public virtual DbSet<SysField> SysField { get; set; }
         public virtual DbSet<SysLog> SysLog { get; set; }
         public virtual DbSet<SysNotice> SysNotice { get; set; }
+        public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
     }
 }
