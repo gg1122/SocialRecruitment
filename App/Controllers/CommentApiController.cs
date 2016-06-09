@@ -112,27 +112,17 @@ namespace Langben.App.Controllers
             return result;
         }
 
-    
-        // PUT api/<controller>/5
-        /// <summary>
-        /// 编辑
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>  
-        public Common.ClientResult.Result Put([FromBody]Comment entity)
+        
+        public Common.ClientResult.Result Put([FromBody]string  id)
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-            if (entity != null && ModelState.IsValid)
+            if (!string.IsNullOrWhiteSpace(id))
             {   //数据校验
-
-                //string currentPerson = GetCurrentPerson();
-                //entity.UpdateTime = DateTime.Now;
-                //entity.UpdatePerson = currentPerson;
-
+ 
                 string returnValue = string.Empty;
-                if (m_BLL.Edit(ref validationErrors, entity))
+                if (m_BLL.Cai(ref validationErrors, id))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，评论信息的Id为" + entity.Id,"评论"
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，彩" + id, "评论"
                         );//写入日志                   
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = Suggestion.UpdateSucceed;
@@ -148,7 +138,7 @@ namespace Langben.App.Controllers
                             return true;
                         });
                     }
-                    LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，评论信息的Id为" + entity.Id + "," + returnValue, "评论"
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，彩" + id + "," + returnValue, "评论"
                         );//写入日志   
                     result.Code = Common.ClientCode.Fail;
                     result.Message = Suggestion.UpdateFail + returnValue;
@@ -160,45 +150,7 @@ namespace Langben.App.Controllers
             return result; //提示输入的数据的格式不对         
         }
 
-        // DELETE api/<controller>/5
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <returns></returns>  
-        public Common.ClientResult.Result Delete(string query)
-        {
-            Common.ClientResult.Result result = new Common.ClientResult.Result();
-
-            string returnValue = string.Empty;
-            string[] deleteId = query.GetString().Split(',');
-            if (deleteId != null && deleteId.Length > 0)
-            {
-                if (m_BLL.DeleteCollection(ref validationErrors, deleteId))
-                {
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteSucceed + "，信息的Id为" + string.Join(",", deleteId), "消息"
-                        );//删除成功，写入日志
-                    result.Code = Common.ClientCode.Succeed;
-                    result.Message = Suggestion.DeleteSucceed;
-                }
-                else
-                {
-                    if (validationErrors != null && validationErrors.Count > 0)
-                    {
-                        validationErrors.All(a =>
-                        {
-                            returnValue += a.ErrorMessage;
-                            return true;
-                        });
-                    }
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteFail + "，信息的Id为" + string.Join(",", deleteId)+ "," + returnValue, "消息"
-                        );//删除失败，写入日志
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = Suggestion.DeleteFail + returnValue;
-                }
-            }
-            return result;
-        }
+         
 
         IBLL.ICommentBLL m_BLL;
 

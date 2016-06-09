@@ -17,8 +17,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
@@ -157,6 +157,7 @@
     <Compile Include="Codes\SupportFilter.cs" />
     <Compile Include="Codes\SysFieldModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FileUploaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SysFieldController.cs" />
     <Compile Include="Global.asax.cs">

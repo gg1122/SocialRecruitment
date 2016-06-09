@@ -43,7 +43,7 @@
                 @Model.Comment.Count 个码农在码砖
             </h5>
             <ol class="comment-list">
-                @foreach (var item in Model.Comment)
+                @foreach (var item in Model.Comment.OrderByDescending(o=>o.CreateTime))
                 {
                     if (string.IsNullOrEmpty(item.MyPicture))
                     {
@@ -56,7 +56,7 @@
                                 <cite><a href="#">@item.CreatePerson</a></cite>
                                 <div class="comment-meta">
                                     <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
-                                    <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
+                                    <a class="comment-reply" onclick="commentReply('@item.Id');" href="#">彩（@item.AgreeNumber）</a>
                                 </div>
                             </footer>
                             <div class="comment-content">
@@ -102,10 +102,11 @@
             data: "blogId=" + blogId + "&Content=" + Content,
             dataType: "json",
             success: function (data) {
-                alert(data.Message);
+               
+                var comment = '<li> <article><footer> <img class="img-rounded img-responsive" src="' + "../images/thumb-1.jpg" + '" alt="" /><cite><a href="#">item.CreatePerson</a></cite> <div class="comment-meta"><time pubdate="" datetime="2012-08-06T00:18:45+00:00">' + new Date("yyyy年MM月dd日").toString()  + '</time> <a class="comment-reply" href="#">彩（0）</a> </div> </footer><div class="comment-content">'
+                               + Content +"</div> </article> </li>";
+                $(".comment-list").prepend(comment);
 
-                window.location.href = "/Blog/Details/id?=" + blogId;
-                location.reload();
 
             },
             error: function (data) {
@@ -114,5 +115,26 @@
             }
         });
     }
+    //彩
+    function commentReply(id) {
 
+        alert(id);
+        debugger;
+        $.ajax({
+            async: false,
+            url: "/api/CommentApi/Put",
+            type: "Put",
+            data:  "id=" + id,
+            dataType: "json",
+            success: function (data) {
+
+                alert("彩");
+
+            },
+            error: function (data) {
+                debugger;
+                alert("提交失败！" + data);
+            }
+        });
+    }
 </script>
