@@ -110,29 +110,26 @@
 
             },
             error: function (data) {
-                debugger;
+               
                 alert("提交失败！" + data);
             }
         });
     }
     //彩
     function commentReply(id) {
-
-        alert(id);
-        debugger;
+        
         $.ajax({
             async: false,
             url: "/api/CommentApi/Put",
             type: "Put",
             data:  "id=" + id,
-            dataType: "json",
+           
             success: function (data) {
-
-                alert("彩");
+                alert("出彩！");
 
             },
             error: function (data) {
-                debugger;
+                
                 alert("提交失败！" + data);
             }
         });

@@ -113,10 +113,11 @@ namespace Langben.App.Controllers
         }
 
         
-        public Common.ClientResult.Result Put([FromBody]string  id)
+        public Common.ClientResult.Result Put([FromBody]Comment entity)
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-            if (!string.IsNullOrWhiteSpace(id))
+            string id = entity.Id;
+            if (entity!=null&&!string.IsNullOrWhiteSpace(id))
             {   //数据校验
  
                 string returnValue = string.Empty;
