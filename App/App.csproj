@@ -615,6 +615,7 @@
     <Content Include="Views\DegreeSchool\Index.cshtml" />
     <Content Include="Views\LanguageCompetence\Index.cshtml" />
     <Content Include="Views\FileUploader\Index.cshtml" />
+    <Content Include="Views\ITAbility\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

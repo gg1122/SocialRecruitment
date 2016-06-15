@@ -5,5 +5,284 @@
     Layout = "~/Views/Shared/Personal.cshtml";
 }
 
-<h2>Index</h2>
+<div class="col-md-9 column">
+    <ul class="breadcrumb">
+        <li><a>首页</a> </li>
+        <li class="active">语言能力 </li>
+    </ul>
+    <!--列表开始 -->
+    <table class="table table-bordered table-striped" id="tbList">
+        <tr id="trTitle">
+            <th>序号</th>
+            <th>语言名称</th>
+            <th>语言水平</th>            
+            <th>操作</th>
+        </tr>
+        <tr id="trList" style="display:none">
+            <td id="tdNo">1</td>
+            <td id="tdLanguage"> 英语 </td>
+            <td id="tdLevel"> 流利 </td>           
+            <td><a href="#" id="aEdit" class="btn btn-link btn-xs " title="编辑"><i class="fa fa-pencil-square-o"></i><span class="sr-only">编辑</span></a> | <a id="aDelete" href="#" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a></td>
 
+
+        </tr>
+
+    </table>
+    <p>
+        <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
+        <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" id="divNoOp"/>
+    </p>
+    <div class="form-horizontal" role="form" id="divEdit" style="display:none">
+        <input type="hidden" id="hideID" value="" /><!--编号-->
+        <input type="hidden" id="hideResumeId" value="" /><!--简历管理Id-->
+        <input type="hidden" id="hideSort" value="0" /><!--排序-->
+        <input type="hidden" id="hideState" value="启用" /><!--状态-->
+        <input type="hidden" id="hideCreateTime" value="" /><!--创建时间-->
+        <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->    
+
+       
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">语言名称</label>
+            <div class="col-sm-5">
+                <select class="form-control input-inline" id="ddlLanguage">
+                    <option value="10">英语</option>
+                    <option value="20">德语</option>                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">语言水平<span class="required"> </span></label>
+            <div class="col-sm-9">
+                <select class="form-control  input-inline" id="ddlLevel">
+                    <option value="10">母语</option>
+                    <option value="20">流利</option>
+                    <option value="30">可面试</option>
+                    <option value="40">简单会话</option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+        <div class="form-group" id="divAddOp" style="display:none">
+            <div class="col-sm-offset-3 col-sm-5">
+                <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
+                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Create');" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" />
+            </div>
+        </div>
+        <div class="form-group" id="divEditOp" style="display:none">
+            <div class="col-sm-offset-3 col-sm-5">
+                <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
+                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Edit');" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $tbList = $('#tbList');
+    var $trList = $('#trList');
+    $(function () {
+
+        //列表
+        GetList();       
+
+        //语言
+        GetSysField("#ddlLanguage", "LanguageCompetence", "Language");
+
+        //语言水平
+        GetSysField("#ddlLevel", "LanguageCompetence", "Level");
+
+
+
+    });
+    //列表
+    function GetList() {
+        $("#tbList").find("tr").each(function (i, data) {
+            if (i > 1) {
+                $(this).remove();
+
+            }
+        });
+        $.ajax({
+            url: "/LanguageCompetence/GetList",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data != null && data.length > 0) {//有数据
+                    var No = 0;
+                    $.each(data, function (key, item) {
+                        var $tr = $trList.clone().appendTo($tbList);
+                        No++;
+                        $tr.css('display', '');
+
+                        $tr.find("#tdNo").html(No); //序号                       
+
+                        $tr.find("#tdLanguage").html(item.Language); //语言
+                        $tr.find("#tdLevel").html(item.Level); //语言水平                       
+
+                        //编辑
+                        $tr.find('#aEdit').click(function () {
+                            EditShow(item.Id)
+                        });
+                        //修改
+                        $tr.find('#aDelete').click(function () {
+                            Delete(item.Id)
+                        });
+
+                    });
+                }
+                else {//无数据
+                    // alert(data.Message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("获取数据失败");
+            }
+        });
+    }
+    //添加
+    function AddShow() {        
+        $("#hideID").val("");        
+        $("#ddlLanguage").get(0).selectedIndex = 0;
+        $("#ddlLevel").get(0).selectedIndex = 0;
+        $('#divEdit').show();
+        $('#divAddOp').show();
+        $('#divEditOp').hide();
+        $('#divNoOp').hide();
+
+
+    }
+    //数据检验
+    function CheckData() {
+        var Language = $("#ddlLanguage").val();
+        var Level = $("#ddlLevel").val();       
+        var Message = "";
+        if (trimStr(Language) == "") {
+            Message = "请选择语言名称";
+        }       
+        if (trimStr(Level) == "") {
+            Message += "请选择语言水平";
+        }
+        if (Message != "") {
+            alert(Message);
+            return false;
+        }
+        return true;
+    }
+    //保存提交
+    function Save(IsNext, Op) {
+        //验证数据
+        if (CheckData()) {
+            var Id = $("#hideID").val();           
+            var Language = $("#ddlLanguage").val();
+            var Level = $("#ddlLevel").val();
+            var ResumeId = $("#hideResumeId").val();
+            var Sort = $("#hideSort").val();
+            var State = $("#hideState").val();
+            var CreateTime = $("#hideCreateTime").val();
+            var CreatePerson = $("#hideCreatePerson").val();
+
+            //var Model=  jQuery.parseJSON('{"BeginDate": "'+BeginDate+'", "EndDate": "'+EndDate+'", "IsNow": "'+IsNow+'", "SchoolArea": "'+SchoolArea+'", "SchoolName": "'+SchoolName+'", "ProfessionalType1": "'+ProfessionalType1+'", "ProfessionalType2": "'+ProfessionalType2+'", "Education": "'+Education+'", "Degree": "'+Degree+'" }');
+            var Model = jQuery.parseJSON('{ ' +
+                            '"Id":"' + Id + '"' +
+                            ',"Language": "' + Language + '"' +
+                            ',"Level": "' + Level + '"' +                           
+                            ',"ResumeId":"' + ResumeId + '"' +
+                            ',"Sort":"' + Sort + '"' +
+                            ',"State":"' + State + '"' +
+                            ',"CreateTime":"' + CreateTime + '"' +
+                           ',"CreatePerson":"' + CreatePerson + '"' +
+            '}');
+            var url = "/LanguageCompetence/CreateSave"
+            if (Op == "Edit") {
+                url = "/LanguageCompetence/EditSave"
+            }
+
+            $.ajax({
+                url: url,
+                type: "post",
+                dataType: "json",
+                //data: { "BeginDate": BeginDate, "EndDate": EndDate, "IsNow": IsNow, "SchoolArea": SchoolArea, "SchoolName": SchoolName, "ProfessionalType1": ProfessionalType1, "ProfessionalType2": ProfessionalType2, "Education": Education, "Degree": Degree },
+                data: { "Model": JSON.stringify(Model) },
+                success: function (data) {
+                    if (data.Code == 1) {//成功
+                        alert("操作成功");
+                        if (IsNext == "Y") {
+                            window.location.href = "/ITAbility/Index";
+                        }
+                        else {
+                            GetList();
+                        }
+                    }
+                    else {//失败
+                        alert(data.Message);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("操作失败");
+                }
+            });
+        }
+    }
+    //修改显示
+    function EditShow(Id) {
+        $("#hideID").val(Id);
+        $.ajax({
+            url: "/LanguageCompetence/GetById",
+            type: "post",
+            dataType: "json",
+            data: { "Id": Id },
+            success: function (data) {
+                if (data != null) {//成功                    
+                    $("#ddlLevel").val(data.Level);
+                    $("#ddlLanguage").val(data.Language);
+                    $("#hideResumeId").val(data.ResumeId);
+                    $("#hideSort").val(data.Sort);
+                    $("#hideCreateTime").val(jsonDateTimeFormat(data.CreateTime));
+                    $("#hideCreatePerson").val(data.CreatePerson);
+                    $('#divEdit').show();
+                    $('#divAddOp').hide();
+                    $('#divEditOp').show();
+                    $('#divNoOp').hide();
+                }
+                else {//失败
+                    alert("未获取到数据");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("获取数据失败");
+            }
+        });
+
+    }
+    //删除
+    function Delete(Id) {
+        if (confirm("你确定删除此记录吗？")) {
+            $.ajax({
+                url: "/LanguageCompetence/Delete",
+                type: "post",
+                dataType: "json",
+                data: { "Id": Id },
+                success: function (data) {
+                    if (data.Code == 1) {//成功
+                        alert("操作成功");
+                        GetList();
+                        $('#divEdit').hide();
+                        $('#divAddOp').hide();
+                        $('#divEditOp').hide();
+                        $('#divNoOp').show();
+                    }
+                    else {//失败
+                        alert(data.Message);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("操作失败");
+                }
+            });
+        }
+    }
+
+</script>

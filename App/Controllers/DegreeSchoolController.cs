@@ -242,7 +242,7 @@ namespace Langben.App.Controllers
             return Json(result);
         }
         /// <summary>
-        /// 创建保存
+        /// 删除保存
         /// </summary>
         /// <returns></returns>
         public ActionResult Delete()

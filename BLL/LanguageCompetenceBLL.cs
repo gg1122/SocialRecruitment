@@ -283,7 +283,8 @@ namespace Langben.BLL
         /// <param name="id">语言能力的主键</param>
         /// <returns>一个语言能力</returns>
         public LanguageCompetence GetById(string id)
-        {           
+        {
+            db.Configuration.ProxyCreationEnabled = false;//解决转json异常
             return repository.GetById(db, id);           
         }
 

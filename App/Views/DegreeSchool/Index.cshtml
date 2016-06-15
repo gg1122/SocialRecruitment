@@ -38,7 +38,7 @@
     </table>
     <p>
         <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
-        <input class="btn btn-primary" type="button" onclick="BackList('/LanguageCompetence/Index')" value="下一步" />
+        <input class="btn btn-primary" type="button" onclick="BackList('/LanguageCompetence/Index')" value="下一步"  id="divNoOp" />
     </p>
     <div class="form-horizontal" role="form" id="divEdit" style="display:none">
         <input type="hidden" id="hideID" value="" /><!--编号-->
@@ -262,7 +262,7 @@
         }
         // checkbox "undefined" "checked"
         if (trimStr(EndDate) == "" && IsNow == "undefined") {
-            Message = "结束日期不能为空\n\r";
+            Message += "结束日期不能为空\n\r";
         }
         if (Message != "") {
             alert(Message);
@@ -394,28 +394,30 @@
     }
     //删除
     function Delete(Id) {
-        $.ajax({
-            url: "/DegreeSchool/Delete",
-            type: "post",
-            dataType: "json",
-            data: { "Id": Id },
-            success: function (data) {
-                if (data.Code == 1) {//成功
-                    alert("操作成功");                   
-                    GetList();
-                    $('#divEdit').hide();
-                    $('#divAddOp').hide();
-                    $('#divEditOp').hide();
-                    $('#divNoOp').show();
+        if (confirm("你确定删除此记录吗？")) {
+            $.ajax({
+                url: "/DegreeSchool/Delete",
+                type: "post",
+                dataType: "json",
+                data: { "Id": Id },
+                success: function (data) {
+                    if (data.Code == 1) {//成功
+                        alert("操作成功");
+                        GetList();
+                        $('#divEdit').hide();
+                        $('#divAddOp').hide();
+                        $('#divEditOp').hide();
+                        $('#divNoOp').show();
+                    }
+                    else {//失败
+                        alert(data.Message);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("操作失败");
                 }
-                else {//失败
-                    alert(data.Message);
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("操作失败");
-            }
-        });
+            });
+        }
     }
 
 </script>
