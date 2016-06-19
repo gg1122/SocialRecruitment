@@ -283,7 +283,8 @@ namespace Langben.BLL
         /// <param name="id">实习经验的主键</param>
         /// <returns>一个实习经验</returns>
         public InternshipExperience GetById(string id)
-        {           
+        {
+            db.Configuration.ProxyCreationEnabled = false;//解决转json异常       
             return repository.GetById(db, id);           
         }
 

@@ -283,7 +283,8 @@ namespace Langben.BLL
         /// <param name="id">IT技能爱好的主键</param>
         /// <returns>一个IT技能爱好</returns>
         public ITAbility GetById(string id)
-        {           
+        {
+            db.Configuration.ProxyCreationEnabled = false;//解决转json异常    
             return repository.GetById(db, id);           
         }
 

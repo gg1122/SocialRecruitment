@@ -177,6 +177,7 @@
     <Content Include="Content\Blog\main.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Competence.css" />
     <Content Include="Content\Default.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\main.css" />
@@ -569,6 +570,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\jquery.autocomplete.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Content\Blog\less\main.less" />
     <Content Include="Content\Blog\main.css.map" />
@@ -616,6 +618,8 @@
     <Content Include="Views\LanguageCompetence\Index.cshtml" />
     <Content Include="Views\FileUploader\Index.cshtml" />
     <Content Include="Views\ITAbility\Index.cshtml" />
+    <Content Include="Views\ProjectExperience\Index.cshtml" />
+    <Content Include="Views\InternshipExperience\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

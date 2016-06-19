@@ -1,0 +1,56 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*组织管理*/
+.zzLeft { position:absolute; left:0; top:0; width:250px; background:#F2F2F2; height:500px;}
+.zzRight { padding-left:20px; margin-left:250px;}
+.searchBox { width:220px; position:relative;}
+.searchBox .inputText { width:200px;}
+.searchBox .searchBtn { position:absolute; right:20px; top:1px;*top:2px; display:block; width:15px; height:16px; background:url(/Images/NewFrameImages/htIcon.png) 0 -123px;}
+.zzglTop a { display:block; width:69px; height:26px; margin-right:20px;}
+.addBtn { background:url(/Images/NewFrameImages/htIcon.png) no-repeat 0 -153px;}
+.resetBtn {background:url(/Images/NewFrameImages/htIcon.png) no-repeat 0 -187px;}
+.deleteBtn {background:url(/Images/NewFrameImages/htIcon.png) no-repeat 0 -222px;}
+
+.ListHover{display:none;z-index:100;position:absolute;}
+.ListHover .hiddenList {z-index:9999; background:#ffffff; border:1px #666666 solid; width:70px; padding:10px 0 5px 0;}
+.ListHover .hiddenList li { padding-bottom:5px;}
+.bjBtnBox { display:block;padding-right:20px;padding-top:10px;}
+.bjBtn { padding-right:14px; background:url(/Images/NewFrameImages/htIcon.png) 27px -269px; *background-position:27px -267px;}
+.bjBtn2 { padding-right:14px;background:url(/Images/NewFrameImages/htIcon.png) 27px -256px;*background-position:27px -254px;}
+.zzLeftBottom { position:absolute; bottom:10px; left:10px;}
+.addGroup { background:url(/Images/NewFrameImages/htIcon.png) 0 -288px; padding-left:20px; color:#000000;}
+.zzglTable td{}
+
+/*组织信息修改*/
+.infoHidden { padding-top:20px; display:none;}
+.infoHidden td { padding-bottom:20px;}
+.infoHidden .textarea1 { padding:2px 0 0 3px; resize:none; width:740px; height:40px;border:1px #cccccc solid; overflow-y:scroll}
+.zzxxInfo h2 a {color:#333333;} 
+
+/*私有权限*/
+.syqxInfo { position:relative; padding-top:32px;}
+.syqxInfoTab { border-left:1px #cccccc solid; position:absolute; left:21px; top:0; z-index:999;}
+.syqxInfoTab .syqxInfoTabBtn{ background:#f9f9f9; display:block; width:86px; height:30px; color:#333333; border:1px #cccccc solid; border-left:none; text-align:center; line-height:30px;}
+.syqxInfoTab .syqxInfoTabFocus { border-bottom:1px #ffffff solid;background:#ffffff;}
+.syqxInfoTab table { margin-top:30px;}
+.syqxInfoTableBox {border:1px #cccccc solid; padding-bottom:10px; margin-top:-1px;}
+.syqxInfoTabLiLast { border-bottom:1px #cccccc solid; height:31px;}
+.syqxInfoIcon { display:block; width:16px; height:16px; background:url(/Images/NewFrameImages/ico_18_role_G.gif) no-repeat;}
+.syqxInfoIcon2 { display:block; width:16px; height:16px; background:url(/Images/NewFrameImages/ico_18_role_X.gif) no-repeat;}
+
+/*权限设置*/
+.qxsetInfo h3 { font-size:14px;}
+
+/*新建角色-详细资料*/
+.xjxxzl textarea{ padding:2px 0 0 3px; resize:none; width:740px; height:40px;border:1px #cccccc solid; overflow-y:scroll}
+.xjxxPosition .btnLeft { display:block; width:20px; height:30px;border:1px #cccccc solid; text-align:center; font-size:18px; line-height:28px; color:#333333; font-family:Georgia, "Times New Roman", Times, serif; position:absolute; left:0; top:0; z-index:9999;}
+.xjxxPosition .btnRight { display:block; width:20px; height:30px;border:1px #cccccc solid; text-align:center; font-size:18px; line-height:28px; color:#333333; font-family:Georgia, "Times New Roman", Times, serif; position:absolute; top:0; right:0; z-index:9999;}
+.xjxxPosition .btnLeft:hover , .xjxxPosition .btnRight:hover { background-color:#f9f9f9;}
+.syqxInfoTab2 {border-left:1px #cccccc solid; position:absolute; left:0px; top:0; z-index:999;}
+.syqxInfoTab2 .syqxInfoTabBtn{ background:#f9f9f9; display:block; width:86px; height:30px; color:#333333; border:1px #cccccc solid; border-left:none; text-align:center; line-height:30px;}
+.syqxInfoTab2 .syqxInfoTabFocus { border-bottom:1px #ffffff solid;background:#ffffff;}
+
+/*查看成员列表*/
+
+
