@@ -563,3 +563,40 @@ function jsonDateTimeFormat(jsonDate) {//json日期格式转换为正常格式
         return "";
     }
 }
+//是否登录用于控制页头显示隐藏控件
+//YesHideIDList:已登录隐藏控件
+//YesShowIDList:已登录显示控件
+//NoHideIDList:未登录隐藏控件
+//NoShowIDList:未登录显示控件
+function TopBtnHideShow(YesHideIDList, YesShowIDList,NoHideIDList, NoShowIDList) {
+   
+        $.ajax({
+            url: "/Account/GetIsLogining",
+            type: "post",
+            dataType: "text",           
+            success: function (data) {
+                if(data=="Y")
+                {
+                    for (var i = 0; i < YesHideIDList.length; i++) {
+                        $(YesHideIDList[i]).hide();
+                    }
+                    for (var i = 0; i < YesShowIDList.length; i++) {
+                        $(YesShowIDList[i]).show();
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < NoHideIDList.length; i++) {
+                        $(NoHideIDList[i]).hide();
+                    }
+                    for (var i = 0; i < NoShowIDList.length; i++) {
+                        $(NoShowIDList[i]).show();
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("操作失败");
+            }
+        });
+   
+}

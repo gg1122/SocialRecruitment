@@ -19,7 +19,21 @@ namespace Langben.App.Controllers
     /// </summary>
     public class AccountController : BaseController
     {
-
+        /// <summary>
+        /// 是否登录
+        /// </summary>
+        /// <returns></returns>
+        public string GetIsLogining()
+        {
+            if (CurrentAccount != null)
+            {
+                return "Y";
+            }
+            else
+            {
+                return "N";
+            }
+        }
         /// <summary>
         /// 列表
         /// </summary>
@@ -94,6 +108,10 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public ActionResult EditSave([FromBody]DAL.Account entity)
         {
+            if (CurrentAccount == null)
+            {
+                return null;
+            }
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null)
             {
@@ -225,7 +243,7 @@ namespace Langben.App.Controllers
                     result.Code = ClientCode.Succeed;
                     result.Message = "登录成功";
                     result.Url = "../Blog/Index";//(正式需要修改)注册成功后，跳转到填写简历
-
+                    CurrentAccount = new Account_Resume();
                     CurrentAccount.account = model;
                     try
                     {

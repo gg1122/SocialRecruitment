@@ -234,6 +234,7 @@ namespace Langben.App.Controllers
         /// <returns></returns>  
         public Common.ClientResult.Result Edit([FromBody]DAL.Account entity)
         {
+           
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null)
             {
@@ -272,6 +273,10 @@ namespace Langben.App.Controllers
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "个人评价不能为空";
                     return result; //提示失败
+                }
+                if (CurrentAccount == null)
+                {
+                    return null;
                 }
                 DAL.Account model = m_BLL.GetById(CurrentAccount.account.Id);
                 model.AnmeldenCity = entity.AnmeldenCity;

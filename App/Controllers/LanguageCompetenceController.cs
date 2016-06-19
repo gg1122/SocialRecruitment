@@ -45,7 +45,7 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public string GetList()
         {
-            if (CurrentAccount.resume != null)
+            if (CurrentAccount!=null && CurrentAccount.resume != null)
             {
                 List<LanguageCompetence> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
                 return JsonObj.ObjToJson(list);

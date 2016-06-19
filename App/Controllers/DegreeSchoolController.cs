@@ -28,7 +28,7 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-            if (CurrentAccount.resume != null)
+            if (CurrentAccount!=null && CurrentAccount.resume != null)
             {
                 List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
                 return View(list);
@@ -50,7 +50,7 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public string GetList()
         {           
-            if (CurrentAccount.resume != null)
+            if (CurrentAccount!=null && CurrentAccount.resume != null)
             {
                 List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);             
                 return JsonObj.ObjToJson(list);

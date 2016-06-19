@@ -62,22 +62,23 @@ namespace  Models
                 }
                 else
                 {
-                    Session.Clear();                   
+                    Session.Clear();
 
 
                     //测试
-                    Langben.App.Models.Account_Resume account = new Langben.App.Models.Account_Resume();
-                    Langben.IBLL.IAccountBLL bll = new Langben.BLL.AccountBLL();
-                    AccountArg arg = new AccountArg();
-                    arg.Name = "test";
-                    account.account = bll.GetByParam(arg);
-                    if (account.account != null)
-                    {
-                        Langben.IBLL.IResumeBLL rBll = new Langben.BLL.ResumeBLL();
-                        account.resume = rBll.GetFirstByAccountID(account.account.Id);
-                    }
-                    Session["account"] = account;
-                    currentAccount = account;
+                    //Langben.App.Models.Account_Resume account = new Langben.App.Models.Account_Resume();
+                    //Langben.IBLL.IAccountBLL bll = new Langben.BLL.AccountBLL();
+                    //AccountArg arg = new AccountArg();
+                    //arg.Name = "test";
+                    //account.account = bll.GetByParam(arg);
+                    //if (account.account != null)
+                    //{
+                    //    Langben.IBLL.IResumeBLL rBll = new Langben.BLL.ResumeBLL();
+                    //    account.resume = rBll.GetFirstByAccountID(account.account.Id);
+                    //}
+                    //Session["account"] = account;
+                    //currentAccount = account;
+                    Response.Redirect("/Blog/Index");
 
                 }
 

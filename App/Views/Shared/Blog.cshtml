@@ -23,7 +23,7 @@
     <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script> 
     <link href="~/Content/pagerstyles.css" rel="stylesheet" />
     <script src="~/Scripts/Validate.js" type="text/javascript"></script>   
-
+    <script src="~/Scripts/JScriptCommon.js" type="text/javascript"></script>  
     @RenderSection("HeadContent", false)
 
 </head>
@@ -39,10 +39,10 @@
             </div>
             <div  class="col-md-3" style="float:right"> 
                 <h3>
-                    <a href="~/Blog/Index" style="margin-right:20px;">首页</a>
-                    <a href="~/Account/Edit" style="margin-right:20px;">个人信息</a>
-                    <a href="~/Account/Login" style="margin-right:20px;">登录</a>
-                    <a href="~/Account/Register">注册</a>
+                    <a href="~/Blog/Index" style="margin-right:20px;" id="aTopHomePage">首页</a>
+                    <a href="~/Account/Edit" style="margin-right:20px;" id="aTopPersonalInformation">个人资料</a>
+                    <a href="~/Account/Login" style="margin-right:20px;" id="aTopLogin">登录</a>
+                    <a href="~/Account/Register" id="aTopRegister">注册</a>
                 </h3>
 
             </div>
@@ -68,3 +68,19 @@
 </body>
 
 </html>
+<script type="text/javascript">
+    $(function () {
+        
+        var YesHideIDList =["#aTopLogin","#aTopRegister"];//已登录隐藏控件
+        var YesShowIDList = ["#aTopHomePage","#aTopPersonalInformation"];//已登录显示控件
+        var NoHideIDList = ["#aTopPersonalInformation"];//未登录隐藏控件
+        var NoShowIDList = ["#aTopHomePage","#aTopLogin", "#aTopRegister"];//未登录显示控件
+       
+        //控制页头控件
+        TopBtnHideShow(YesHideIDList, YesShowIDList, NoHideIDList, NoShowIDList);
+
+
+
+    });
+  
+</script>
