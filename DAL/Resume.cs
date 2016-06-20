@@ -35,6 +35,7 @@ namespace Langben.DAL
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public byte[] Version { get; set; }
+        public int CompletionPercentage { get; set; }
     
         public virtual ICollection<DegreeSchool> DegreeSchool { get; set; }
         public virtual ICollection<FileUploader> FileUploader { get; set; }

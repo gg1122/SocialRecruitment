@@ -46,15 +46,15 @@ namespace Langben.IBLL
         /// <returns></returns>
         [OperationContract]
         System.Collections.Generic.List<SysField> GetAll();
-        
-        
+
+
         /// <summary>
         /// 根据主键，查看详细信息
         /// </summary>
         /// <param name="id">根据主键</param>
         /// <returns></returns>
         [OperationContract]
-        SysField GetById(string id);    
+        SysField GetById(string id);
         /// <summary>
         /// 创建一个对象
         /// </summary>
@@ -62,7 +62,7 @@ namespace Langben.IBLL
         /// <param name="entity">一个对象</param>
         /// <returns></returns>
         [OperationContract]
-         bool Create(ref Common.ValidationErrors validationErrors, SysField entity); 
+        bool Create(ref Common.ValidationErrors validationErrors, SysField entity);
         /// <summary>
         /// 删除一个对象
         /// </summary>
@@ -86,8 +86,36 @@ namespace Langben.IBLL
         /// <param name="entity">一个对象</param>
         /// <returns></returns>
         [OperationContract]
-        bool Edit(ref Common.ValidationErrors validationErrors, SysField entity); 
-    
+        bool Edit(ref Common.ValidationErrors validationErrors, SysField entity);
+
+        /// <summary>
+        /// 获取子类集
+        /// </summary>
+        /// <param name="id">子类MyColums</param>
+        /// <param name="parentid">父类MyColums</param>
+        /// <param name="value">父类MyTexts</param>
+        /// <returns></returns>
+        [OperationContract]
+        List<SysField> GetSysFieldByParent(string id, string parentid, string value);
+
+        /// <summary>
+        /// 根据表名字段名获取集合
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="colum"></param>
+        /// <returns></returns>
+        [OperationContract]
+        List<SysField> GetSysField(string table, string colum);
+
+        /// <summary>
+        /// 根据表名获取集合
+        /// </summary>
+        /// <param name="table"></param>        
+        /// <returns></returns>
+        [OperationContract]
+        List<SysField> GetSysField(string table);
     }
+
+
 }
 

@@ -19,7 +19,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class SysFieldController : BaseController
     {
-        protected SysEntities db = new SysEntities();
+        
         /// <summary>
         /// 列表
         /// </summary>
@@ -84,10 +84,11 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public string GetSysFieldByParent(string id, string parentid, string value)
         {
-            List<SysField> list = (from c in db.SysField
-                                   join o in db.SysField on c.ParentId equals o.Id
-                                   where c.MyColums == id && o.MyColums == parentid && o.MyTexts == value
-                                   select c).ToList();
+            //List<SysField> list = (from c in db.SysField
+            //                       join o in db.SysField on c.ParentId equals o.Id
+            //                       where c.MyColums == id && o.MyColums == parentid && o.MyTexts == value
+            //                       select c).ToList();
+            List<SysField> list = m_BLL.GetSysFieldByParent(id, parentid, value);
             string strJson = string.Empty;
             JavaScriptSerializer serialize = new JavaScriptSerializer();
             strJson = serialize.Serialize(list);
@@ -102,14 +103,26 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public string GetSysField(string table, string colum)
         {
-            List<SysField> list = (from c in db.SysField                                  
-                                   where c.MyColums == colum && c.MyTables == table && c.State==StateEnums.QY
-                                   select c).ToList();
+            //List<SysField> list = (from c in db.SysField                                  
+            //                       where c.MyColums == colum && c.MyTables == table && c.State==StateEnums.QY
+            //                       select c).ToList();
+            List<SysField> list =  m_BLL.GetSysField(table, colum);
             string strJson = string.Empty;
             JavaScriptSerializer serialize = new JavaScriptSerializer();
             strJson = serialize.Serialize(list);
             return strJson;
 
+        }
+        IBLL.ISysFieldBLL m_BLL;
+
+        ValidationErrors validationErrors = new ValidationErrors();
+
+        public SysFieldController()
+            : this(new SysFieldBLL()) { }
+
+        public SysFieldController(SysFieldBLL bll)
+        {
+            m_BLL = bll;
         }
 
     }

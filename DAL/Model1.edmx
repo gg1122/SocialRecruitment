@@ -204,6 +204,7 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="CompletionPercentage" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SysAnnouncement">
           <Key>
@@ -643,6 +644,7 @@
           <NavigationProperty Name="ITAbility" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="Resume" ToRole="ITAbility" />
           <NavigationProperty Name="LanguageCompetence" Relationship="SysModel.FK_LANGUAGE_REFERENCE_RESUME" FromRole="Resume" ToRole="LanguageCompetence" />
           <NavigationProperty Name="ProjectExperience" Relationship="SysModel.FK_PROJECTE_REFERENCE_RESUME" FromRole="Resume" ToRole="ProjectExperience" />
+          <Property Name="CompletionPercentage" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SysAnnouncement">
           <Key>
@@ -1016,6 +1018,7 @@
           <EntitySetMapping Name="Resume">
             <EntityTypeMapping TypeName="SysModel.Resume">
               <MappingFragment StoreEntitySet="Resume">
+                <ScalarProperty Name="CompletionPercentage" ColumnName="CompletionPercentage" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />

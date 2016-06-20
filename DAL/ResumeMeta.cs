@@ -69,6 +69,11 @@ namespace Langben.DAL
 			[Display(Name = "时间戳", Order = 11)]
 			public object Version { get; set; }
 
+            [ScaffoldColumn(true)]
+            [Display(Name = "完整度", Order = 12)]
+            [Range(0, 2147483646, ErrorMessage = "数值超出范围")]
+            public int? CompletionPercentage { get; set; }
+
 
     }
 }

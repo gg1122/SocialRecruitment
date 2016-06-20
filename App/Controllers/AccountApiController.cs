@@ -194,7 +194,7 @@ namespace Langben.App.Controllers
                     ResumeModel.Sort = 0;
                     ResumeModel.State = StateEnums.QY;
                     ResumeModel.UpdateTime = ResumeModel.CreateTime;
-                    
+                    ResumeModel.CompletionPercentage = 0;
                     if (rBll.Create(ref validationErrors, ResumeModel))
                     {
                         LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 

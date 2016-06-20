@@ -52,6 +52,7 @@
     <Compile Include="BlogBLL.cs" />
     <Compile Include="CommentBLL.cs" />
     <Compile Include="Recruitment\CommentBLL.cs" />
+    <Compile Include="Recruitment\SysFieldBLL.cs" />
     <Compile Include="SysLogBLL.cs" />
     <Compile Include="SysNoticeBLL.cs" />
     <Compile Include="SysExceptionBLL.cs" />
