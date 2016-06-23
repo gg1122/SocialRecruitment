@@ -169,6 +169,7 @@
     <Compile Include="Models\BlogDetailsModel.cs" />
     <Compile Include="Models\Account_Resume.cs" />
     <Compile Include="Models\EmptyClass.cs" />
+    <Compile Include="Models\PreviewModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

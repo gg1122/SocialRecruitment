@@ -97,10 +97,14 @@ namespace Langben.App.Controllers
         /// <returns></returns> 
         [SupportFilter]
         public ActionResult Edit()
-        {          
-            ViewBag.Id = CurrentAccount.account.Id;            
-            DAL.Account model = m_BLL.GetById(ViewBag.Id);            
-            return View(model);
+        {
+            if (CurrentAccount != null)
+            {
+                ViewBag.Id = CurrentAccount.account.Id;
+                DAL.Account model = m_BLL.GetById(ViewBag.Id);
+                return View(model);
+            }
+            return View();
         }
         /// <summary>
         /// 编辑保存
@@ -168,6 +172,7 @@ namespace Langben.App.Controllers
                     LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + model.Id, "会员"
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
+                    result.Url = "../DegreeSchool/Index";
                     result.Message = "提交成功";
                     return Json(result); //提交成功
                 }
@@ -262,6 +267,22 @@ namespace Langben.App.Controllers
             return Json(result);
 
         }
+        /// <summary>
+        /// 预览
+        /// </summary>        
+        /// <returns></returns> 
+        [SupportFilter]
+        public ActionResult Preview()
+        {
+            PreviewModel model = null;
+            if (CurrentAccount!=null && CurrentAccount.resume!=null)
+            {
+                model = new PreviewModel();
+               
+            }           
+            return View(model);
+        }
+
         IBLL.IAccountBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();

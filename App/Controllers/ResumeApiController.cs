@@ -19,6 +19,16 @@ namespace Langben.App.Controllers
     /// </summary>
     public class ResumeApiController : BaseApiController
     {
+        ///// <summary>
+        ///// /重新计算简历完整度
+        ///// </summary>
+        ///// <returns></returns>
+        //public int CalCompletionPercentage(string Id)
+        //{
+        //    SysFieldBLL sBll = new SysFieldBLL();
+        //    List<SysField> sList =  sBll.GetSysField("Resume");
+        //    AccountBLL aBll = 
+        //}
         /// <summary>
         /// 异步加载数据
         /// </summary>
