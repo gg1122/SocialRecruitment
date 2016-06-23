@@ -158,6 +158,7 @@
     <Compile Include="Codes\SupportFilter.cs" />
     <Compile Include="Codes\SysFieldModels.cs" />
     <Compile Include="Codes\UploadFiles.cs" />
+    <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -171,7 +172,6 @@
     <Compile Include="Models\BlogDetailsModel.cs" />
     <Compile Include="Models\Account_Resume.cs" />
     <Compile Include="Models\EmptyClass.cs" />
-    <Compile Include="Models\PreviewModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -624,6 +624,7 @@
     <Content Include="Views\ITAbility\Index.cshtml" />
     <Content Include="Views\ProjectExperience\Index.cshtml" />
     <Content Include="Views\InternshipExperience\Index.cshtml" />
+    <Content Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

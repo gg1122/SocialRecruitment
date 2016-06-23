@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Langben.App.Models
+namespace Langben.DAL
 {
     /// <summary>
     /// 预览实体
@@ -21,7 +22,7 @@ namespace Langben.App.Models
         /// <summary>
         /// 学校学历
         /// </summary>
-        public Langben.DAL.DegreeSchool degreeSchool { get; set; }
+        public List<Langben.DAL.DegreeSchool> degreeSchool { get; set; }
         /// <summary>
         /// 上传
         /// </summary>
@@ -29,19 +30,20 @@ namespace Langben.App.Models
         /// <summary>
         /// 实习经验
         /// </summary>
-        public Langben.DAL.InternshipExperience internshipExperience { get; set; }
+        public List<Langben.DAL.InternshipExperience> internshipExperience { get; set; }
         /// <summary>
         /// IT技能
         /// </summary>
-        public Langben.DAL.ITAbility iTAbility { get; set; }
+        public List<Langben.DAL.ITAbility> iTAbility { get; set; }
         /// <summary>
         /// 语言能力
         /// </summary>
-        public Langben.DAL.LanguageCompetence languageCompetence { get; set; }
+        public List<Langben.DAL.LanguageCompetence> languageCompetence { get; set; }
         /// <summary>
         /// 项目经验
         /// </summary>
-        public Langben.DAL.ProjectExperience projectExperience { get; set; }
+        public List<Langben.DAL.ProjectExperience> projectExperience { get; set; }
 
     }
+
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40/">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Automated Report Generator Example</Author>
+  <Created>2016-28-12T20:05:SSZ</Created>
+  <Company>Yeesky</Company>
+  <Version>11.6408</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8955</WindowHeight>
+  <WindowWidth>11355</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>15</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font/>
+   <Interior/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="0"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="高低舱分析报表（AY）(1---12)">
+  <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="14" x:FullColumns="1"
+   x:FullRows="1">
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">年份</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">月份</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">高舱票价合计</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">低舱票价合计</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">01</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">36600.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">280380.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">02</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">239320.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">146850.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">03</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">61790.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">67420.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">04</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">160285.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">49455.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">05</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">285125.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">12570.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">06</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">160990.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">237830.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">07</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">328720.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">638540.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">08</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">109820.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">172930.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">09</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">46840.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">10</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">1700.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">11</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s21"><Data ss:Type="String">2016</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="String">12</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+<Cell ss:StyleID="s21"><Data ss:Type="Number">0.00</Data></Cell>
+</Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Print>
+    <ValidPrinterInfo/>
+     <PaperSizeIndex>1</PaperSizeIndex>
+     <HorizontalResolution>600</HorizontalResolution>
+     <VerticalResolution>600</VerticalResolution>
+    </Print>
+   <TopRowVisible>1</TopRowVisible>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

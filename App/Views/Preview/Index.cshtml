@@ -1,0 +1,284 @@
+﻿@model Langben.DAL.PreviewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Resumes.cshtml";
+}
+@using Common
+@using Models
+@section SubMenu{}
+
+<div class="col-md-12 column">
+    <ul class="breadcrumb">
+        <li><a>首页</a> </li>
+        <li class="active">简历预览</li>
+    </ul>
+    <div class="page-header">
+        <h3>个人信息 </h3>
+    </div>
+    <!--表单开始 -->
+    @if (Model != null && Model.account != null)
+    {
+        <div class="form-horizontal clearfix" style="position: relative;" id="divPersonal">
+            @if (Model.fileUploader != null && Model.fileUploader.PictureUrl!=null && Model.fileUploader.PictureUrl.Trim()!="")
+            {
+                <img id="imgPicture" src="@Model.fileUploader.PictureUrl" class="img-responsive touxiang" style="position: absolute; top: 0; right: 0; width: 220px" alt="照片">
+            }
+            else
+
+            {
+                <img id="imgPicture" src="images/4313.jpg" class="img-responsive touxiang" style="position: absolute; top: 0; right: 0; width: 220px" alt="照片">
+            }
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">姓名</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.MyName</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">性别</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.Sex</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">户口所在地</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.AnmeldenCity</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">现在所在地</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.LiveCity</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">电子邮件</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.Email</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">个人评价</label>
+                    <div class="col-xs-9 col-md-9">
+                        <p class="form-control-static">@Model.account.PersonalAssessment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!--表单开始 -->
+    <div class="page-header">
+        <h3>教育经历 <a role="button" data-toggle="collapse" href="#collapseEducation" aria-expanded="false" aria-controls="collapseEducation" class="pull-right"><span class="caret "></span></a></h3>
+    </div>
+    <!--表单开始 -->
+    <div id="collapseEducation">
+        @if (Model != null && Model.degreeSchool != null)
+        {
+            foreach (var item in Model.degreeSchool)
+            {
+                <div class="mr_jobe_list row clearfix">
+                    <div class="col-xs-8 col-md-8">
+                        <div class="l2">
+                            <h4>@item.SchoolName</h4>
+                            <span>@item.ProfessionalType2</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        @if (item.IsNow != "Y")
+                        {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
+                        }
+                        else
+                        {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — 至今</span>
+                        }
+                    </div>
+
+                </div>
+                <br />
+            }
+        }
+
+    </div>
+    <!--表单结束 -->
+    <!--表单开始 -->
+    <div class="page-header">
+        <h3>语言能力 <a role="button" data-toggle="collapse" href="#degreeSchool" aria-expanded="false" aria-controls="degreeSchool" class="pull-right"><span class="caret "></span></a></h3>
+    </div>
+    <!--表单开始 -->
+    <div id="degreeSchool">
+        @if (Model != null && Model.languageCompetence != null)
+        {
+            foreach (var item in Model.languageCompetence)
+            {
+                <div class="mr_jobe_list row clearfix">
+                    <div class="col-xs-8 col-md-8">
+                        <span>@item.Language</span>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        <span>@item.Level</span>
+                    </div>
+
+                </div>
+                <br />
+            }
+        }
+
+    </div>
+    <!--表单结束 -->
+    <!--表单开始 -->
+    <div class="page-header">
+        <h3>IT技能爱好 <a role="button" data-toggle="collapse" href="#iTAbility" aria-expanded="false" aria-controls="iTAbility" class="pull-right"><span class="caret "></span></a></h3>
+    </div>
+    <!--表单开始 -->
+    <div id="iTAbility">
+        @if (Model != null && Model.iTAbility != null)
+        {
+            foreach (var item in Model.iTAbility)
+            {
+                <div class="mr_jobe_list row clearfix">
+                    <div class="col-xs-4 col-md-4">
+                        <span>@item.Ability</span>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        <span>@item.UseTime</span>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        <span>@item.Proficiency</span>
+                    </div>
+                </div>
+                <br />
+            }
+        }
+    </div>
+    <!--表单结束 -->
+    <!--表单开始 -->
+    <div class="page-header">
+        <h3>项目经验 <a role="button" data-toggle="collapse" href="#projectExperience" aria-expanded="false" aria-controls="projectExperience" class="pull-right"><span class="caret "></span></a></h3>
+    </div>
+    <!--表单开始 -->
+    <div id="projectExperience">
+        @if (Model != null && Model.projectExperience != null)
+        {
+            foreach (var item in Model.projectExperience)
+            {
+                <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
+                    <div class="col-xs-8 col-md-8">
+                        <span>@item.ProjectName</span>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        @if (item.IsNow != "Y")
+                    {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
+                        }
+                        else
+                        {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — 至今</span>
+                        }
+                    </div>
+                </div>
+                <div class="mr_jobe_list row clearfix">
+                    <div style="float:left;margin-left:15px">
+                        <span>项目职务:</span>
+                    </div>
+                    <div class="col-xs-8 col-md-8">
+                        <span>@item.Job</span>
+                    </div>
+                </div>
+                <div class="mr_jobe_list row clearfix">
+                    <div style="float:left;margin-left:15px">
+                        <span>项目描述:</span>
+                    </div>
+
+                    <div class="col-xs-11 col-md-11" style="word-wrap:break-word;">
+                        <span>@item.ProjectDescription</span>
+                    </div>
+
+                </div>
+                <br />
+            }
+        }
+    </div>
+    <!--表单结束 -->
+    <!--表单开始 -->
+    <div class="page-header">
+        <h3>实习经验 <a role="button" data-toggle="collapse" href="#internshipExperience" aria-expanded="false" aria-controls="internshipExperience" class="pull-right"><span class="caret "></span></a></h3>
+    </div>
+    <!--表单开始 -->
+    <div id="internshipExperience">
+        @if (Model != null && Model.internshipExperience != null)
+        {
+            foreach (var item in Model.internshipExperience)
+            {
+                <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
+                    <div class="col-xs-8 col-md-8">
+                        <span>@item.CompanyName</span>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        @if (item.IsNow != "Y")
+                    {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
+                        }
+                        else
+                        {
+                            <span>@item.BeginDate.ToString("yyyy-MM-dd") — 至今</span>
+                        }
+                    </div>
+                </div>
+                <div class="mr_jobe_list row clearfix">
+                    <div style="float:left;margin-left:15px">
+                        <span>公司职务:</span>
+                    </div>
+                    <div class="col-xs-8 col-md-8">
+                        <span>@item.Job</span>
+                    </div>
+                </div>
+                <div class="mr_jobe_list row clearfix">
+                    <div style="float:left;margin-left:15px">
+                        <span>公司性质:</span>
+                    </div>
+
+                    <div class="col-xs-8 col-md-8" style="word-wrap:break-word;">
+                        <span>@item.CompanyNature</span>
+                    </div>
+
+                </div>
+                <div class="mr_jobe_list row clearfix">
+                    <div style="float:left;margin-left:15px">
+                        <span>公司规模:</span>
+                    </div>
+
+                    <div class="col-xs-8 col-md-8" style="word-wrap:break-word;">
+                        <span>@item.CompanyScale</span>
+                    </div>
+
+                </div>
+                <br />
+            }
+        }
+    </div>
+    <!--表单结束 -->
+
+
+</div>
