@@ -143,7 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Res\webuploader\" />
     <Folder Include="Scripts\My97DatePicker\" />
     <Folder Include="Upload\" />
   </ItemGroup>
@@ -186,6 +185,7 @@
     <Content Include="Content\main.css" />
     <Content Include="Content\pagerstyles.css" />
     <Content Include="Content\StyleSheet.css" />
+    <Content Include="Res\webuploader\css\Up.css" />
     <Content Include="Doc\表结构初始化.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -505,6 +505,17 @@
     <Content Include="Res\My97DatePicker\skin\whyGreen\datepicker.css" />
     <Content Include="Res\My97DatePicker\skin\whyGreen\img.gif" />
     <Content Include="Res\My97DatePicker\WdatePicker.js" />
+    <Content Include="Res\webuploader\css\webuploader.css" />
+    <Content Include="Res\webuploader\images\bg.png" />
+    <Content Include="Res\webuploader\images\icons.png" />
+    <Content Include="Res\webuploader\images\image.png" />
+    <Content Include="Res\webuploader\images\progress.png" />
+    <Content Include="Res\webuploader\images\style.css" />
+    <Content Include="Res\webuploader\images\success.png" />
+    <Content Include="Res\webuploader\js\expressInstall.swf" />
+    <Content Include="Res\webuploader\js\Uploader.swf" />
+    <Content Include="Res\webuploader\js\webuploader.min.js" />
+    <Content Include="Res\webuploader\js\webuploader.nolog.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Res\jquery.uploadify-v2.1.4\check.php" />
