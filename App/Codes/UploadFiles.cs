@@ -41,6 +41,12 @@ namespace Models
           string postfix = filename.Substring(start + 1);
           return postfix;
       }
+        /// <summary>
+        /// 保存上传的文件
+        /// </summary>
+        /// <param name="postedFile"></param>
+        /// <param name="fileName">存储的新的文件名</param>
+        /// <returns></returns>
       public string fileSaveAs(HttpPostedFileBase postedFile, string fileName)
       {
           string ramName = fileName.Substring(0, fileName.LastIndexOf('.'));
@@ -61,9 +67,9 @@ namespace Models
           }
           catch
           {
-              return "{\"jsonrpc\" : \"2.0\", \"result\" : \"上传错误\"}";
+              return "上传错误";
           }
-          return "{\"jsonrpc\" : \"" + ramName + "\", \"result\" : \"" + serverFileName + "\"}";
+          return  serverFileName;
       }
   
         /// <summary>

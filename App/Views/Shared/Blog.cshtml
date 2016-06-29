@@ -31,20 +31,20 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <!-- logo -->
                 <a href="http://www.langben.com/">
                     <img class="logo" src="~/images/logo.png" alt="" style="width: 207px;" />
                 </a>
             </div>
-            <div  class="col-md-3" style="float:right"> 
-                <h3>
-                     
-                    <a href="~/Account/Edit" style="margin-right:20px;" id="aTopPersonalInformation">个人资料</a>
+            
+            <div class="col-md-4">
+                <h3 style="float:right;">
                     <a href="~/Account/Login" style="margin-right:20px;" id="aTopLogin">登录</a>
-                    <a href="~/Account/Register" id="aTopRegister">注册</a>
+                    <a href="~/Account/Register" id="aTopRegister">注册</a> 
+                    <a href="~/SysNotice" style="margin-right:20px;" id="aTopNotice">我的消息</a>
+                    <a href="~/Preview" id="aTopPersonalInformation">个人资料</a>
                 </h3>
-
             </div>
         </div>
         <div class="container" style="min-height: 500px">
@@ -72,9 +72,9 @@
     $(function () {
         
         var YesHideIDList =["#aTopLogin","#aTopRegister"];//已登录隐藏控件
-        var YesShowIDList = ["#aTopHomePage","#aTopPersonalInformation"];//已登录显示控件
-        var NoHideIDList = ["#aTopPersonalInformation"];//未登录隐藏控件
-        var NoShowIDList = ["#aTopHomePage","#aTopLogin", "#aTopRegister"];//未登录显示控件
+        var YesShowIDList = ["#aTopNotice", "#aTopPersonalInformation"];//已登录显示控件
+        var NoHideIDList = YesShowIDList;//未登录隐藏控件
+        var NoShowIDList = YesHideIDList;//未登录显示控件
        
         //控制页头控件
         TopBtnHideShow(YesHideIDList, YesShowIDList, NoHideIDList, NoShowIDList);

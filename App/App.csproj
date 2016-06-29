@@ -161,7 +161,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SysExceptionController.cs" />
     <Compile Include="Controllers\SysFieldController.cs" />
+    <Compile Include="Controllers\SysLogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

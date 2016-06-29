@@ -5,15 +5,14 @@
     Layout = "~/Views/Shared/Personal.cshtml";
 }
 <div class="col-md-9 column">
-    <ul class="breadcrumb">
-        <li><a>首页</a> </li>
-        <li class="active">IT技能爱好 </li>
-    </ul>
+    <h4 class="breadcrumb">
+        撩妹
+    </h4> 
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
         <tr id="trTitle">
             <th>序号</th>
-            <th>IT技能</th>
+            <th>技能</th>
             <th>使用时间</th>
             <th>熟练程度</th>
             <th>操作</th>
@@ -76,16 +75,16 @@
 
         <hr>
         <div class="form-group" id="divAddOp" style="display:none">
-            <div class="col-sm-offset-3 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
-                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Create');" />
+                <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Create');" />
                 <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience/Index')" value="下一步" />
             </div>
         </div>
         <div class="form-group" id="divEditOp" style="display:none">
-            <div class="col-sm-offset-3 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
-                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Edit');" />
+                <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Edit');" />
                 <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience/Index')" value="下一步" />
             </div>
         </div>

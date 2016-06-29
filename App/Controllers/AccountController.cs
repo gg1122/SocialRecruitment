@@ -172,7 +172,7 @@ namespace Langben.App.Controllers
                     LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + model.Id, "会员"
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
-                    result.Url = "../DegreeSchool/Index";
+                    result.Url = "../DegreeSchool";
                     result.Message = "提交成功";
                     return Json(result); //提交成功
                 }

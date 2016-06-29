@@ -6,10 +6,9 @@
 }
 
 <div class="col-md-9 column">
-    <ul class="breadcrumb">
-        <li><a>首页</a> </li>
-        <li class="active">实习经验</li>
-    </ul>
+    <h4 class="breadcrumb">     
+        实习的生活其实只有苟且！
+    </h4>
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
         <tr id="trTitle">
@@ -27,14 +26,12 @@
             <td id="tdCompanyName">浪奔 </td>
             <td id="tdJob"> 架构师 </td>
             <td><a href="#" id="aEdit" class="btn btn-link btn-xs " title="编辑"><i class="fa fa-pencil-square-o"></i><span class="sr-only">编辑</span></a> | <a id="aDelete" href="#" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a></td>
-
-
         </tr>
 
     </table>
     <p>
         <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
-        <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" id="divNoOp" />
+        <input class="btn btn-primary" type="button" onclick="BackList('/FileUploader')" value="下一步" id="divNoOp" />
     </p>
     <div class="form-horizontal" role="form" id="divEdit" style="display:none">
         <input type="hidden" id="hideID" value="" /><!--编号-->
@@ -103,17 +100,17 @@
         </div>
         <hr>
         <div class="form-group" id="divAddOp" style="display:none">
-            <div class="col-sm-offset-3 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
-                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Create');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Create');" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/FileUploader')" value="下一步" />
             </div>
         </div>
         <div class="form-group" id="divEditOp" style="display:none">
-            <div class="col-sm-offset-3 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
-                <input class="btn btn-primary" type="submit" value="保存跳转下一步" onclick="Save('Y','Edit');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Edit');" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/FileUploader')" value="下一步" />
             </div>
         </div>
     </div>
@@ -186,6 +183,7 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                debugger;
                 alert("获取数据失败");
             }
         });
@@ -302,7 +300,7 @@
                     if (data.Code == 1) {//成功
                         alert("操作成功");
                         if (IsNext == "Y") {
-                            window.location.href = "/InternshipExperience/Index";
+                            window.location.href = "/FileUploader";
                         }
                         else {
                             GetList();
