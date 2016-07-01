@@ -10,8 +10,15 @@
 
 <div class="col-md-12 column">
     <ul class="breadcrumb">
+
+
         <li><a>首页</a> </li>
+
         <li class="active">简历预览</li>
+        @if (Model != null && Model.resume != null)
+        {
+            <li><a>完整度：@Model.resume.CompletionPercentage %</a> </li>
+        }
     </ul>
     <div class="page-header">
         <h3>个人信息 <small><a href="~/Account/Edit">编辑个人信息</a></small></h3>
@@ -20,7 +27,7 @@
     @if (Model != null && Model.account != null)
     {
         <div class="form-horizontal clearfix" style="position: relative;" id="divPersonal">
-         
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="col-xs-3 control-label">姓名</label>
