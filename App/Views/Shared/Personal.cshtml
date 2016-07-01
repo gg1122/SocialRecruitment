@@ -6,17 +6,34 @@
 
 <div class="col-md-3 column visible-md visible-lg ">
     <ul class="nav nav-pills nav-stacked pinned" role="tablist" id="menuList" >
-        <li id="liPersonalInformation" ><a href="~/Account/Edit">个人信息</a></li>
-        <li id="liDegreeSchool" ><a href="~/DegreeSchool">秀才学堂</a></li>
-        <li id="liLanguageCompetence" ><a href="/LanguageCompetence">语言能力</a></li>
+        <li id="liEdit" ><a href="~/Account/Edit">个人信息 *</a></li>
+        <li id="liDegreeSchool" ><a href="~/DegreeSchool">秀才学堂 *</a></li>
+        <li id="liLanguageCompetence" ><a href="/LanguageCompetence">语言能力 *</a></li>
         <!--<li id="liRewardsEvent" ><a href="">奖励、活动</a></li>-->
-        <li id="liITAbility" ><a href="/ITAbility">技能爱好</a></li>
-        <li id="liProjectExperience" ><a href="/ProjectExperience">项目经验</a></li>
+        <li id="liITAbility" ><a href="/ITAbility">技能爱好 *</a></li>
+        <li id="liProjectExperience" ><a href="/ProjectExperience">项目经验 *</a></li>
         <li id="liInternshipExperience" ><a href="/InternshipExperience">实习经验</a></li>
         <!--<li id="liFamilyMember" ><a href="/FamilyMember/Index">家庭成员</a></li>-->
         <li id="liUploadFiles" ><a href="~/FileUploader">上传简历</a></li>
-     </ul>
+     </ul>    
 </div>
     }
+<script type="text/javascript">
+        $(document).ready(function () {
+            //$("#menuList li").click(function () {
+            //    $("menuList li").removeClass("active"); //Remove any "active" class
+            //    $(this).addClass("active"); //Add "active" class to selected tab
+            //});
+            var urls = window.location.href.split('/');
+            if(urls!=null)
+            {
+                var liID = "li" + urls[urls.length - 1];                   
+                $("menuList li").removeClass("active"); //Remove any "active" class
+                $("#" + liID).addClass("active");
+
+
+            }
+        });
+</script>
 
 
