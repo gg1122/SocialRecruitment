@@ -45,14 +45,11 @@
             <ol class="comment-list">
                 @foreach (var item in Model.Comment.OrderByDescending(o=>o.CreateTime))
                 {
-                    if (string.IsNullOrEmpty(item.MyPicture))
-                    {
-                        item.MyPicture = "../images/thumb-1.jpg";
-                    }
+                    
                     <li>
                         <article>
                             <footer>
-                                <img class="img-rounded img-responsive" src="@item.MyPicture" alt="" />
+                               
                                 <cite><a href="#">@item.CreatePerson</a></cite>
                                 <div class="comment-meta">
                                     <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
@@ -72,12 +69,7 @@
     </div>
 
     <div class="col-md-3">
-        <aside>
-            <h3>砖头</h3>
-            <a href="#">搜才代码生成器</a>
-            <a style="font-size: 1.2em" href="#">权限管理系统</a>
-            <a style="font-size: 1.3em" href="#">MVC架构</a>
-        </aside>
+       
 
         <aside>
             <h3>码农有话说</h3>
@@ -103,7 +95,7 @@
             dataType: "json",
             success: function (data) {
                
-                var comment = '<li> <article><footer> <img class="img-rounded img-responsive" src="' + "../images/thumb-1.jpg" + '" alt="" /><cite><a href="#">item.CreatePerson</a></cite> <div class="comment-meta"><time pubdate="" datetime="2012-08-06T00:18:45+00:00">' + new Date("yyyy年MM月dd日").toString()  + '</time> <a class="comment-reply" href="#">彩（0）</a> </div> </footer><div class="comment-content">'
+                var comment = '<li> <article><footer> <cite><a href="#">item.CreatePerson</a></cite> <div class="comment-meta"><time pubdate="" datetime="2012-08-06T00:18:45+00:00">' + new Date("yyyy年MM月dd日").toString()  + '</time> <a class="comment-reply" href="#">彩（0）</a> </div> </footer><div class="comment-content">'
                                + Content +"</div> </article> </li>";
                 $(".comment-list").prepend(comment);
 
@@ -125,7 +117,7 @@
             data:  "id=" + id,
            
             success: function (data) {
-                alert("出彩！");
+                alert("待审核！");
 
             },
             error: function (data) {

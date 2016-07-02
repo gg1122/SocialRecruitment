@@ -6,18 +6,24 @@
 
 <div class="col-md-3 column visible-md visible-lg ">
     <ul class="nav nav-pills nav-stacked pinned" role="tablist" id="menuList" >
-        <li id="liEdit" ><a href="~/Account/Edit">个人信息 *</a></li>
-        <li id="liDegreeSchool" ><a href="~/DegreeSchool">秀才学堂 *</a></li>
-        <li id="liLanguageCompetence" ><a href="/LanguageCompetence">语言能力 *</a></li>
+        <li id="liEdit" ><a href="~/Person">个人信息 <span class="menuRequired">*</span></a></li>
+        <li id="liDegreeSchool" ><a href="~/DegreeSchool">秀才学堂<span class="menuRequired">*</span></a></li>
+        <li id="liLanguageCompetence" ><a href="/LanguageCompetence">语言能力<span class="menuRequired">*</span></a></li>
         <!--<li id="liRewardsEvent" ><a href="">奖励、活动</a></li>-->
-        <li id="liITAbility" ><a href="/ITAbility">技能爱好 *</a></li>
-        <li id="liProjectExperience" ><a href="/ProjectExperience">项目经验 *</a></li>
-        <li id="liInternshipExperience" ><a href="/InternshipExperience">实习经验</a></li>
+        <li id="liITAbility" ><a href="/ITAbility">技能爱好<span class="menuRequired">*</span></a></li>
+        <li id="liProjectExperience" ><a href="/ProjectExperience">项目经验<span class="menuRequired">*</span></a></li>
+        <li id="liInternshipExperience" ><a href="/InternshipExperience">实习经验<span class="menuRequired">*</span></a></li>
         <!--<li id="liFamilyMember" ><a href="/FamilyMember/Index">家庭成员</a></li>-->
         <li id="liUploadFiles" ><a href="~/FileUploader">上传简历</a></li>
      </ul>    
 </div>
     }
+<style>
+     .menuRequired {
+    color: #e02222;
+    font-size: 15px;
+}
+</style>
 <script type="text/javascript">
         $(document).ready(function () {
             //$("#menuList li").click(function () {

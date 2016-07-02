@@ -17,7 +17,14 @@
                     </div>
                     <p>请拖一份简历到碗里来</p>
                 </div>
-                <ul class="filelist"></ul>
+                <ul class="filelist">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <li>@item.ResumeUrl</li>
+                    }
+                }</ul>
             </div>
             <div style="display:none;" class="statusBar">
 
@@ -30,13 +37,7 @@
     </div>
 
 </div>
-@if (Model != null && Model.Count() > 0)
-{
-    foreach (var item in Model)
-    {
-        <p>@item.ResumeUrl</p>
-    }
-}
+
 
 <link href="~/Res/webuploader/css/Up.css" rel="stylesheet" />
 

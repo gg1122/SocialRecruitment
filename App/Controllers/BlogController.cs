@@ -33,12 +33,12 @@ namespace Langben.App.Controllers
             int pageSize = 10;
             int total = 0;
             StringBuilder search = new StringBuilder();
-            search.AppendFormat("State{0}&{1}", ArgEnums.DDL_String,StateEnums.QY);   
-            List<Blog> list = m_BLL.GetByParam(null, pIndex, pageSize, "desc", "CreateTime", search.ToString(), ref total);           
+            search.AppendFormat("State{0}&{1}", ArgEnums.DDL_String, StateEnums.QY);
+            List<Blog> list = m_BLL.GetByParam(null, pIndex, pageSize, "desc", "CreateTime", search.ToString(), ref total);
             var model = new PagedList<Blog>(list, pIndex, pageSize, total);
             return View(model);
         }
-         /// <summary>
+        /// <summary>
         /// 列表
         /// </summary>
         /// <returns></returns>
@@ -53,29 +53,22 @@ namespace Langben.App.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [SupportFilter]  
-        public ActionResult Details(string id,string Op)
+        [SupportFilter]
+        public ActionResult Details(string id)
         {
-             
+
             var blog = m_BLL.GetById(id);
-            
-            if (Op == "Read" && blog!=null)//浏览
-            {
-                try
-                {
-                    if(blog.ReadNumber==null)
+
+            if (blog != null)//浏览
+            { 
+                    if (blog.ReadNumber == null)
                     {
                         blog.ReadNumber = 0;
                     }
                     blog.ReadNumber++;
                     ValidationErrors err = new ValidationErrors();
                     m_BLL.Edit(ref err, blog);
-                }
-                catch(Exception ex)
-                {
-
-                }
-
+                
             }
             return View(blog);
             /* 原来的代码，增加blog和comment外键之后
@@ -113,8 +106,8 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         [SupportFilter]
         public ActionResult Create(string id)
-        { 
-            
+        {
+
             return View();
         }
 
@@ -123,13 +116,13 @@ namespace Langben.App.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns> 
-        [SupportFilter] 
+        [SupportFilter]
         public ActionResult Edit(string id)
         {
             ViewBag.Id = id;
             return View();
         }
-        IBLL.IBlogBLL m_BLL;        
+        IBLL.IBlogBLL m_BLL;
         public BlogController()
             : this(new BlogBLL()) { }
 

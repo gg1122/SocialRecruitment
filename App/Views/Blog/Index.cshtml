@@ -10,7 +10,7 @@
     {
         <div class="row">
             <div class="col-md-3">
-                <a href="/Blog/Details?Op=Read&ID=@item.Id">
+                <a href="/Blog/Details/@item.Id">
                     @if(string.IsNullOrEmpty(item.Picture))
                     {
                        item.Picture="../images/portfolio_2_column_img_01.jpg";
@@ -30,7 +30,7 @@
 
             <div class="col-md-9">
                 <div class="portofolio-imageGridTitle">
-                    <h3><a href="/Blog/Details?Op=Read&ID=@item.Id">@item.Title</a></h3>
+                    <h3><a href="/Blog/Details/@item.Id">@item.Title</a></h3>
                 </div>
                 <div class="portofolio-projectMeta">
                     @item.CreateTime.Value.ToString("yyyy年MM月dd日") 发榜，围观：@item.ReadNumber，评论：@item.CommentNumber
