@@ -23,11 +23,11 @@
 
     //登录
     function Login() {
-        
+
         var Name = $("#txtName").val();
         var Pwd = $("#txtPwd").val();
         if (trimStr(Name) == "") {
-            alert("请输入绰号|邮箱|手机号");
+            alert("请输入邮箱|手机号");
             $("#txtName").focus();
             return;
 
@@ -37,11 +37,11 @@
             $("#txtPwd").focus();
             return;
         }
-      
+
         $.ajax({
-            url: "/Account/LoginGo",
+            url: "/Login/Go",
             type: "post",
-            dataType: "json",
+      
             data: { "Name": Name, "Pwd":Pwd},
             success: function (data) {
                 if (data.Code==1) {//成功
@@ -50,7 +50,7 @@
                     }
                     else
                     {
-                        window.location.href = "../Blog/Index";
+                        window.location.href = "../Blog";
                     }
                 }
                 else {//失败
