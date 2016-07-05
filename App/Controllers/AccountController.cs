@@ -16,15 +16,15 @@ namespace Langben.App.Controllers
         /// 是否登录
         /// </summary>
         /// <returns></returns>
-        public string GetIsLogining()
+        public ActionResult GetIsLogining()
         {
             if (CurrentAccount != null)
             {
-                return "Y";
+                return Content("Y");
             }
             else
             {
-                return "N";
+                return Content("N");
             }
         }
     }
