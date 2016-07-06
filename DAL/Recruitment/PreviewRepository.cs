@@ -18,23 +18,19 @@ namespace Langben.DAL
         /// <param name="ResumeId">简历ID</param>
         public PreviewModel GetPreviewInfo(SysEntities db, string ResumeId)
         {
-            PreviewModel model = new PreviewModel();
-
-            model.account = (from c in db.Account
-                             join o in db.Resume on c.Id equals o.AccountId
-                             where o.Id == ResumeId
-                             select c).FirstOrDefault();
-
-            model.resume = (from r in db.Resume.Include("DegreeSchool")
-                            .Include("LanguageCompetence")
-                            .Include("ITAbility")
-                            .Include("ProjectExperience")
-                            .Include("InternshipExperience")
 
 
-                            where r.Id == ResumeId
-                            select r).FirstOrDefault();
-            return model;
+            return (from r in db.Resume.Include("DegreeSchool")
+                               .Include("LanguageCompetence")
+                               .Include("ITAbility")
+                               .Include("ProjectExperience")
+                               .Include("InternshipExperience")
+
+
+                    join a in db.Account on r.AccountId equals a.Id
+                    where r.Id == ResumeId
+                    select new PreviewModel() { account = a, resume = r }).FirstOrDefault();
+
         }
         /// <summary>
         /// 获取简历预览信息
@@ -43,22 +39,18 @@ namespace Langben.DAL
         /// <param name="accountId">人员ID</param>
         public PreviewModel GetPreviewInfoByAccountId(SysEntities db, string accountId)
         {
-            PreviewModel model = new PreviewModel();
+            return (from r in db.Resume.Include("DegreeSchool")
+                   .Include("LanguageCompetence")
+                   .Include("ITAbility")
+                   .Include("ProjectExperience")
+                   .Include("InternshipExperience")
 
-            model.account = (from c in db.Account
-                             where c.Id == accountId
-                             select c).FirstOrDefault();
 
-            model.resume = (from r in db.Resume.Include("DegreeSchool")
-                            .Include("LanguageCompetence")
-                            .Include("ITAbility")
-                            .Include("ProjectExperience")
-                            .Include("InternshipExperience")
+                    join a in db.Account on r.AccountId equals a.Id
+                    where a.Id == accountId
+                    select new PreviewModel() { account = a, resume = r }).FirstOrDefault();
 
-                            where r.AccountId == accountId
-                            select r).FirstOrDefault();
 
-            return model;
         }
     }
 }
