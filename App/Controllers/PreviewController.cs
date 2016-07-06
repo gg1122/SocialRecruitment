@@ -45,7 +45,7 @@ namespace Langben.App.Controllers
             Langben.DAL.PreviewModel model = null;
             if (!string.IsNullOrWhiteSpace(id))
             {
-                model = m_BLL.GetPreviewInfo(id);
+                model = m_BLL.GetPreviewInfoByAccountId(id);
 
             }
             return View(model);

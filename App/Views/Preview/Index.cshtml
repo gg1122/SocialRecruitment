@@ -90,10 +90,10 @@
     </div>
     <!--表单开始 -->
     <div id="collapseEducation">
-        @if (Model != null && Model.degreeSchool != null)
-        {
-            foreach (var item in Model.degreeSchool)
-            {
+@if (Model != null && Model.resume != null && Model.resume.DegreeSchool != null)
+{
+    foreach (var item in Model.resume.DegreeSchool)
+    {
                 <div class="mr_jobe_list row clearfix">
                     <div class="col-xs-8 col-md-8">
                         <div class="l2">
@@ -128,10 +128,10 @@
     </div>
     <!--表单开始 -->
     <div id="degreeSchool">
-        @if (Model != null && Model.languageCompetence != null)
-        {
-            foreach (var item in Model.languageCompetence)
-            {
+@if (Model != null && Model.resume != null && Model.resume.LanguageCompetence != null)
+{
+    foreach (var item in Model.resume.LanguageCompetence)
+    {
                 <div class="mr_jobe_list row clearfix">
                     <div class="col-xs-8 col-md-8">
                         <span>@item.Language</span>
@@ -156,10 +156,10 @@
     </div>
     <!--表单开始 -->
     <div id="iTAbility">
-        @if (Model != null && Model.iTAbility != null)
-        {
-            foreach (var item in Model.iTAbility)
-            {
+@if (Model != null && Model.resume != null && Model.resume.ITAbility != null)
+{
+    foreach (var item in Model.resume.ITAbility)
+    {
                 <div class="mr_jobe_list row clearfix">
                     <div class="col-xs-4 col-md-4">
                         <span>@item.Ability</span>
@@ -185,10 +185,10 @@
     </div>
     <!--表单开始 -->
     <div id="projectExperience">
-        @if (Model != null && Model.projectExperience != null)
-        {
-            foreach (var item in Model.projectExperience)
-            {
+@if (Model != null && Model.resume != null && Model.resume.ProjectExperience != null)
+{
+    foreach (var item in Model.resume.ProjectExperience)
+    {
                 <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
                     <div class="col-xs-8 col-md-8">
                         <span>@item.ProjectName</span>
@@ -236,10 +236,10 @@
     </div>
     <!--表单开始 -->
     <div id="internshipExperience">
-        @if (Model != null && Model.internshipExperience != null)
-        {
-            foreach (var item in Model.internshipExperience)
-            {
+@if (Model != null && Model.resume != null && Model.resume.InternshipExperience != null)
+{
+    foreach (var item in Model.resume.InternshipExperience)
+    {
                 <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
                     <div class="col-xs-8 col-md-8">
                         <span>@item.CompanyName</span>

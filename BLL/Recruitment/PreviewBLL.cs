@@ -44,6 +44,23 @@ namespace Langben.BLL
             }
 
         }
+        /// <summary>
+        /// 获取简历预览信息
+        /// </summary>       
+        /// <param name="accountId">用户ID</param>
+        public PreviewModel GetPreviewInfoByAccountId(string accountId)
+        {
+            try
+            {
+                PreviewModel model = repository.GetPreviewInfoByAccountId(db, accountId);
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
         public void Dispose()
         {
 

@@ -18,5 +18,12 @@ namespace Langben.IBLL
         /// <param name="ResumeId">简历ID</param>        
         [OperationContract]
         PreviewModel GetPreviewInfo(string ResumeId);
+        /// <summary>
+        /// 获取简历预览信息
+        /// </summary>
+        /// <param name="db">数据访问</param>
+        /// <param name="accountId">用户ID</param>        
+        [OperationContract]
+        PreviewModel GetPreviewInfoByAccountId(string accountId);
     }  
 }

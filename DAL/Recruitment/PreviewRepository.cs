@@ -23,64 +23,41 @@ namespace Langben.DAL
             model.account = (from c in db.Account
                              join o in db.Resume on c.Id equals o.AccountId
                              where o.Id == ResumeId
-                             select c).FirstOrDefault();            
-            model.degreeSchool = (from c in db.DegreeSchool                                 
-                             where c.ResumeId == ResumeId
-                             select c).ToList();
-            model.fileUploader = (from c in db.FileUploader
-                                  where c.ResumeId == ResumeId
-                                  select c).FirstOrDefault();
-            model.internshipExperience = (from c in db.InternshipExperience
-                                          where c.ResumeId == ResumeId
-                                  select c).ToList();
-            model.iTAbility = (from c in db.ITAbility
-                               where c.ResumeId == ResumeId
-                                          select c).ToList();
-            model.languageCompetence = (from c in db.LanguageCompetence
-                                        where c.ResumeId == ResumeId
-                               select c).ToList();
-            model.projectExperience = (from c in db.ProjectExperience
-                                       where c.ResumeId == ResumeId
-                                        select c).ToList();
-            model.resume = (from c in db.Resume
-                            where c.Id == ResumeId
-                                       select c).FirstOrDefault();
+                             select c).FirstOrDefault();
+
+            model.resume = (from r in db.Resume.Include("DegreeSchool")
+                            .Include("LanguageCompetence")
+                            .Include("ITAbility")
+                            .Include("ProjectExperience")
+                            .Include("InternshipExperience")
+
+
+                            where r.Id == ResumeId
+                            select r).FirstOrDefault();
             return model;
         }
         /// <summary>
         /// 获取简历预览信息
         /// </summary>
         /// <param name="db">数据访问</param>
-        /// <param name="ResumeId">人员ID</param>
-        public PreviewModel GetPreviewInfo(SysEntities db, string AccountId)
+        /// <param name="accountId">人员ID</param>
+        public PreviewModel GetPreviewInfoByAccountId(SysEntities db, string accountId)
         {
             PreviewModel model = new PreviewModel();
 
             model.account = (from c in db.Account
-                             join o in db.Resume on c.Id equals o.AccountId
-                             where o.Id == ResumeId
+                             where c.Id == accountId
                              select c).FirstOrDefault();
-            model.degreeSchool = (from c in db.DegreeSchool
-                                  where c.ResumeId == ResumeId
-                                  select c).ToList();
-            model.fileUploader = (from c in db.FileUploader
-                                  where c.ResumeId == ResumeId
-                                  select c).FirstOrDefault();
-            model.internshipExperience = (from c in db.InternshipExperience
-                                          where c.ResumeId == ResumeId
-                                          select c).ToList();
-            model.iTAbility = (from c in db.ITAbility
-                               where c.ResumeId == ResumeId
-                               select c).ToList();
-            model.languageCompetence = (from c in db.LanguageCompetence
-                                        where c.ResumeId == ResumeId
-                                        select c).ToList();
-            model.projectExperience = (from c in db.ProjectExperience
-                                       where c.ResumeId == ResumeId
-                                       select c).ToList();
-            model.resume = (from c in db.Resume
-                            where c.Id == ResumeId
-                            select c).FirstOrDefault();
+
+            model.resume = (from r in db.Resume.Include("DegreeSchool")
+                            .Include("LanguageCompetence")
+                            .Include("ITAbility")
+                            .Include("ProjectExperience")
+                            .Include("InternshipExperience")
+
+                            where r.AccountId == accountId
+                            select r).FirstOrDefault();
+
             return model;
         }
     }
