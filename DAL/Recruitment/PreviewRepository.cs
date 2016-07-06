@@ -47,7 +47,7 @@ namespace Langben.DAL
 
 
                     join a in db.Account on r.AccountId equals a.Id
-                    where a.Id == accountId
+                    where r.AccountId == accountId
                     select new PreviewModel() { account = a, resume = r }).FirstOrDefault();
 
 
