@@ -47,7 +47,7 @@
         <input type="hidden" id="hideCreateTime" value="" /><!--创建时间-->
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
-            <label class="col-sm-3 control-label">开始日期<span class="required">* </span></label>
+            <label class="col-sm-3 control-label">开始日期<span class="required">*</span></label>
             <div class=" col-sm-5">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtBeginDate" onclick="WdatePicker()" />
@@ -68,7 +68,7 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">学校</label>
+            <label class="col-sm-3 control-label">学校<span class="required">*</span></label>
             <div class="col-sm-5">
 
                 <select class="form-control  input-inline" id="ddlSchoolArea" style="max-width:105px">
@@ -83,7 +83,7 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">专业</label>
+            <label class="col-sm-3 control-label">专业<span class="required">*</span></label>
             <div class="col-sm-5">
                 <select class="form-control  input-inline" id="ddlProfessionalType1" style="max-width:105px">
                     <option>请选择</option>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">学历</label>
+            <label class="col-sm-3 control-label">学历<span class="required">*</span></label>
             <div class="col-sm-5">
                 <select class="form-control input-inline" id="ddlEducation">
                     <option value="10">无</option>
@@ -112,7 +112,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">学位<span class="required"> </span></label>
+            <label class="col-sm-3 control-label">学位<span class="required">*</span></label>
             <div class="col-sm-9">
                 <select class="form-control  input-inline" id="ddlDegree">
                     <option value="">请选择</option>
@@ -263,6 +263,24 @@
         if (trimStr(EndDate) == "" && IsNow == "undefined") {
             Message += "结束日期不能为空\n\r";
         }
+      
+        var SchoolName = $("#ddlSchoolName").val();
+        if (trimStr(SchoolName) == "") {
+            Message += "学校不能为空\n\r";
+        }
+        var ProfessionalType2 = $("#ddlProfessionalType2").val();
+        if (trimStr(ProfessionalType2) == "") {
+            Message += "专业不能为空\n\r";
+        }
+        var Education = $("#ddlEducation").val();
+        if (trimStr(Education) == "") {
+            Message += "学历不能为空\n\r";
+        }
+        var Degree = $("#ddlDegree").val();
+        if (trimStr(Degree) == "") {
+            Message += "学位不能为空\n\r";
+        }
+
         if (Message != "") {
             alert(Message);
             return false;

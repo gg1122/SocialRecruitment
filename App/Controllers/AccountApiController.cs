@@ -91,8 +91,102 @@ namespace Langben.App.Controllers
             result.Message = Suggestion.InsertFail + "，请核对输入的数据的格式"; //提示输入的数据的格式不对 
             return result;
         }
+        /// <summary>
+        /// 编辑
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>  
+        public Common.ClientResult.Result Edit([FromBody]DAL.Account entity)
+        {
 
-     
+            Common.ClientResult.Result result = new Common.ClientResult.Result();
+            if (entity != null)
+            {
+                if (entity.MyName == null || entity.MyName.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "姓名不能为空";
+                    return result; //提示失败
+                }
+                if (entity.Sex == null || entity.Sex.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "性别不能为空";
+                    return result; //提示失败
+                }
+                if (entity.AnmeldenCity == null || entity.AnmeldenCity.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "户口所在地不能为空";
+                    return result; //提示失败
+                }
+                if (entity.LiveCity == null || entity.LiveCity.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "现在所在地不能为空";
+                    return result; //提示失败
+                }
+                if (entity.PersonalAssessment == null || entity.PersonalAssessment.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "个人评价不能为空";
+                    return result; //提示失败
+                }
+                if (entity.PersonalAssessment == null || entity.PersonalAssessment.Trim() == "")
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "个人评价不能为空";
+                    return result; //提示失败
+                }
+                if (CurrentAccount == null)
+                {
+                    return null;
+                }
+                DAL.Account model = m_BLL.GetById(CurrentAccount.account.Id);
+                model.AnmeldenCity = entity.AnmeldenCity;
+                model.AnmeldenProvince = entity.AnmeldenProvince;
+                model.Email = entity.Email;
+                model.LiveCity = entity.LiveCity;
+                model.LiveProvince = entity.LiveProvince;
+                model.MyName = entity.MyName;
+                model.PersonalAssessment = entity.PersonalAssessment;
+                model.Sex = entity.Sex;
+                model.UpdatePerson = CurrentPerson;
+                model.UpdateTime = DateTime.Now;
+                string returnValue = string.Empty;
+                if (m_BLL.Edit(ref validationErrors, model))
+                {
+                    LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + model.Id, "会员"
+                        );//写入日志 
+                    result.Code = Common.ClientCode.Succeed;
+                    result.Message = "提交成功";
+                    CurrentAccount.account = model;//重新设置Session
+                    result.Url = "/DegreeSchool/Index";
+                    return result; //提交成功
+                }
+                else
+                {
+                    if (validationErrors != null && validationErrors.Count > 0)
+                    {
+                        validationErrors.All(a =>
+                        {
+                            returnValue += a.ErrorMessage;
+                            return true;
+                        });
+                    }
+                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，会员的信息，" + returnValue, "会员"
+                        );//写入日志                      
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = Suggestion.UpdateFail + returnValue;
+                    return result; //提示插入失败
+                }
+            }
+
+            result.Code = Common.ClientCode.FindNull;
+            result.Message = Suggestion.UpdateFail + "，请核对输入的数据的格式"; //提示输入的数据的格式不对 
+            return result;
+        }
+
         IBLL.IAccountBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();

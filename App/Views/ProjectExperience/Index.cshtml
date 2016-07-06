@@ -206,7 +206,12 @@
         }
         if (trimStr(Job) == "") {
             Message += "职务不能为空\n\r";
-        }       
+        }
+        var ProjectDescription = $("#txtProjectDescription").val();
+        if (trimStr(ProjectDescription) == "") {
+            Message += "项目描述不能为空\n\r";
+        }
+        
         if (Message != "") {
             alert(Message);
             return false;
