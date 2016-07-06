@@ -146,6 +146,7 @@
     <Folder Include="Scripts\My97DatePicker\" />
     <Folder Include="Upload\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Default1\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

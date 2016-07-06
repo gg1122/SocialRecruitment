@@ -40,10 +40,18 @@
             
             <div class="col-md-4">
                 <h3 style="float:right;">
-                    <a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a>
-                    <a href="~/Register" id="aTopRegister">注册</a> 
-                    <a href="~/SysNotice" style="margin-right:20px;" id="aTopNotice">我的消息</a>
-                    <a href="~/Preview" id="aTopPersonalInformation">个人资料</a>
+                    @if (Session["account"] == null)
+                    {
+                        <a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a>
+                        <a href="~/Register" id="aTopRegister">注册</a>
+                    }
+                    else
+                    {
+
+                        <a href="~/SysNotice" style="margin-right:20px;" id="aTopNotice">我的消息</a>
+                        <a href="~/Preview" id="aTopPersonalInformation">个人资料</a>
+                    }
+               
                 </h3>
             </div>
         </div>
@@ -70,16 +78,7 @@
 </html>
 <script type="text/javascript">
     $(function () {
-        
-        var YesHideIDList =["#aTopLogin","#aTopRegister"];//已登录隐藏控件
-        var YesShowIDList = ["#aTopNotice", "#aTopPersonalInformation"];//已登录显示控件
-        var NoHideIDList = YesShowIDList;//未登录隐藏控件
-        var NoShowIDList = YesHideIDList;//未登录显示控件
-       
-        //控制页头控件
-        TopBtnHideShow(YesHideIDList, YesShowIDList, NoHideIDList, NoShowIDList);
-
-
+      
 
     });
   
