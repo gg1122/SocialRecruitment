@@ -34,7 +34,7 @@ namespace Langben.App.Controllers
 
                 FileUploader entity = new FileUploader();
                 entity.ResumeId = CurrentAccount.resume.Id;
-                string currentPerson = GetCurrentPerson();
+                string currentPerson = this.CurrentPerson;
                 entity.CreateTime = DateTime.Now;
                 entity.CreatePerson = currentPerson;
 

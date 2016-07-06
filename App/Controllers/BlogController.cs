@@ -20,7 +20,7 @@ namespace Langben.App.Controllers
     {
 
         /// <summary>
-        /// 列表
+        /// 首页
         /// </summary>
         /// <returns></returns>
         [SupportFilter]
@@ -41,16 +41,20 @@ namespace Langben.App.Controllers
         
 
         /// <summary>
-        /// 查看详细
+        /// 详细
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [SupportFilter]
         public ActionResult Details(string id)
         {
-
+            if (string.IsNullOrWhiteSpace(this.CurrentPerson)|| string.IsNullOrWhiteSpace(id) )
+            {
+                return View();
+            }
+            ViewBag.CurrentPerson = this.CurrentPerson;
+            ViewBag.CurrentPersonId = this.CurrentPersonId;
             var blog = m_BLL.GetById(id);
-
             if (blog != null)//浏览
             { 
                     if (blog.ReadNumber == null)
@@ -61,60 +65,11 @@ namespace Langben.App.Controllers
                     ValidationErrors err = new ValidationErrors();
                     m_BLL.Edit(ref err, blog);
                 
-            }
-            ViewBag.CurrentPerson = this.CurrentPerson;
+            }       
             return View(blog);
-            /* 原来的代码，增加blog和comment外键之后
-              ViewBag.Id = id;
-                        IBLL.ICommentBLL c_BLL = new CommentBLL();
-                        Langben.App.Models.BlogDetailsModel model = new BlogDetailsModel();
-                        model.blog = m_BLL.GetById(id);
-                        StringBuilder search = new StringBuilder();
-                        search.AppendFormat("BlogId{0}&{1}^State{0}&{2}", ArgEnums.DDL_String,id, StateEnums.QY);
-                        model.commentList = c_BLL.GetByParam("", "desc", "CreateTime", search.ToString());
-                        if (Op == "Read" && model.blog!=null)//浏览
-                        {
-                            try
-                            {
-                                if(model.blog.ReadNumber==null)
-                                {
-                                    model.blog.ReadNumber = 0;
-                                }
-                                model.blog.ReadNumber++;
-                                ValidationErrors err = new ValidationErrors();
-                                m_BLL.Edit(ref err, model.blog);
-                            }
-                            catch(Exception ex)
-                            {
-
-                            }
-
-                        }
-                        */
+          
         }
-
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter]
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-        }
+ 
         IBLL.IBlogBLL m_BLL;
         public BlogController()
             : this(new BlogBLL()) { }

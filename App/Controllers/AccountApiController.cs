@@ -16,7 +16,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class AccountApiController : BaseApiController
     {
-       
+
         /// <summary>
         /// 注册
         /// </summary>
@@ -41,8 +41,8 @@ namespace Langben.App.Controllers
                     entity.Password = EncryptAndDecrypte.EncryptString(model.Password);//加密
                 }
                 entity.CreateTime = DateTime.Now;
-                entity.UpdateTime = entity.CreateTime;  
-                entity.Id= Result.GetNewId();
+                entity.UpdateTime = entity.CreateTime;
+                entity.Id = Result.GetNewId();
             }
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null && ModelState.IsValid)
@@ -66,7 +66,12 @@ namespace Langben.App.Controllers
                         LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 
                         result.Code = Common.ClientCode.Succeed;
                         result.Message = Suggestion.InsertSucceed;
-                        result.Url = "../Blog/Index";//(正式需要修改)注册成功后，跳转到填写简历
+                        result.Url = "../Person";//(正式需要修改)注册成功后，跳转到填写简历
+                        Langben.App.Models.Account_Resume ar = new Account_Resume();
+
+                        ar.account = entity;
+                        ar.resume = ResumeModel;
+                        CurrentAccount = ar;
                         return result; //提示创建成功
                     }
                 }
@@ -102,40 +107,41 @@ namespace Langben.App.Controllers
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null)
             {
-                if (entity.MyName == null || entity.MyName.Trim() == "")
+                if (string.IsNullOrWhiteSpace(entity.MyName))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "姓名不能为空";
                     return result; //提示失败
                 }
-                if (entity.Sex == null || entity.Sex.Trim() == "")
+                if (string.IsNullOrWhiteSpace(entity.Sex))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "性别不能为空";
                     return result; //提示失败
                 }
-                if (entity.AnmeldenCity == null || entity.AnmeldenCity.Trim() == "")
+                if (string.IsNullOrWhiteSpace(entity.AnmeldenCity))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "户口所在地不能为空";
                     return result; //提示失败
                 }
-                if (entity.LiveCity == null || entity.LiveCity.Trim() == "")
+                if (string.IsNullOrWhiteSpace(entity.LiveCity))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "现在所在地不能为空";
                     return result; //提示失败
                 }
-                if (entity.PersonalAssessment == null || entity.PersonalAssessment.Trim() == "")
+
+                if (string.IsNullOrWhiteSpace(entity.PersonalAssessment))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "个人评价不能为空";
                     return result; //提示失败
                 }
-                if (entity.PersonalAssessment == null || entity.PersonalAssessment.Trim() == "")
+                if (string.IsNullOrWhiteSpace(entity.Email)|| EmailFormat.IsEmail(entity.Email))
                 {
                     result.Code = Common.ClientCode.Fail;
-                    result.Message = "个人评价不能为空";
+                    result.Message = "电子邮箱不能为空或者格式不对";
                     return result; //提示失败
                 }
                 if (CurrentAccount == null)

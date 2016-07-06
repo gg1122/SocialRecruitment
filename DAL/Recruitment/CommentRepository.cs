@@ -17,18 +17,18 @@ namespace Langben.DAL
         /// </summary>
         /// <param name="id">一条数据的主键</param>
         /// <returns></returns>    
-        public int Cai(SysEntities db, string id)
+        public int Cai(SysEntities db, string id, string myId)
         {
 
             Comment item = GetById(db, id);
 
-            if (item != null)
+            if (item != null && item.CreatePersonId != myId)
             {
                 item.AgreeNumber++;
-                
+                return Save(db);
             }
-            return Save(db);
 
+            return 0;
         }
 
     }

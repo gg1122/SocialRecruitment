@@ -17,22 +17,34 @@ using NPOI.SS.UserModel;
 using System.Web;
 using Langben.DAL;
 
-namespace  Models
+namespace Models
 {
     //[SupportFilter]//此处如果去掉注释，则全部继承BaseController的Controller，都将执行SupportFilter过滤
     public class BaseController : Controller
     {
-        public string GetCurrentPerson()
+        /// <summary>
+        /// 获取当前登陆人的ID
+        /// </summary>
+        /// <returns></returns>
+        public string CurrentPersonId
         {
-            return CurrentPerson;
+            get
+            {
+                Langben.App.Models.Account_Resume account = CurrentAccount;
+                if (account != null && account.account != null && !string.IsNullOrWhiteSpace(account.account.Id))
+                {
+                    return account.account.Id;
+                }
+                return string.Empty;
+            }
 
-        }
+        }       
 
-    /// <summary>
-    /// 获取当前登陆人的名称
-    /// </summary>
-    /// <returns></returns>
-    public string CurrentPerson
+        /// <summary>
+        /// 获取当前登陆人的名称
+        /// </summary>
+        /// <returns></returns>
+        public string CurrentPerson
         {
             get
             {
@@ -63,23 +75,9 @@ namespace  Models
                 else
                 {
                     Session.Clear();
-
-
-                    //测试
-                    //Langben.App.Models.Account_Resume account = new Langben.App.Models.Account_Resume();
-                    //Langben.IBLL.IAccountBLL bll = new Langben.BLL.AccountBLL();
-                    //AccountArg arg = new AccountArg();
-                    //arg.Name = "test";
-                    //account.account = bll.GetByParam(arg);
-                    //if (account.account != null)
-                    //{
-                    //    Langben.IBLL.IResumeBLL rBll = new Langben.BLL.ResumeBLL();
-                    //    account.resume = rBll.GetFirstByAccountID(account.account.Id);
-                    //}
-                    //Session["account"] = account;
-                    //currentAccount = account;
-                    Response.Redirect("/Blog/Index");
-
+                    Response.Redirect("/Login");
+                    Response.End();
+              
                 }
 
                 return currentAccount;
@@ -88,11 +86,11 @@ namespace  Models
             {
                 Session["account"] = value;
             }
-            
+
         }
-        
+
         public BaseController()
         { }
-    
-   }
+
+    }
 }

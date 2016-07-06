@@ -68,7 +68,7 @@ namespace Langben.App.Controllers
                 {
                     result.Code = ClientCode.Succeed;
                     result.Message = "登录成功";
-                    result.Url = "../";//(正式需要修改)注册成功后，跳转到填写简历
+                    //result.Url = "../";//(正式需要修改)注册成功后，跳转到填写简历
                     CurrentAccount = new Account_Resume();
                     CurrentAccount.account = model;
                     try

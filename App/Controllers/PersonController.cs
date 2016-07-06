@@ -19,22 +19,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class PersonController : BaseController
     {
-        /// <summary>
-        /// 是否登录
-        /// </summary>
-        /// <returns></returns>
-        public string GetIsLogining()
-        {
-            if (CurrentAccount != null)
-            {
-                return "Y";
-            }
-            else
-            {
-                return "N";
-            }
-        }
-         
+       
         /// <summary>
         /// 首次编辑
         /// </summary>

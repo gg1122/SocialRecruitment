@@ -45,13 +45,9 @@
             data: { "Name": Name, "Pwd":Pwd},
             success: function (data) {
                 if (data.Code==1) {//成功
-                    if (data.Url != null && trimStr(data.Url) != "") {
-                        window.location.href = data.Url;
-                    }
-                    else
-                    {
+                     
                         window.location.href = "../Blog";
-                    }
+                    
                 }
                 else {//失败
                     alert(data.Message);
