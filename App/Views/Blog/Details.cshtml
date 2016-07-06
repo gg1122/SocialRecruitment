@@ -57,7 +57,7 @@
                                         }
                                         else
                                         {
-                                            <a href='@((string.IsNullOrWhiteSpace(ViewBag.CurrentPerson)) ? "~/login" : "~/Show/" + item.CreatePersonId)'> @item.CreatePerson </a>
+                                            <a href='@((string.IsNullOrWhiteSpace(ViewBag.CurrentPerson)) ? "/login" : "/Preview/Show/" + item.CreatePersonId)'> @item.CreatePerson </a>
                                         }
 
                                     </cite>

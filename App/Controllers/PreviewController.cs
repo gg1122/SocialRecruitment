@@ -34,8 +34,22 @@ namespace Langben.App.Controllers
             }
             return View(model);
         }
-     
 
+        /// <summary>
+        /// 预览
+        /// </summary>        
+        /// <returns></returns> 
+        [SupportFilter]
+        public ActionResult Show(string id)
+        {
+            Langben.DAL.PreviewModel model = null;
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                model = m_BLL.GetPreviewInfo(id);
+
+            }
+            return View(model);
+        }
         IBLL.IPreviewBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();
