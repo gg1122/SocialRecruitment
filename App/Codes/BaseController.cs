@@ -78,7 +78,7 @@ namespace  Models
                     //}
                     //Session["account"] = account;
                     //currentAccount = account;
-                    Response.Redirect("/Blog/Index");
+                   // Response.Redirect("/Blog/Index");
 
                 }
 

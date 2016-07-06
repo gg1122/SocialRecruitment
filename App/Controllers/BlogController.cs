@@ -38,15 +38,7 @@ namespace Langben.App.Controllers
             var model = new PagedList<Blog>(list, pIndex, pageSize, total);
             return View(model);
         }
-        /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
-
-            return View();
-        }
+        
 
         /// <summary>
         /// 查看详细
@@ -70,6 +62,7 @@ namespace Langben.App.Controllers
                     m_BLL.Edit(ref err, blog);
                 
             }
+            ViewBag.CurrentPerson = this.CurrentPerson;
             return View(blog);
             /* 原来的代码，增加blog和comment外键之后
               ViewBag.Id = id;

@@ -7,7 +7,6 @@
       <Diagram DiagramId="06cfbae2dc4f47a3923564e6abd36d81" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="SysModel.Account" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="SysModel.DegreeSchool" Width="1.5" PointX="3" PointY="6.875" />
-        <EntityTypeShape EntityType="SysModel.FileUploader" Width="1.5" PointX="3" PointY="25.5" />
         <EntityTypeShape EntityType="SysModel.InternshipExperience" Width="1.5" PointX="3" PointY="16.25" />
         <EntityTypeShape EntityType="SysModel.ITAbility" Width="1.5" PointX="3" PointY="12.125" />
         <EntityTypeShape EntityType="SysModel.LanguageCompetence" Width="1.5" PointX="3" PointY="21.5" />
@@ -19,14 +18,15 @@
         <EntityTypeShape EntityType="SysModel.SysLog" Width="1.5" PointX="7.75" PointY="9.75" />
         <EntityTypeShape EntityType="SysModel.SysNotice" Width="1.5" PointX="9.75" PointY="8.75" />
         <AssociationConnector Association="SysModel.FK_DEGREESC_REFERENCE_RESUME" />
-        <AssociationConnector Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_INTERNSH_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_ITABILIT_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_LANGUAGE_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_PROJECTE_REFERENCE_RESUME" />
         <EntityTypeShape EntityType="SysModel.Blog" Width="1.5" PointX="12.375" PointY="1" />
-        <EntityTypeShape EntityType="SysModel.Comment" Width="1.5" PointX="14.625" PointY="1.25" />
+        <EntityTypeShape EntityType="SysModel.Comment" Width="1.5" PointX="14.625" PointY="1.125" />
+        <EntityTypeShape EntityType="SysModel.FileUploader" Width="1.5" PointX="3" PointY="25.75" />
         <AssociationConnector Association="SysModel.FK_COMMENT_REFERENCE_BLOG" />
+        <AssociationConnector Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

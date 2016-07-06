@@ -19,50 +19,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class CommentApiController : BaseApiController
     {
-        /// <summary>
-        /// 异步加载数据
-        /// </summary>
-        /// <param name="getParam"></param>
-        /// <returns></returns>
-        public Common.ClientResult.DataResult PostData([FromBody]GetDataParam getParam)
-        {
-            int total = 0;
-            List<Comment> queryData = m_BLL.GetByParam(null, getParam.page, getParam.rows, getParam.order, getParam.sort, getParam.search, ref total);
-            var data = new Common.ClientResult.DataResult
-            {
-                total = total,
-                rows = queryData.Select(s => new
-                {
-                    Id = s.Id
-					,BlogId = s.BlogId
-					,Content = s.Content
-					,AgreeNumber = s.AgreeNumber
-					,MyPicture = s.MyPicture
-					,Sort = s.Sort
-					,State = s.State
-					,CreateTime = s.CreateTime
-					,CreatePerson = s.CreatePerson
-					,UpdateTime = s.UpdateTime
-					,UpdatePerson = s.UpdatePerson
-					,Version = s.Version
-					
-
-                })
-            };
-            return data;
-        }
-
-        /// <summary>
-        /// 根据ID获取数据模型
-        /// </summary>
-        /// <param name="id">编号</param>
-        /// <returns></returns>
-        public Comment Get(string id)
-        {
-            Comment item = m_BLL.GetById(id);
-            return item;
-        }
- 
+       
         /// <summary>
         /// 创建
         /// </summary>
@@ -74,9 +31,16 @@ namespace Langben.App.Controllers
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null && ModelState.IsValid)
             {
-                string currentPerson =" GetCurrentPerson()";
+                string currentPerson =this.CurrentPerson;
+                if (string.IsNullOrWhiteSpace(currentPerson))
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message ="请登录";
+                    return result; //提示插入失败
+                }
                 entity.CreateTime = DateTime.Now;
                 entity.CreatePerson = currentPerson;
+                entity.CreatePersonId = this.CurrentPersonId;
                 entity.AgreeNumber=0;
                  
                 entity.Id = Result.GetNewId();   

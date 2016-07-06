@@ -22,6 +22,7 @@ namespace Langben.DAL
         public Nullable<int> Sort { get; set; }
         public string State { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public string CreatePersonId { get; set; }
         public string CreatePerson { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }

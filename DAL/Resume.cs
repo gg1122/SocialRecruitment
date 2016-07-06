@@ -17,11 +17,11 @@ namespace Langben.DAL
         public Resume()
         {
             this.DegreeSchool = new HashSet<DegreeSchool>();
-            this.FileUploader = new HashSet<FileUploader>();
             this.InternshipExperience = new HashSet<InternshipExperience>();
             this.ITAbility = new HashSet<ITAbility>();
             this.LanguageCompetence = new HashSet<LanguageCompetence>();
             this.ProjectExperience = new HashSet<ProjectExperience>();
+            this.FileUploader = new HashSet<FileUploader>();
         }
     
         public string Id { get; set; }
@@ -38,10 +38,10 @@ namespace Langben.DAL
         public int CompletionPercentage { get; set; }
     
         public virtual ICollection<DegreeSchool> DegreeSchool { get; set; }
-        public virtual ICollection<FileUploader> FileUploader { get; set; }
         public virtual ICollection<InternshipExperience> InternshipExperience { get; set; }
         public virtual ICollection<ITAbility> ITAbility { get; set; }
         public virtual ICollection<LanguageCompetence> LanguageCompetence { get; set; }
         public virtual ICollection<ProjectExperience> ProjectExperience { get; set; }
+        public virtual ICollection<FileUploader> FileUploader { get; set; }
     }
 }

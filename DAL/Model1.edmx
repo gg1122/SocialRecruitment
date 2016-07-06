@@ -69,6 +69,7 @@
           <Property Name="Sort" Type="int" />
           <Property Name="State" Type="varchar" MaxLength="200" />
           <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePersonId" Type="varchar" MaxLength="200" />
           <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
@@ -103,6 +104,8 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="ResumeId" Type="nvarchar" MaxLength="36" />
+          <Property Name="PictureName" Type="nvarchar" MaxLength="400" />
+          <Property Name="ResumeName" Type="nvarchar" MaxLength="400" />
           <Property Name="PictureUrl" Type="nvarchar" MaxLength="400" />
           <Property Name="ResumeUrl" Type="nvarchar" MaxLength="400" />
           <Property Name="Sort" Type="int" />
@@ -428,7 +431,6 @@
         <EntityContainer Name="SysEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Account" EntityType="SysModel.Account" />
           <EntitySet Name="DegreeSchool" EntityType="SysModel.DegreeSchool" />
-          <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
           <EntitySet Name="InternshipExperience" EntityType="SysModel.InternshipExperience" />
           <EntitySet Name="ITAbility" EntityType="SysModel.ITAbility" />
           <EntitySet Name="LanguageCompetence" EntityType="SysModel.LanguageCompetence" />
@@ -442,10 +444,6 @@
           <AssociationSet Name="FK_DEGREESC_REFERENCE_RESUME" Association="SysModel.FK_DEGREESC_REFERENCE_RESUME">
             <End Role="Resume" EntitySet="Resume" />
             <End Role="DegreeSchool" EntitySet="DegreeSchool" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FILEUPLO_REFERENCE_RESUME" Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME">
-            <End Role="Resume" EntitySet="Resume" />
-            <End Role="FileUploader" EntitySet="FileUploader" />
           </AssociationSet>
           <AssociationSet Name="FK_INTERNSH_REFERENCE_RESUME" Association="SysModel.FK_INTERNSH_REFERENCE_RESUME">
             <End Role="Resume" EntitySet="Resume" />
@@ -465,9 +463,14 @@
           </AssociationSet>
           <EntitySet Name="Blog" EntityType="SysModel.Blog" />
           <EntitySet Name="Comment" EntityType="SysModel.Comment" />
+          <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
           <AssociationSet Name="FK_COMMENT_REFERENCE_BLOG" Association="SysModel.FK_COMMENT_REFERENCE_BLOG">
             <End Role="Blog" EntitySet="Blog" />
             <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FILEUPLO_REFERENCE_RESUME" Association="SysModel.FK_FILEUPLO_REFERENCE_RESUME">
+            <End Role="Resume" EntitySet="Resume" />
+            <End Role="FileUploader" EntitySet="FileUploader" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
@@ -525,23 +528,6 @@
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Resume" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="DegreeSchool" ToRole="Resume" />
-        </EntityType>
-        <EntityType Name="FileUploader">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="PictureUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="ResumeUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Sort" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Resume" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="FileUploader" ToRole="Resume" />
         </EntityType>
         <EntityType Name="InternshipExperience">
           <Key>
@@ -639,12 +625,12 @@
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="DegreeSchool" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="Resume" ToRole="DegreeSchool" />
-          <NavigationProperty Name="FileUploader" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="Resume" ToRole="FileUploader" />
           <NavigationProperty Name="InternshipExperience" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="Resume" ToRole="InternshipExperience" />
           <NavigationProperty Name="ITAbility" Relationship="SysModel.FK_ITABILIT_REFERENCE_RESUME" FromRole="Resume" ToRole="ITAbility" />
           <NavigationProperty Name="LanguageCompetence" Relationship="SysModel.FK_LANGUAGE_REFERENCE_RESUME" FromRole="Resume" ToRole="LanguageCompetence" />
           <NavigationProperty Name="ProjectExperience" Relationship="SysModel.FK_PROJECTE_REFERENCE_RESUME" FromRole="Resume" ToRole="ProjectExperience" />
           <Property Name="CompletionPercentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FileUploader" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="Resume" ToRole="FileUploader" />
         </EntityType>
         <EntityType Name="SysAnnouncement">
           <Key>
@@ -744,18 +730,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FILEUPLO_REFERENCE_RESUME">
-          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
-          <End Type="SysModel.FileUploader" Role="FileUploader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resume">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="FileUploader">
-              <PropertyRef Name="ResumeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_INTERNSH_REFERENCE_RESUME">
           <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
           <End Type="SysModel.InternshipExperience" Role="InternshipExperience" Multiplicity="*" />
@@ -837,11 +811,31 @@
           <Property Name="Sort" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePersonId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UpdateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Blog" Relationship="SysModel.FK_COMMENT_REFERENCE_BLOG" FromRole="Comment" ToRole="Blog" />
+        </EntityType>
+        <EntityType Name="FileUploader">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="PictureName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="PictureUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ResumeUrl" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Resume" Relationship="SysModel.FK_FILEUPLO_REFERENCE_RESUME" FromRole="FileUploader" ToRole="Resume" />
         </EntityType>
         <Association Name="FK_COMMENT_REFERENCE_BLOG">
           <End Type="SysModel.Blog" Role="Blog" Multiplicity="0..1" />
@@ -852,6 +846,18 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FILEUPLO_REFERENCE_RESUME">
+          <End Type="SysModel.Resume" Role="Resume" Multiplicity="0..1" />
+          <End Type="SysModel.FileUploader" Role="FileUploader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resume">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FileUploader">
+              <PropertyRef Name="ResumeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -913,23 +919,6 @@
                 <ScalarProperty Name="IsNow" ColumnName="IsNow" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
-                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FileUploader">
-            <EntityTypeMapping TypeName="SysModel.FileUploader">
-              <MappingFragment StoreEntitySet="FileUploader">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="ResumeUrl" ColumnName="ResumeUrl" />
-                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
                 <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1152,6 +1141,7 @@
                 <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
                 <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreatePersonId" ColumnName="CreatePersonId" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Sort" ColumnName="Sort" />
@@ -1159,6 +1149,25 @@
                 <ScalarProperty Name="AgreeNumber" ColumnName="AgreeNumber" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileUploader">
+            <EntityTypeMapping TypeName="SysModel.FileUploader">
+              <MappingFragment StoreEntitySet="FileUploader">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ResumeUrl" ColumnName="ResumeUrl" />
+                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+                <ScalarProperty Name="ResumeName" ColumnName="ResumeName" />
+                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+                <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

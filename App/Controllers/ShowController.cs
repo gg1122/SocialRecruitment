@@ -17,33 +17,31 @@ namespace Langben.App.Controllers
     /// <summary>
     /// 简历预览
     /// </summary>
-    public class PreviewController : BaseController
+    public class ShowController : BaseController
     {
         /// <summary>
         /// 预览
         /// </summary>        
         /// <returns></returns> 
         [SupportFilter]
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             Langben.DAL.PreviewModel model = null;
-            if (CurrentAccount != null && CurrentAccount.resume != null)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                model = m_BLL.GetPreviewInfo(CurrentAccount.resume.Id);
+                model = m_BLL.GetPreviewInfo(id);
 
             }
             return View(model);
         }
-     
-
         IBLL.IPreviewBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();
 
-        public PreviewController()
+        public ShowController()
             : this(new PreviewBLL()) { }
 
-        public PreviewController(PreviewBLL bll)
+        public ShowController(PreviewBLL bll)
         {
             m_BLL = bll;
         }
