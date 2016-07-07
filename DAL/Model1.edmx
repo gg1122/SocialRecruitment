@@ -97,6 +97,8 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="ProfessionalTypeRemark" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolNameRemark" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="FileUploader">
           <Key>
@@ -528,6 +530,8 @@
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Resume" Relationship="SysModel.FK_DEGREESC_REFERENCE_RESUME" FromRole="DegreeSchool" ToRole="Resume" />
+          <Property Name="ProfessionalTypeRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolNameRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="InternshipExperience">
           <Key>
@@ -903,6 +907,8 @@
           <EntitySetMapping Name="DegreeSchool">
             <EntityTypeMapping TypeName="SysModel.DegreeSchool">
               <MappingFragment StoreEntitySet="DegreeSchool">
+                <ScalarProperty Name="SchoolNameRemark" ColumnName="SchoolNameRemark" />
+                <ScalarProperty Name="ProfessionalTypeRemark" ColumnName="ProfessionalTypeRemark" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />

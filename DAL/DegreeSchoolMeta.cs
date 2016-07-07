@@ -57,9 +57,9 @@ namespace Langben.DAL
 			[Display(Name = "学校名称", Order = 7)]
 			[Required(ErrorMessage = "不能为空")]
 			[StringLength(200, ErrorMessage = "长度不可超过200")]
-			public object SchoolName { get; set; }
+			public object SchoolName { get; set; }       
 
-			[ScaffoldColumn(true)]
+            [ScaffoldColumn(true)]
 			[Display(Name = "专业类别一", Order = 8)]
 			[StringLength(200, ErrorMessage = "长度不可超过200")]
 			public object ProfessionalType1 { get; set; }
@@ -116,7 +116,15 @@ namespace Langben.DAL
 			[Display(Name = "时间戳", Order = 18)]
 			public object Version { get; set; }
 
+            [ScaffoldColumn(true)]
+            [Display(Name = "学校名称备注", Order = 19)]
+            [StringLength(200, ErrorMessage = "长度不可超过200")]
+            public object SchoolNameRemark { get; set; }
 
+            [ScaffoldColumn(true)]
+            [Display(Name = "专业类别备注", Order = 20)]
+            [StringLength(200, ErrorMessage = "长度不可超过200")]
+            public object ProfessionalTypeRemark { get; set; }
     }
 }
  

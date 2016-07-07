@@ -69,16 +69,16 @@
 
         <div class="form-group">
             <label class="col-sm-3 control-label">学校<span class="required">*</span></label>
-            <div class="col-sm-5">
-
+            <div class="col-md-9">
                 <select class="form-control  input-inline" id="ddlSchoolArea" style="max-width:105px">
                     <option>请选择</option>
                     <option>北京</option>
                     <option>河北</option>
                 </select>
-                <select class="form-control  input-inline" id="ddlSchoolName" style="max-width:200px">
+                <select class="form-control  input-inline" id="ddlSchoolName" style="max-width:200px;">
                     <option>请选择</option>
                 </select>
+                <input type="text" class="form-control input-inline" id="txtSchoolNameRemark" style="display:none;margin-left:330px;margin-top:-55px" />
             </div>
         </div>
 
@@ -90,9 +90,10 @@
                     <option>哲学类</option>
                     <option>经济学类</option>
                 </select>
-                <select class="form-control  input-inline" id="ddlProfessionalType2" style="max-width:200px">
+                <select class="form-control  input-inline" id="ddlProfessionalType2" style="max-width:200px;">
                     <option>请选择</option>
                 </select>
+                <input type="text" class="form-control input-inline" id="txtProfessionalTypeRemark"  style="display:none;margin-left:330px;margin-top:-55px" />
             </div>
         </div>
 
@@ -154,9 +155,29 @@
         //学校
         GetSysField("#ddlSchoolArea", "DegreeSchool", "SchoolArea");
         $("#ddlSchoolArea").change(function () { GetSysFieldByParent("#ddlSchoolName", "#ddlSchoolArea", "SchoolName", "SchoolArea"); });
+        $("#ddlSchoolName").change(function () {
+            if (trimStr($("#ddlSchoolName").val()) == "其它")
+            {
+                $("#txtSchoolNameRemark").show();
+            }
+            else
+            {
+                $("#txtSchoolNameRemark").hide();
+            }
+        });
         //专业
         GetSysField("#ddlProfessionalType1", "DegreeSchool", "ProfessionalType1");
         $("#ddlProfessionalType1").change(function () { GetSysFieldByParent("#ddlProfessionalType2", "#ddlProfessionalType1", "ProfessionalType2", "ProfessionalType1"); });
+
+        $("#ddlProfessionalType2").change(function () {
+            if (trimStr($("#ddlProfessionalType2").val()) == "其它") {
+                $("#txtProfessionalTypeRemark").show();
+            }
+            else {
+                $("#txtProfessionalTypeRemark").hide();
+            }
+
+        });
 
         //学历
         GetSysField("#ddlEducation", "DegreeSchool", "Education");
@@ -206,9 +227,18 @@
                         //$tr.find("#tdSchoolName").html(item.SchoolArea + "【" + item.SchoolName + "】"); //学校
                         //$tr.find("#tdProfessionalType2").html(item.ProfessionalType1 + "【" + item.ProfessionalType2 + "】"); //专业
                         //$tr.find("#tdDegree").html(item.Education + "【" + item.Degree + "】"); //学历学位
-
-                        $tr.find("#tdSchoolName").html(item.SchoolName); //学校
-                        $tr.find("#tdProfessionalType2").html(item.ProfessionalType2); //专业
+                        if (trimStr(item.SchoolName) == "其它") {
+                            $tr.find("#tdSchoolName").html(item.SchoolNameRemark); //学校
+                        }
+                        else {
+                            $tr.find("#tdSchoolName").html(item.SchoolName); //学校
+                        }
+                        if (trimStr(item.ProfessionalType2) == "其它") {
+                            $tr.find("#tdProfessionalType2").html(item.ProfessionalTypeRemark); //专业
+                        }
+                        else {
+                            $tr.find("#tdProfessionalType2").html(item.ProfessionalType2); //专业
+                        }
                         $tr.find("#tdDegree").html(item.Education + "【" + item.Degree + "】"); //学历学位
 
                         //编辑
@@ -239,8 +269,10 @@
         $("#cbIsNow").attr("checked", false);
         $("#ddlSchoolArea").get(0).selectedIndex = 0;
         $("#ddlSchoolName").get(0).selectedIndex = 0;
+        $("#txtSchoolNameRemark").val("");//学校名称备注
         $("#ddlProfessionalType1").get(0).selectedIndex = 0;
         $("#ddlProfessionalType2").get(0).selectedIndex = 0;
+        $("#txtProfessionalTypeRemark").val("");//专业备注
         $("#ddlEducation").get(0).selectedIndex = 0;
         $("#ddlDegree").get(0).selectedIndex = 0;
         $('#divEdit').show();
@@ -268,9 +300,22 @@
         if (trimStr(SchoolName) == "") {
             Message += "学校不能为空\n\r";
         }
+        if (trimStr(SchoolName) == "其它") {
+            var SchoolNameRemark = $("#txtSchoolNameRemark").val();
+            if (trimStr(SchoolNameRemark) == "") {
+                Message += "学校不能为空\n\r";
+            }
+        }
         var ProfessionalType2 = $("#ddlProfessionalType2").val();
         if (trimStr(ProfessionalType2) == "") {
             Message += "专业不能为空\n\r";
+        }
+        if (trimStr(ProfessionalType2) == "其它") {
+            var ProfessionalTypeRemark = $("#txtProfessionalTypeRemark").val();
+            if(trimStr(ProfessionalTypeRemark)=="")
+            {
+                Message += "专业不能为空\n\r";
+            }
         }
         var Education = $("#ddlEducation").val();
         if (trimStr(Education) == "") {
@@ -306,9 +351,10 @@
 
             var SchoolArea = $("#ddlSchoolArea").val();
             var SchoolName = $("#ddlSchoolName").val();
+            var SchoolNameRemark = $("#txtSchoolNameRemark").val();//学校名称备注
             var ProfessionalType1 = $("#ddlProfessionalType1").val();
-
             var ProfessionalType2 = $("#ddlProfessionalType2").val();
+            var ProfessionalTypeRemark = $("#txtProfessionalTypeRemark").val();//专业备注
             var Education = $("#ddlEducation").val();
             var Degree = $("#ddlDegree").val();
             var ResumeId = $("#hideResumeId").val();
@@ -325,8 +371,10 @@
                             ',"IsNow": "' + IsNow + '"' +
                             ',"SchoolArea": "' + SchoolArea + '"' +
                             ',"SchoolName": "' + SchoolName + '"' +
+                            ',"SchoolNameRemark": "' + SchoolNameRemark + '"' +
                             ',"ProfessionalType1": "' + ProfessionalType1 + '"' +
                             ',"ProfessionalType2": "' + ProfessionalType2 + '"' +
+                            ',"ProfessionalTypeRemark": "' + ProfessionalTypeRemark + '"' +
                             ',"Education": "' + Education + '"' +
                             ', "Degree": "' + Degree + '"' +
                             ',"ResumeId":"' + ResumeId + '"' +
@@ -385,9 +433,23 @@
                         $("#cbIsNow").attr("checked", false);
                     }
                     $("#ddlSchoolArea").val(data.SchoolArea).change();
-                    $("#ddlSchoolName").val(data.SchoolName);
+                    $("#ddlSchoolName").val(data.SchoolName);                    
+                    $("#txtSchoolNameRemark").val(data.SchoolNameRemark);//学校名称备注
+                    if (trimStr(data.SchoolName) == "其它") {
+                        $("#txtSchoolNameRemark").show();
+                    }
+                    else {
+                        $("#txtSchoolNameRemark").hide();
+                    }
                     $("#ddlProfessionalType1").val(data.ProfessionalType1).change();
                     $("#ddlProfessionalType2").val(data.ProfessionalType2);
+                    $("#txtProfessionalTypeRemark").val(data.ProfessionalTypeRemark);//专业备注
+                    if (trimStr(data.ProfessionalType2) == "其它") {
+                        $("#txtProfessionalTypeRemark").show();
+                    }
+                    else {
+                        $("#txtProfessionalTypeRemark").hide();
+                    }
                     $("#ddlEducation").val(data.Education);
                     $("#ddlDegree").val(data.Degree);
                     $("#hideResumeId").val(data.ResumeId);
