@@ -24,32 +24,51 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public Common.ClientResult.Result Register([FromBody]Langben.App.Models.RegisterModel model)
         {
-            DAL.Account entity = null;
+            Common.ClientResult.Result result = new Common.ClientResult.Result();
+
             if (model != null && ModelState.IsValid)
             {
-                entity = new DAL.Account();
-                if (model.Name != null)
+                DAL.Account entity = new DAL.Account();
+
+                if (string.IsNullOrWhiteSpace(model.Name))
                 {
-                    entity.Name = model.Name.ToUpper();
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "绰号不能为空";
+                    return result; //提示失败
                 }
-                if (model.PhoneNumber != null)
+                else
+                {
+                    entity.Name = model.Name.Trim();
+                }
+                if (Common.Validator.IsMobile(model.PhoneNumber))
+                {
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "手机号码格式不正确";
+                    return result; //提示失败
+                }
+                else
                 {
                     entity.PhoneNumber = model.PhoneNumber.ToString();
                 }
-                if (model.Password != null)
+
+                if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
                 {
-                    entity.Password = EncryptAndDecrypte.EncryptString(model.Password);//加密
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "密码不能为空或长度至少6位";
+                    return result; //提示失败
                 }
+                else
+                {
+                    entity.Password = EncryptAndDecrypte.EncryptString(model.Password);//加密;
+                }
+                entity.LogonIP = IP.GetIP();
                 entity.CreateTime = DateTime.Now;
                 entity.UpdateTime = entity.CreateTime;
                 entity.Id = Result.GetNewId();
-            }
-            Common.ClientResult.Result result = new Common.ClientResult.Result();
-            if (entity != null && ModelState.IsValid)
-            {
+
                 string returnValue = string.Empty;
                 if (m_BLL.Create(ref validationErrors, entity))
-                {
+                {//事务
                     IBLL.IResumeBLL rBll = new ResumeBLL();
                     Resume ResumeModel = new Resume();
                     ResumeModel.AccountId = entity.Id;
@@ -74,22 +93,21 @@ namespace Langben.App.Controllers
                         CurrentAccount = ar;
                         return result; //提示创建成功
                     }
-                }
-
-                if (validationErrors != null && validationErrors.Count > 0)
-                {
-                    validationErrors.All(a =>
+                    if (validationErrors != null && validationErrors.Count > 0)
                     {
-                        returnValue += a.ErrorMessage;
-                        return true;
-                    });
-                }
-                LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，会员的信息，" + returnValue, "会员"
-                    );//写入日志                      
-                result.Code = Common.ClientCode.Fail;
-                result.Message = Suggestion.InsertFail + returnValue;
-                return result; //提示插入失败
+                        validationErrors.All(a =>
+                        {
+                            returnValue += a.ErrorMessage;
+                            return true;
+                        });
+                    }
+                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，会员的信息，" + returnValue, "会员"
+                        );//写入日志                      
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = Suggestion.InsertFail + returnValue;
+                    return result; //提示插入失败
 
+                }
             }
 
             result.Code = Common.ClientCode.FindNull;
@@ -138,7 +156,7 @@ namespace Langben.App.Controllers
                     result.Message = "个人评价不能为空";
                     return result; //提示失败
                 }
-                if (string.IsNullOrWhiteSpace(entity.Email)|| EmailFormat.IsEmail(entity.Email))
+                if (string.IsNullOrWhiteSpace(entity.Email) || Validator.IsEmail(entity.Email))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "电子邮箱不能为空或者格式不对";

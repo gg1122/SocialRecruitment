@@ -154,6 +154,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Codes\BaseApiController.cs" />
     <Compile Include="Codes\BaseController.cs" />
+    <Compile Include="Codes\IP.cs" />
     <Compile Include="Codes\LogClassModels.cs" />
     <Compile Include="Codes\SupportFilter.cs" />
     <Compile Include="Codes\SysFieldModels.cs" />
