@@ -1,11 +1,13 @@
 ﻿@charset "utf-8";
 /* CSS Document */
-body{ padding-bottom:50px}
+body{ padding-bottom:50px; font-family:Microsoft yahei ; padding-top:70px}
 ul,li,ol{ margin:0; padding:0; list-style:none}
 
 .mynav{  background:#222222; padding-left:20px; padding-right:20px; margin-bottom:20px }
 .navbar{ margin-bottom:0}
 .navbar{ width:100%}
+.color6{ color:#666}
+.color9{ color:#999}
 .input-mini {
   width: 45px !important;
 }
@@ -75,11 +77,12 @@ label {
 
 /* Static form control */
 .form-control-static {
-  margin: 2px 0;
+  /*margin: 2px 0; */
   display: inline-block;
 }
 .btm-nav{ display:none}
 @media (max-width:768px){
+.form-control-static{ padding-top:0}
 .mynav{ padding:0}
 .navbar{ position:fixed}
 /*底部响应菜单*/
@@ -155,5 +158,8 @@ label {
       border-right:9px solid transparent;
       z-index:11;
   }
-  .touxiang{position:absolute; top:0; right:0; width:220px}  
+  .touxiang{position:absolute; top:0; right:0; width:220px}    
 }
+.page-header{ padding-bottom:0; border-bottom:none; border-left:3px solid #DF2020; padding-left:10px}
+.control-label{ color:#888}
+.mr_jobe_list { margin-bottom:10px}
