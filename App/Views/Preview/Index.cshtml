@@ -16,7 +16,7 @@
         </h4>
     }
     <div class="page-header">
-        <h3>个人信息 <small><a href="~/Person">编辑个人信息</a></small></h3>
+        <h4>个人信息 <small><a href="~/Person"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small></h4>
     </div>
     <!--表单开始 -->
     @if (Model != null && Model.account != null)
@@ -80,13 +80,13 @@
         </div>
     }
 
-
+    <hr />
     <!--表单开始 -->
     <div class="page-header">
-        <h3>
+        <h4>
             秀才学堂
-            <small><a href="~/DegreeSchool">编辑秀才学堂</a></small>
-        </h3>
+            <small><a href="~/DegreeSchool"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small>
+        </h4>
     </div>
     <!--表单开始 -->
     <div id="collapseEducation">
@@ -95,13 +95,13 @@
     foreach (var item in Model.resume.DegreeSchool)
     {
                 <div class="mr_jobe_list row clearfix">
-                    <div class="col-xs-8 col-md-8">
+                    <div class=" col-md-8">
                         <div class="l2">
                             <h4>@item.SchoolName</h4>
                             <span>@item.ProfessionalType2</span>
                         </div>
                     </div>
-                    <div class="col-xs-4 col-md-4">
+                    <div class="col-md-4 color9">
                         @if (item.IsNow != "Y")
                         {
                             <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
@@ -119,12 +119,13 @@
 
     </div>
     <!--表单结束 -->
+    <hr />
     <!--表单开始 -->
     <div class="page-header">
-        <h3>
+        <h4>
             语言能力
-            <small><a href="~/LanguageCompetence">编辑语言能力</a></small>
-        </h3>
+            <small><a href="~/LanguageCompetence"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small>
+        </h4>
     </div>
     <!--表单开始 -->
     <div id="degreeSchool">
@@ -141,18 +142,19 @@
                     </div>
 
                 </div>
-                <br />
+                
             }
         }
 
     </div>
     <!--表单结束 -->
+    <hr />
     <!--表单开始 -->
     <div class="page-header">
-        <h3>
+        <h4>
             技能爱好
-            <small><a href="~/ITAbility">编辑技能爱好</a></small>
-        </h3>
+            <small><a href="~/ITAbility"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small>
+        </h4>
     </div>
     <!--表单开始 -->
     <div id="iTAbility">
@@ -171,17 +173,18 @@
                         <span>@item.Proficiency</span>
                     </div>
                 </div>
-                <br />
+               
             }
         }
     </div>
     <!--表单结束 -->
+    <hr />
     <!--表单开始 -->
     <div class="page-header">
-        <h3>
+        <h4>
             项目经验
-            <small><a href="~/ProjectExperience">编辑项目经验</a></small>
-        </h3>
+            <small><a href="~/ProjectExperience"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small>
+        </h4>
     </div>
     <!--表单开始 -->
     <div id="projectExperience">
@@ -189,11 +192,11 @@
 {
     foreach (var item in Model.resume.ProjectExperience)
     {
-                <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
-                    <div class="col-xs-8 col-md-8">
-                        <span>@item.ProjectName</span>
+                <div class="mr_jobe_list row clearfix" >
+                    <div class=" col-md-8">
+                        <b>@item.ProjectName</b>
                     </div>
-                    <div class="col-xs-4 col-md-4">
+                    <div class=" col-md-4 color9">
                         @if (item.IsNow != "Y")
                     {
                             <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
@@ -227,12 +230,13 @@
         }
     </div>
     <!--表单结束 -->
+    <hr />
     <!--表单开始 -->
     <div class="page-header">
-        <h3>
+        <h4>
             实习经验
-            <small><a href="~/InternshipExperience">编辑实习经验</a></small>
-        </h3>
+            <small><a href="~/InternshipExperience"><i class="fa fa-edit" aria-hidden="true"></i> 编辑</a></small>
+        </h4>
     </div>
     <!--表单开始 -->
     <div id="internshipExperience">
@@ -240,11 +244,11 @@
 {
     foreach (var item in Model.resume.InternshipExperience)
     {
-                <div class="mr_jobe_list row clearfix" style="background-color:gainsboro">
-                    <div class="col-xs-8 col-md-8">
-                        <span>@item.CompanyName</span>
+                <div class="mr_jobe_list row clearfix" >
+                    <div class=" col-md-8">
+                        <b>@item.CompanyName</b>
                     </div>
-                    <div class="col-xs-4 col-md-4">
+                    <div class=" col-md-4 color9">
                         @if (item.IsNow != "Y")
                     {
                             <span>@item.BeginDate.ToString("yyyy-MM-dd") — @item.EndDate.Value.ToString("yyyy-MM-dd")</span>
