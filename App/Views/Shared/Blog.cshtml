@@ -14,8 +14,10 @@
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link href="~/Content/Blog/main.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/main.css">
     <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script> 
@@ -26,34 +28,39 @@
 
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">             
+    <!--header b -->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- logo -->
                 <a href="~/">
                     <img class="logo" src="~/images/logo.png" alt="" style="width: 207px;" />
                 </a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
             </div>
-            
-            <div class="col-md-4">
-                <h3 style="float:right;">
-                    @if (Session["account"] == null)
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav navbar-right">
+@if (Session["account"] == null)
                     {
-                        <a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a>
-                        <a href="~/Register" id="aTopRegister">注册</a>
-                    }
+                    <li><a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a></li>
+                    <li><a href="~/Register" id="aTopRegister">注册</a></li>
+      }
                     else
                     {
-
-                        <a href="~/SysNotice" style="margin-right:20px;" id="aTopNotice">我的消息</a>
-                        <a href="~/Preview" id="aTopPersonalInformation">个人资料</a>
-                    }               
-                </h3>
+                    <li><a href="~/SysNotice" style="margin-right:20px;" id="aTopNotice">我的消息</a></li>
+                    <li><a href="~/Preview" id="aTopPersonalInformation">个人资料</a></li>
+                    }  
+                </ul>
             </div>
         </div>
+    </div>
+    <!--header e -->
+    
+       
         <div class="container" style="min-height: 500px">
             @RenderBody()
         </div>
-    </div>
+   
     <div class="footer">
         <div class="container">
             <div class="row">
