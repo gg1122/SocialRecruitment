@@ -13,7 +13,7 @@
                 <a href="/Blog/Details/@item.Id">
                     @if(string.IsNullOrEmpty(item.Picture))
                     {
-                       item.Picture="../images/portfolio_2_column_img_01.jpg";
+                       item.Picture="/images/portfolio_2_column_img_01.jpg";
                     }                    
                     @if(item.ReadNumber==null)
                     {
@@ -42,14 +42,10 @@
         </div>
         <br />
     }
-    @Html.Pager(Model, new PagerOptions
-{
-    PageIndexParameterName = "pageIndex",
-    ContainerTagName = "pageIndex",
-  
-    CssClass = "pagination",
-    PagerItemTemplate = "&nbsp;{0}&nbsp;" 
-})  
+    <div class="text-center">
+        @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+    </div>
+
 
 }
 

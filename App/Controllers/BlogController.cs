@@ -24,12 +24,11 @@ namespace Langben.App.Controllers
         /// </summary>
         /// <returns></returns>
         [SupportFilter]
-        public ActionResult Index()
-        {
-            string pageIndex = Request["pageIndex"];
+        public ActionResult Index(string id)
+        { 
             int pIndex = 1;
-            if (!string.IsNullOrEmpty(pageIndex))
-                int.TryParse(pageIndex, out pIndex);
+            if (!string.IsNullOrEmpty(id))
+                int.TryParse(id, out pIndex);
             int pageSize = 10;
             int total = 0;
             StringBuilder search = new StringBuilder();
