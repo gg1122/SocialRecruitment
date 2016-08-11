@@ -42,7 +42,14 @@
         </div>
         <br />
     }
-    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "pageIndex", ContainerTagName = "pageIndex", PrevPageText = "上页", NextPageText = "下页", FirstPageText = "首页", LastPageText = "尾页", CssClass = "pagination", PagerItemsSeperator = "", CurrentPagerItemWrapperFormatString = "<li class=\"active\"><a href=\"#\">{0}</a></li>", PagerItemWrapperFormatString = "<li>{0}</li>" }, new { id = "bootstrappager", @class = "pagination" })  
+    @Html.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "pageIndex",
+    ContainerTagName = "pageIndex",
+  
+    CssClass = "pagination",
+    PagerItemTemplate = "&nbsp;{0}&nbsp;" 
+})  
 
 }
 
