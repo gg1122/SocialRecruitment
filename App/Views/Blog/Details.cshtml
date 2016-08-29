@@ -6,86 +6,88 @@
 }
 
 <div class="row">
-    <div id="content" class="col-md-9">
+    <div id="content" class="col-md-12">
         @if (Model != null)
         {
-            <article class="post">
-                <header class="entry-header" style="position:relative; margin-bottom:10px;">
+        <article class="post">
+            <header class="entry-header" style="position:relative; margin-bottom:10px;">
 
-                    <hgroup>
-                        <h3>
-                            <a href="#" rel="bookmark">@Model.Title</a>
-                        </h3>
-                    </hgroup>
-                    <div class="entry-meta">
-                        <span>
-                            发榜：@Model.CreateTime.Value.ToString("yyyy年MM月dd日")
-                        </span>
-                        <span>
-                            围观：@Model.ReadNumber
-                        </span>
-                    </div>
-                </header>
-
-                <div class="entry-content">
-                    <p>
-                        @Model.Content
-                    </p>
+                <hgroup>
+                    <h3>
+                        <a href="#" rel="bookmark">@Model.Title</a>
+                    </h3>
+                </hgroup>
+                <div class="entry-meta">
+                    <span>
+                        发榜：@Model.CreateTime.Value.ToString("yyyy年MM月dd日")
+                    </span>
+                    <span>
+                        围观：@Model.ReadNumber
+                    </span>
                 </div>
-            </article>
+            </header>
+
+            <div class="entry-content">
+                <p>
+                    @Model.Content
+                </p>
+            </div>
+        </article>
         }
 
         <div class="comments">
 
             @if (Model != null && Model.Comment != null && Model.Comment.Count > 0)
             {
-                <h5 class="comments-title">
+            <h3 class="comments-title">
 
-                    @Model.Comment.Count 个码农在码砖
-                </h5>
-                <ol class="comment-list">
-                    @foreach (var item in Model.Comment.OrderByDescending(o => o.CreateTime))
+                @Model.Comment.Count 个码农在码砖
+            </h3>
+            <ol class="comment-list">
+                @foreach (var item in Model.Comment.OrderByDescending(o => o.CreateTime))
                 {
-                        <li>
-                            <article>
-                                <footer>
+                    <li>
+                        <article>
+                            <footer>
 
-                                    <cite>
-                                        @if (ViewBag.CurrentPersonId == item.CreatePersonId)
+                                <cite>
+                                    @if (ViewBag.CurrentPersonId == item.CreatePersonId)
                                         {
-                                            <a href='#'>您</a>
+                                        <a href='#'>您</a>
                                         }
                                         else
                                         {
-                                            <a href="/Preview/Show/"> @item.CreatePerson </a>
+                                        <a href="/Preview/Show/"> @item.CreatePerson </a>
                                         }
 
-                                    </cite>
-                                    <div class="comment-meta">
-                                        <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
-                                        @if (ViewBag.CurrentPersonId == item.CreatePersonId)
+                                </cite>
+                                <div class="comment-meta">
+                                    <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
+                                    @if (ViewBag.CurrentPersonId == item.CreatePersonId)
                                         {
-                                            <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
+                                        <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
                                         }
                                         else
                                         {
-                                            <a class="comment-reply" onclick="commentReply('@item.Id');" href="#">彩（@item.AgreeNumber）</a>
+                                        <a class="comment-reply" onclick="commentReply('@item.Id');" href="#">彩（@item.AgreeNumber）</a>
                                         }
-                                    </div>
-                                </footer>
-                                <div class="comment-content">
-                                    @item.Content
                                 </div>
-                            </article>
-                        </li>
+                            </footer>
+                            <div class="comment-content">
+                                @item.Content
+                            </div>
+                        </article>
+                    </li>
                     }
-                </ol>
+            </ol>
             }
         </div>
 
     </div>
+</div>
 
-    <div class="col-md-3">
+<div class="row">
+    <div class="col-md-12">
 
         @if (!string.IsNullOrWhiteSpace(ViewBag.CurrentPerson))
             {
