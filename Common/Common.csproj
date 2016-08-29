@@ -47,7 +47,7 @@
     <Compile Include="ClientCode.cs" />
     <Compile Include="ClientResult.cs" />
     <Compile Include="EncryptAndDecrypte.cs" />
-    <Compile Include="IsEmail.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="JsonObj.cs" />
     <Compile Include="NetSendMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

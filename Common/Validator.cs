@@ -23,9 +23,9 @@ namespace Common
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static bool IsMobile(int source)
+        public static bool IsMobile(string source)
         {
-            return Regex.IsMatch(source.ToString(), @"^1[35]\d{9}$", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(source, @"^1[35]\d{9}$", RegexOptions.IgnoreCase);
         }
     }
 }
