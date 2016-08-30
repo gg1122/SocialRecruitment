@@ -17,7 +17,7 @@ namespace Langben.App.Controllers
     /// <summary>
     /// 会员注册
     /// </summary>
-    public class RegisterController : BaseController
+    public class PublishController : BaseController
     {
        
         /// <summary>
