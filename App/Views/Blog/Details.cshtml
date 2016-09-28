@@ -9,78 +9,81 @@
     <div id="content" class="col-md-12">
         @if (Model != null)
         {
-        <article class="post">
-            <header class="entry-header" style="position:relative; margin-bottom:10px;">
+            <article class="post">
+                <header class="entry-header" style="position:relative; margin-bottom:10px;">
 
-                <hgroup>
-                    <h3>
-                        <a href="#" rel="bookmark">@Model.Title</a>
-                    </h3>
-                </hgroup>
-                <div class="entry-meta">
-                    <span>
-                        发榜：@Model.CreateTime.Value.ToString("yyyy年MM月dd日")
-                    </span>
-                    <span>
-                        围观：@Model.ReadNumber
-                    </span>
+                    <hgroup>
+                        <h3>
+                            <a href="#" rel="bookmark">@Model.Title</a>
+                        </h3>
+                    </hgroup>
+                    <div class="entry-meta">
+                        <span>
+                            发榜：@Model.CreateTime.Value.ToString("yyyy年MM月dd日")
+                        </span>
+                        <span>
+                            围观：@Model.ReadNumber
+                        </span>
+                    </div>
+                </header>
+
+                <div class="entry-content">
+                    <p>
+                        @(new HtmlString(Model.Content))
+                    </p>
                 </div>
-            </header>
-
-            <div class="entry-content">
-                <p>
-                    @Model.Content
-                </p>
-            </div>
-        </article>
+            </article>
         }
 
         <div class="comments">
-
-            @if (Model != null && Model.Comment != null && Model.Comment.Count > 0)
-            {
             <h3 class="comments-title">
-
-                @Model.Comment.Count 个码农在码砖
+                @if (Model != null && Model.Comment != null && Model.Comment.Count > 0)
+                {
+                    @Model.Comment.Count
+                }
+               
+                码农在码砖
             </h3>
             <ol class="comment-list">
-                @foreach (var item in Model.Comment.OrderByDescending(o => o.CreateTime))
+                @if (Model != null && Model.Comment != null && Model.Comment.Count > 0)
                 {
-                    <li>
-                        <article>
-                            <footer>
-
-                                <cite>
-                                    @if (ViewBag.CurrentPersonId == item.CreatePersonId)
+                    foreach (var item in Model.Comment.OrderByDescending(o => o.CreateTime))
+                    {
+                        <li>
+                            <article>
+                                <footer>
+                                    <cite>
+                                        @if (ViewBag.CurrentPersonId == item.CreatePersonId)
                                         {
-                                        <a href='#'>您</a>
+                                            <a href='#'>您</a>
                                         }
                                         else
                                         {
-                                        <a href="/Preview/Show/"> @item.CreatePerson </a>
+                                            <a href="/Preview/Show/"> @item.CreatePerson </a>
                                         }
 
-                                </cite>
-                                <div class="comment-meta">
-                                    <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
-                                    @if (ViewBag.CurrentPersonId == item.CreatePersonId)
+                                    </cite>
+                                    <div class="comment-meta">
+                                        <time pubdate="" datetime="2012-08-06T00:18:45+00:00">@item.CreateTime.Value.ToString("yyyy年MM月dd日")</time>
+                                        @if (ViewBag.CurrentPersonId == item.CreatePersonId)
                                         {
-                                        <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
+                                            <a class="comment-reply" href="#">彩（@item.AgreeNumber）</a>
                                         }
                                         else
                                         {
-                                        <a class="comment-reply" onclick="commentReply('@item.Id');" href="#">彩（@item.AgreeNumber）</a>
+                                            <a class="comment-reply" onclick="commentReply('@item.Id');" href="#">彩（@item.AgreeNumber）</a>
                                         }
+                                    </div>
+                                </footer>
+                                <div class="comment-content">
+                                    @item.Content
                                 </div>
-                            </footer>
-                            <div class="comment-content">
-                                @item.Content
-                            </div>
-                        </article>
-                    </li>
+                            </article>
+                        </li>
                     }
+                }
             </ol>
-            }
+
         </div>
 
     </div>
@@ -95,7 +98,7 @@
                 <h3>码农有话说</h3>
                 <p><textarea class="form-control" rows="3" id="txtContent"></textarea></p>
 
-                <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent(@Model.Id);">码砖</button>
+                <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent('@Model.Id');">码砖</button>
 
 
             </aside> }
@@ -112,14 +115,16 @@
         }
         $.ajax({
             async: false,
-            url: "/api/CommentApi",
+            url: "/api/CommentApi/Post",
             type: "Post",
             data: "blogId=" + blogId + "&Content=" + Content,
             dataType: "json",
             success: function (data) {
+
                 if (data.Message == "请登录") {
                     window.location.href = "~/Login";
                 } else {
+                    alert(data.Message);
                     var comment = '<li> <article><footer> <cite><a href="#">您</a></cite> <div class="comment-meta"><time pubdate="" datetime="2012-08-06T00:18:45+00:00"> 一分钟前</time> <a class="comment-reply" href="#">彩（0）</a> </div> </footer><div class="comment-content">'
                                    + Content + "</div> </article> </li>";
                     $(".comment-list").prepend(comment);

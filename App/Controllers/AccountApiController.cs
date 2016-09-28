@@ -108,10 +108,17 @@ namespace Langben.App.Controllers
                     return result; //提示插入失败
 
                 }
+                
             }
-
-            result.Code = Common.ClientCode.FindNull;
-            result.Message = Suggestion.InsertFail + "，请核对输入的数据的格式"; //提示输入的数据的格式不对 
+            if (validationErrors != null && validationErrors.Count > 0)
+            {
+                validationErrors.All(a =>
+                {
+                    result.Message += a.ErrorMessage;
+                    return true;
+                });
+            }
+            result.Code = Common.ClientCode.FindNull;   
             return result;
         }
         /// <summary>
@@ -156,7 +163,7 @@ namespace Langben.App.Controllers
                     result.Message = "个人评价不能为空";
                     return result; //提示失败
                 }
-                if (string.IsNullOrWhiteSpace(entity.Email) || Validator.IsEmail(entity.Email))
+                if (string.IsNullOrWhiteSpace(entity.Email) || !Validator.IsEmail(entity.Email))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "电子邮箱不能为空或者格式不对";

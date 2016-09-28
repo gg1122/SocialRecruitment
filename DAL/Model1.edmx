@@ -56,6 +56,10 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="Abstract" Type="nvarchar" MaxLength="4000" />
+          <Property Name="PictureName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Picture2Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Picture3Name" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -802,6 +806,10 @@
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Comment" Relationship="SysModel.FK_COMMENT_REFERENCE_BLOG" FromRole="Blog" ToRole="Comment" />
+          <Property Name="Abstract" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="PictureName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture2Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Picture3Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -1122,6 +1130,10 @@
           <EntitySetMapping Name="Blog">
             <EntityTypeMapping TypeName="SysModel.Blog">
               <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="Picture3Name" ColumnName="Picture3Name" />
+                <ScalarProperty Name="Picture2Name" ColumnName="Picture2Name" />
+                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+                <ScalarProperty Name="Abstract" ColumnName="Abstract" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />

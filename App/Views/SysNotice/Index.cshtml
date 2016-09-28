@@ -16,7 +16,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CreateTime)
         </th>
-        <th></th>
+       
     </tr>
     @if (Model != null && Model.Count() > 0)
     {
@@ -28,15 +28,13 @@
                     @IndexNo
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Message)
+                    @(new HtmlString(item.Message))                 
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreateTime)
                 </td>
 
-                <td>                  
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
+               
             </tr>
             IndexNo = IndexNo + 1;
         }

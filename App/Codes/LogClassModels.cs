@@ -6,6 +6,8 @@ using System.Configuration;
 using Common;
 using System.IO;
 using System.Text;
+using Langben.DAL;
+using Langben.BLL;
 
 namespace Models
 {
@@ -30,11 +32,57 @@ namespace Models
 
     public class LogClassModels : System.Web.SessionState.IRequiresSessionState
     {
+        public static void WriteNotice(string message)
+        {
+            try
+            {
+                SysNotice entity = new SysNotice();
+                entity.Id = Result.GetNewId();
+                entity.CreateTime = DateTime.Now;
+
+                Langben.App.Models.Account_Resume currentAccount = null;
+                if (HttpContext.Current.Session["account"] != null)
+                {
+                    currentAccount = HttpContext.Current.Session["account"] as Langben.App.Models.Account_Resume;
+                }
+                else
+                {
+                    HttpContext.Current.Session.Clear();
+                }
+                if (currentAccount != null && currentAccount.account != null && !string.IsNullOrWhiteSpace(currentAccount.account.Name))
+                {
+                    entity.CreatePerson = currentAccount.account.Name;
+                } 
+                entity.Message = message;
+                using (SysNoticeBLL sysNoticeRepository = new SysNoticeBLL())
+                {
+                    ValidationErrors validationErrors = new ValidationErrors();
+                    sysNoticeRepository.Create(ref validationErrors, entity);
+                    return;
+                }
+            }
+            catch (Exception ep)
+            {
+                try
+                {
+                    string path = @"mylog.txt";
+                    string txtPath = System.Web.HttpContext.Current.Server.MapPath(path);//获取绝对路径
+                    using (StreamWriter sw = new StreamWriter(txtPath, true, Encoding.Default))
+                    {
+                        sw.WriteLine((ep.Message + "|" + message + "|" + GetIP() + DateTime.Now.ToString()).ToString());
+                        sw.Close();
+                    }
+                    return;
+                }
+                catch { return; }
+            }
+
+        }
         public static void WriteServiceLog(string message, string logType, LogOpration logOpration = LogOpration.Default)
         {
             try
             {
-                 //logOpration设置优先级高于配置节logEnabled
+                //logOpration设置优先级高于配置节logEnabled
                 bool logEnabled = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["LogEnabled"]);
                 if (logOpration == LogOpration.Fobid || (logOpration == LogOpration.Default && !logEnabled))
                 {

@@ -81,23 +81,6 @@ namespace Models
             string path = "/up/image/"+DateTime.Now.ToString("yyyyMMdd") + "/";
             return path;
         }
-        /// <summary>
-        /// 是否为图片文件
-        /// </summary>
-        /// <param name="_fileExt">文件扩展名，不含“.”</param>
-        private bool IsImage(string _fileExt)
-        {
-            ArrayList al = new ArrayList();
-            al.Add("bmp");
-            al.Add("jpeg");
-            al.Add("jpg");
-            al.Add("gif");
-            al.Add("png");
-            if (al.Contains(_fileExt.ToLower()))
-            {
-                return true;
-            }
-            return false;
-        }
+       
     }
 }

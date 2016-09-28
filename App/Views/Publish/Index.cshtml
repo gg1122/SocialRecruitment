@@ -24,94 +24,94 @@
 
 
 </script>
-@using (Html.BeginForm("", "api/AccountApi/Register"))
-{
-    <div class="form-horizontal">
-        @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="Title">标题</label>
-
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="Title">内容</label>
-            <div class="col-md-10">
-                <textarea id="Content" name="Content" class="ckeditor"></textarea>
-
-            </div>
-        </div>
-        <div class="form-group">
-            <div id="filePicker" class="col-md-2 control-label">首页图片</div>
-            <div id="fileList" class="col-md-10 uploader-list">
-
-            </div>
-
-
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input id="ctlBtn" type="submit" class="btn btn-lg btn-primary btn-block" value="发布" />
-            </div>
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "标题" })
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.Content, new { @class = "ckeditor" })
+    </div>
+    <div class="form-group">
+        <div id="filePicker">首页图片</div>
+        <div id="fileList" class="uploader-list">
         </div>
     </div>
-
-    <input type="hidden" id="fileUrl" value="HDpic" />
-    <input type="hidden" id="HDpic" value="HDpic" />
-}
+    <div class="form-group">
+        <input id="ctlBtn" type="button" onclick="publish();" class="btn btn-lg btn-primary btn-block" value="发布" />
+    </div>
+</div>
+<div id="hiddenPicture"></div>
 <script>
     function publish() {
-        var entity = new Object();
-        entity.Title = $("#" + fileObj).val(url);
+        var title = $("#Title").val().replace(/(^\s*)|(\s*$)/g, "");//删除左右两端的空格
+        if (title == null || title == '') {
+            alert('标题不能为空');
+            return false;
+        }
+
+        var Content = CKEDITOR.instances.Content.getData();
+        if (Content == null || Content == '') {
+            alert('内容不能为空');
+            return false;
+        }
+
+        var Abstract = CKEDITOR.instances.Content.document.getBody().getText();//取得纯文本
+        if (Abstract.length > 60) {
+            Abstract = Abstract.substring(0, 60);
+        }
+
+        var Picture = Picture2 = Picture3 = '';
+        $(".picture").each(function (index, element) {
+
+            if (index == 0) {
+                Picture = element.value;
+            } else if (index == 1) {
+                Picture2 = element.value;
+            } else if (index == 2) {
+                Picture3 = element.value;
+            }
+        });
+
         $.ajax({
-            url: "/api/Blog/Post",
-            type: "post",
+            url: "/api/BlogApi/Post",
+            type: "Post",
             dataType: "json",
-            data: { "Model": JSON.stringify(Model) },
+            data: {
+                Title: $("#Title").val(), Content: Content, Abstract: Abstract
+            , PictureName: $("#PictureName").val(), Picture2Name: $("#Picture2Name").val(), Picture3Name: $("#Picture3Name").val()
+             , Picture: Picture, Picture2: Picture2, Picture3: Picture3
+            },
             success: function (data) {
-                if (data != null && data.length > 0) {//有数据
-                    var No = 0;
-                    $.each(data, function (key, item) {
+                if (data.Code == 1) {
+                    alert('发布成功');
+                    window.location.href = '/Blog/Details/' + data.Message;
+                } else {
+                    alert('发布失败，请联系管理员ben@langben.com');
 
-
-
-                    });
                 }
-                else {//无数据
-                    // alert(data.Message);
-                }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("获取数据失败");
             }
         });
     }
-    function addFileUrl(name, url) {
-        var fileObj = $("#fileUrl").val();
-        $("#" + fileObj).val(url);
-        $("#showPic").attr("src", url);
-    }
+
     var $ = jQuery, $btn = $('#ctlBtn'), $list = $('#fileList'), state = 'pending';
-    var ValidateIndex,
-    // ä¼˜åŒ–retina, åœ¨retinaä¸‹è¿™ä¸ªå€¼æ˜¯2
-    ratio = window.devicePixelRatio || 1,
-
-    // ç¼©ç•¥å›¾å¤§å°
-    thumbnailWidth = 100 * ratio,
+    var ValidateIndex, ratio = window.devicePixelRatio || 1, thumbnailWidth = 100 * ratio,
     thumbnailHeight = 100 * ratio;
-
 
     var uploader = WebUploader.create({
 
         // 选完文件后，是否自动上传。
-        auto: false,
+        auto: true,
 
         // swf文件路径
         swf: '/Res/webuploader/Uploader.swf',
 
         // 文件接收服务端。
-        server: '/FileUploader/HDpic',
+        server: '/Publish/HDpic',
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -129,6 +129,8 @@
         fileSingleSizeLimit: 5 * 1024 * 1024
     });
     uploader.on('beforeFileQueued', function (file) {
+        if ($(".picture").length > 2) { alert("最多上传3张"); return false; }
+
         switch (file.ext.toLowerCase()) {
             case "gif": return true;
             case "jpg": return true;
@@ -136,10 +138,12 @@
             case "bmp": return true;
             case "png": return true;
         }
+
         alert("请选择图片文件");
         return false;
     });
     uploader.on('fileQueued', function (file) {
+
         var $li = $(
                 '<div id="' + file.id + '" class="file-item thumbnail col-md-4">' +
                     '<img>' +
@@ -147,7 +151,6 @@
                 '</div>'
                 ),
             $img = $li.find('img');
-
 
         // $list为容器jQuery实例
         $list.append($li);
@@ -164,34 +167,14 @@
         }, thumbnailWidth, thumbnailHeight);
 
     });
-    // 文件上传过程中创建进度条实时显示。
-    uploader.on('uploadProgress', function (file, percentage) {
-        var $li = $('#' + file.id),
-            $percent = $li.find('.progress span');
-
-        // 避免重复创建
-        if (!$percent.length) {
-            $percent = $('<p class="progress"><span></span></p>')
-                    .appendTo($li)
-                    .find('span');
-        }
-
-        $percent.css('width', percentage * 100 + '%');
-    });
-
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
     uploader.on('uploadSuccess', function (file, responseText) {
-        //$('#' + file.id).remove();
-        var validate;
+
         for (var d in responseText) {
             validate = responseText[d];
+            $("#hiddenPicture").append('<input type="hidden" class="picture" value="' + validate + '" />');
         }
-        ValidateIndex = validate.indexOf("<script");
-        if (ValidateIndex > 0) {
-            $.messager.alert('提示', '登录超时');
-        } else {
-            alert(1);
-        }
+
         uploader.reset();
     });
 
@@ -207,13 +190,8 @@
 
         $error.text('上传失败');
     });
-    $btn.on('click', function () {
-        if (state === 'uploading') {
-            uploader.stop();
-        } else {
-            uploader.upload();
-        }
-    });
+
 
 
 </script>
+ 
