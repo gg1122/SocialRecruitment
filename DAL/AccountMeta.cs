@@ -121,7 +121,7 @@ namespace Langben.DAL
         [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "邮箱格式不正确")]
         [ScaffoldColumn(true)]
 			[Display(Name = "电子邮件", Order = 20)]
-        [Required(ErrorMessage = "不能为空")]
+         
         [StringLength(400, ErrorMessage = "长度不可超过400")]
 			public object Email { get; set; }
 
