@@ -20,10 +20,10 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script> 
+    <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script>
     <link href="~/Content/pagerstyles.css" rel="stylesheet" />
-    <script src="~/Scripts/Validate.js" type="text/javascript"></script>   
-    <script src="~/Scripts/JScriptCommon.js" type="text/javascript"></script>  
+    <script src="~/Scripts/Validate.js" type="text/javascript"></script>
+    <script src="~/Scripts/JScriptCommon.js" type="text/javascript"></script>
     @RenderSection("HeadContent", false)
 
 </head>
@@ -40,28 +40,28 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav navbar-right">
-@if (Session["account"] == null)
+                    @if (Session["account"] == null)
                     {
-                    <li><a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a></li>
-                    <li><a href="~/Register" id="aTopRegister">注册</a></li>
-      }
+                        <li><a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a></li>
+                        <li><a href="~/Register" id="aTopRegister">注册</a></li>
+                    }
                     else
                     {
-                    <li><a href="~/SysNotice" style="margin-right:20px;" >我的消息</a></li>
-                    <li><a href="~/Preview">个人资料</a></li>
-                    <li><a href="~/Publish">发布博客</a></li>
-                    }  
+                        <li><a href="~/SysNotice" style="margin-right:20px;">我的消息</a></li>
+                        <li><a href="~/Preview">个人资料</a></li>
+                        <li><a href="~/Publish">发布博客</a></li>
+                    }
                 </ul>
             </div>
         </div>
     </div>
     <!--header e -->
-    
-       
-        <div class="container" style="min-height: 500px">
-            @RenderBody()
-        </div>
-   
+
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
     <div class="footer">
         <div class="container">
             <div class="row">

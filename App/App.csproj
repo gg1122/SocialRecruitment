@@ -143,6 +143,7 @@
     <Compile Include="Codes\SupportFilter.cs" />
     <Compile Include="Codes\SysFieldModels.cs" />
     <Compile Include="Codes\UploadFiles.cs" />
+    <Compile Include="Codes\Utils.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />

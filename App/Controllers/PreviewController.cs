@@ -48,6 +48,10 @@ namespace Langben.App.Controllers
                 model = m_BLL.GetPreviewInfoByAccountId(id);
 
             }
+            else
+            {
+                RedirectToAction("Blog");
+            }
             return View(model);
         }
         IBLL.IPreviewBLL m_BLL;

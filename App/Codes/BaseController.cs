@@ -69,14 +69,7 @@ namespace Models
                 {
                     currentAccount = Session["account"] as Langben.App.Models.Account_Resume;
                 }
-                else
-                {
-                    Session.Clear();
-                    Response.Redirect("/Login");
-                    Response.End();
-              
-                }
-
+                
                 return currentAccount;
             }
             set

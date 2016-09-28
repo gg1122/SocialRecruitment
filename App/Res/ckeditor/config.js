@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
     config.image_previewText = ' '; //预览区域显示内容
-    config.filebrowserImageUploadUrl = "admin/UserArticleFileUpload.do"; //待会要上传的action或servlet
+    config.filebrowserImageUploadUrl = "/Publish/CententOfImage"; //待会要上传的action或servlet
     config.toolbarGroups = [
             { name: 'basicstyles', groups: ['basicstyles'] },
               { name: 'paragraph', groups: ['list'] },

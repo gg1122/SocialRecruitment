@@ -44,10 +44,10 @@ namespace Langben.App.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [SupportFilter]
+       
         public ActionResult Details(string id)
         {
-            if (string.IsNullOrWhiteSpace(this.CurrentPerson)|| string.IsNullOrWhiteSpace(id) )
+            if (string.IsNullOrWhiteSpace(id) )
             {
                 return View();
             }
