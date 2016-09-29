@@ -84,8 +84,7 @@ namespace Langben.App.Controllers
                     {
                         LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 
                         result.Code = Common.ClientCode.Succeed;
-                        result.Message ="注册成功";
-                        result.Url = "../Person";//(正式需要修改)注册成功后，跳转到填写简历
+                        result.Message ="注册成功"; 
                         Langben.App.Models.Account_Resume ar = new Account_Resume();
 
                         ar.account = entity;

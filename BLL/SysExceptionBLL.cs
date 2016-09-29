@@ -90,18 +90,10 @@ namespace Langben.BLL
         /// <param name="entity">一个异常处理</param>
         /// <returns></returns>
         public bool Create(ref ValidationErrors validationErrors, SysException entity)
-        {
-            try
-            {
+        { 
                 repository.Create(entity);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                validationErrors.Add(ex.Message);
-                ExceptionsHander.WriteExceptions(ex);                
-            }
-            return false;
+                return true; 
+             
         }
         /// <summary>
         ///  创建异常处理集合

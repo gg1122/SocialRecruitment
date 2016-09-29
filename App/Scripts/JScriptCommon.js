@@ -1,4 +1,8 @@
-﻿//获取数组索引
+﻿
+//去除左右空格
+function trimStr(str)
+{ return str.replace(/(^\s*)|(\s*$)/g, ""); }
+//获取数组索引
 function GetArrIndex(arr, val) {
     var r = -1;
     for (var i = 0; i < arr.length; i++) {
