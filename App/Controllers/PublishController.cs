@@ -20,9 +20,9 @@ namespace Langben.App.Controllers
     {
         public ActionResult Edit(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(id)|| string.IsNullOrWhiteSpace(CurrentPerson))
             {
-                return RedirectToAction("/Acount");
+                return RedirectToAction("Index","Login");
             }
             else
             {
@@ -38,13 +38,17 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-
+            if (string.IsNullOrWhiteSpace(CurrentPerson))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
 
         }
         [HttpPost]
         public string CententOfImage(string CKEditorFuncNum)//上传博客内容的图片
         {
+            string url = System.Web.HttpContext.Current.Request.Url.Host;
             // CKEditor提交的很重要的一个参数  
             String callback = Request.Form["CKEditorFuncNum"];
             System.Web.HttpPostedFileBase pstFile = Request.Files["upload"];
@@ -52,7 +56,7 @@ namespace Langben.App.Controllers
             UploadFiles upFiles = new UploadFiles();
             string msg = upFiles.fileSaveAs(pstFile, upfile);
             string outPut = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum;
-            outPut += ",'http://localhost:55977" + msg + "','')</script>";
+            outPut += ",'" +url+ msg + "','')</script>";
             // 返回"图像"选项卡并显示图片  request.getContextPath()为web项目名   
 
 

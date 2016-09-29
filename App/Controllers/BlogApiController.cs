@@ -52,7 +52,7 @@ namespace Langben.App.Controllers
                 if (m_BLL.Create(ref validationErrors, entity))
                 {
                                     
-                    LogClassModels.WriteNotice("你成功的发布了博客<a href='/Blog/Details/" + entity.Id + "'>" + entity.Title + "</a>，<a  class='btn btn-default' href='/Publish/Edit/" + entity.Id + "'>修改</a>");//写入消息
+                    LogClassModels.WriteNotice("你成功的秀出了<a href='/Blog/Details/" + entity.Id + "'>" + entity.Title + "</a>，<a  class='btn btn-default' href='/Publish/Edit/" + entity.Id + "'>修改</a>");//写入消息
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = entity.Id;
                     return result; //提示创建成功

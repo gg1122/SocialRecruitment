@@ -151,7 +151,6 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SysExceptionController.cs" />
     <Compile Include="Controllers\SysFieldController.cs" />
     <Compile Include="Controllers\SysLogController.cs" />
