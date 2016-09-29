@@ -192,7 +192,7 @@ namespace Langben.App.Controllers
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
                     CurrentAccount.account = model;//重新设置Session
-                    result.Url = "/DegreeSchool/Index";
+                    result.Url = "/DegreeSchool";
                     return result; //提交成功
                 }
                 else

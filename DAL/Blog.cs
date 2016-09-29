@@ -22,10 +22,14 @@ namespace Langben.DAL
         public string Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string Abstract { get; set; }
         public Nullable<int> CommentNumber { get; set; }
         public Nullable<int> ReadNumber { get; set; }
         public string Picture3 { get; set; }
         public string Picture2 { get; set; }
+        public string PictureName { get; set; }
+        public string Picture2Name { get; set; }
+        public string Picture3Name { get; set; }
         public string Picture { get; set; }
         public Nullable<int> Sort { get; set; }
         public string State { get; set; }
@@ -34,10 +38,6 @@ namespace Langben.DAL
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public byte[] Version { get; set; }
-        public string Abstract { get; set; }
-        public string PictureName { get; set; }
-        public string Picture2Name { get; set; }
-        public string Picture3Name { get; set; }
     
         public virtual ICollection<Comment> Comment { get; set; }
     }

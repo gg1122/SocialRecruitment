@@ -52,12 +52,11 @@
             <div class="col-sm-5">
                 <select class="form-control input-inline" id="ddlUseTime">
                     <option value="">-- 请选择 --</option>
-                    <option value="10">3个月</option>
-                    <option value="20">6个月</option>
-                    <option value="30">1年</option>
-                    <option value="40">2年</option>
-                    <option value="50">3-5年</option>
-                    <option value="60">5年以上</option>
+                    <option value="3个月">3个月</option>                   
+                    <option value="1年">1年</option>
+                    <option value="2年">2年</option>
+                    <option value="3-5年">3-5年</option>
+                    <option value="5年以上">5年以上</option>
                 </select>
             </div>
         </div>
@@ -66,9 +65,9 @@
             <div class="col-sm-9">
                 <select class="form-control  input-inline" id="ddlProficiency">
                     <option value="">-- 请选择 --</option>
-                    <option value="10">一般</option>
-                    <option value="20">熟练</option>
-                    <option value="30">精通</option>
+                    <option value="一般">一般</option>
+                    <option value="熟练">熟练</option>
+                    <option value="精通">精通</option>
                 </select>
             </div>
         </div>
@@ -98,14 +97,7 @@
         //列表
         GetList();
 
-        //技能
-        GetAbility("ITAbility", "Ability", "#txtAbility");
-
-        //使用时间
-        GetSysField("#ddlUseTime", "ITAbility", "UseTime");
-
-        //熟练程度
-        GetSysField("#ddlProficiency", "ITAbility", "Proficiency");
+         
 
 
 

@@ -16,9 +16,9 @@ namespace Langben.DAL
     {
         public string Id { get; set; }
         public string ResumeId { get; set; }
+        public string PictureUrl { get; set; }
         public string PictureName { get; set; }
         public string ResumeName { get; set; }
-        public string PictureUrl { get; set; }
         public string ResumeUrl { get; set; }
         public Nullable<int> Sort { get; set; }
         public string State { get; set; }

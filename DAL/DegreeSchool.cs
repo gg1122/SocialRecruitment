@@ -32,8 +32,6 @@ namespace Langben.DAL
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public byte[] Version { get; set; }
-        public string ProfessionalTypeRemark { get; set; }
-        public string SchoolNameRemark { get; set; }
     
         public virtual Resume Resume { get; set; }
     }

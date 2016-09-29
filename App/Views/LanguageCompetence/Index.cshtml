@@ -46,8 +46,8 @@
             <label class="col-sm-3 control-label">语言名称</label>
             <div class="col-sm-5">
                 <select class="form-control input-inline" id="ddlLanguage">
-                    <option value="10">英语</option>
-                    <option value="20">德语</option>                   
+                    <option value="英语">英语</option>
+                    <option value="日语">日语</option>                   
                 </select>
             </div>
         </div>
@@ -55,10 +55,10 @@
             <label class="col-sm-3 control-label">语言水平<span class="required"> </span></label>
             <div class="col-sm-9">
                 <select class="form-control  input-inline" id="ddlLevel">
-                    <option value="10">母语</option>
-                    <option value="20">流利</option>
-                    <option value="30">可面试</option>
-                    <option value="40">简单会话</option>
+                    <option value="母语">母语</option>
+                    <option value="流利">流利</option>
+                    <option value="可面试">可面试</option>
+                    <option value="简单会话">简单会话</option>
                 </select>
             </div>
         </div>
@@ -88,11 +88,11 @@
         //列表
         GetList();       
 
-        //语言
-        GetSysField("#ddlLanguage", "LanguageCompetence", "Language");
+        ////语言
+        //GetSysField("#ddlLanguage", "LanguageCompetence", "Language");
 
-        //语言水平
-        GetSysField("#ddlLevel", "LanguageCompetence", "Level");
+        ////语言水平
+        //GetSysField("#ddlLevel", "LanguageCompetence", "Level");
 
 
 

@@ -928,6 +928,7 @@
     <Content Include="Res\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="Res\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="Res\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <None Include="Properties\PublishProfiles\SocialRecruitment.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
