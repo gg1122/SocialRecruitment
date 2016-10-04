@@ -21,9 +21,7 @@
     <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script>
 
-    <script type="text/javascript" src="~/Scripts/JScriptCommon.js"></script>
-    @RenderSection("HeadContent", false)
-
+    
 </head>
 <body>
     <div class="navbar navbar-default">
@@ -41,7 +39,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["account"] == null)
                     {
-                        <li><a href="~/Login" style="margin-right:20px;" id="aTopLogin">登录</a></li>
+                        <li><a href="~/Logon" style="margin-right:20px;" id="aTopLogin">登录</a></li>
                         <li><a href="~/Register" id="aTopRegister">注册</a></li>
                     }
                     else

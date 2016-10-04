@@ -17,7 +17,7 @@ namespace Langben.App.Controllers
     /// <summary>
     /// 会员
     /// </summary>
-    public class LoginController : BaseController
+    public class LogonController : BaseController
     {
 
         /// <summary>
@@ -92,10 +92,10 @@ namespace Langben.App.Controllers
 
         ValidationErrors validationErrors = new ValidationErrors();
 
-        public LoginController()
+        public LogonController()
             : this(new AccountBLL()) { }
 
-        public LoginController(AccountBLL bll)
+        public LogonController(AccountBLL bll)
         {
             m_BLL = bll;
         }

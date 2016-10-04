@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using Models;
 using Common;
 using Langben.DAL;
@@ -16,7 +14,35 @@ namespace Langben.App.Controllers
     /// </summary>
     public class AccountApiController : BaseApiController
     {
+        public Common.ClientResult.Result Logon([FromBody]Langben.App.Models.LogonModel logonModel)
+        {
+            Common.ClientResult.Result result = new Common.ClientResult.Result();          
 
+            if (ModelState.IsValid)
+            { 
+                DAL.Account model = m_BLL.ValidateUser(logonModel.PersonName, logonModel.Password);
+                if (model != null)
+                {//登录成功
+                    Common.Account account = new Common.Account();
+                    account.Name = model.Name;
+                    account.PersonName = model.MyName;
+                    account.Id = model.Id;                    
+                    Utils.WriteCookie("account", account, 7);
+                    result.Code = Common.ClientCode.Succeed;
+                }
+                else
+                {
+                    result.Code = Common.ClientCode.FindNull;
+                }
+            }
+            else
+            {
+                result.Code = Common.ClientCode.Fail;
+                
+            }            
+            return result;
+
+        }
         /// <summary>
         /// 注册
         /// </summary>
@@ -26,7 +52,7 @@ namespace Langben.App.Controllers
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
 
-            if (model != null && ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 DAL.Account entity = new DAL.Account();
 

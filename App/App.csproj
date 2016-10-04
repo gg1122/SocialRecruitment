@@ -136,6 +136,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Codes\AccountModels.cs" />
     <Compile Include="Codes\BaseApiController.cs" />
     <Compile Include="Codes\BaseController.cs" />
     <Compile Include="Codes\IP.cs" />
@@ -147,7 +148,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LogonController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="HtmlHelper\CheckBoxListHelper.cs" />
     <Compile Include="HtmlHelper\Easyui.cs" />
     <Compile Include="HtmlHelper\RadioButtonListHelper.cs" />
+    <Compile Include="Models\LogOnModel.cs" />
     <Compile Include="Models\BlogDetailsModel.cs" />
     <Compile Include="Models\Account_Resume.cs" />
     <Compile Include="Models\EmptyClass.cs" />
@@ -970,7 +972,7 @@
     <Content Include="Views\InternshipExperience\Index.cshtml" />
     <Content Include="Views\Preview\Index.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Logon\Index.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Preview\Show.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
