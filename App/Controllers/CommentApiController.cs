@@ -47,8 +47,8 @@ namespace Langben.App.Controllers
                 string returnValue = string.Empty;
                 if (m_BLL.Create(ref validationErrors, entity))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，评论的信息的Id为" + entity.Id, "评论"
-                        );//写入日志 
+                    LogClassModels.WriteNotice("你成功的码了一层砖<a href='/Blog/Details/" + entity.BlogId + "'>" + entity.Content + "</a>");//写入消息
+
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = Suggestion.InsertSucceed;
                     return result; //提示创建成功
