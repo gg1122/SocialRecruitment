@@ -23,7 +23,6 @@ namespace Langben.App.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [SupportFilter]
         public ActionResult Index(string id)
         { 
             int pIndex = 1;

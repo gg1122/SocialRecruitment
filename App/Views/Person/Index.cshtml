@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">现在所在地<span class="required">*</span></label>
+                <label class="col-sm-3 control-label">现在居住地<span class="required">*</span></label>
                 <div class="col-sm-5">
                     @Html.DropDownListFor(model => model.LiveProvince, Models.SysFieldModels.GetSysField("Account", "LiveProvince"), "请选择", new { @class = "form-control  input-inline" })
         
@@ -74,7 +74,7 @@
         <!--表单结束 -->
     </div>
 
-
+    @Html.HiddenFor(model => model.PhoneNumber)
 
 }
 <div>
@@ -82,9 +82,38 @@
 </div>
 
 <script type="text/javascript">
-
+    function ajaxFrom(form, url) {
+        $.ajax({
+            url: url,
+            type: "Post",
+            data: $(form).serialize(),
+            dataType: "json",
+            success: function (data) {
+               
+                if (data.Code == 1) {
+                    window.location.href = "../DegreeSchool";
+                } else {
+                    alert(data.Message);
+                    $("input[type='submit']").attr('disabled', false);
+                }
+               
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("操作失败")
+                $("input[type='submit']").attr('disabled', false);
+                return false;
+            }
+        });
+    }
+   
     $(function () {
-
+        $("form").submit(function (form) {
+            if (form.result) {
+                $("input[type='submit']").attr('disabled', true);
+                ajaxFrom(this, this.action);
+            }
+            return false;
+        });
 
         //getAnmeldenCity("#AnmeldenCity");
         $("#AnmeldenProvince").change(function () { getAnmeldenCity("#AnmeldenCity"); });

@@ -24,8 +24,7 @@ namespace Langben.App.Controllers
                 if (model != null)
                 {//登录成功
                     Common.Account account = new Common.Account();
-                    account.Name = model.Name;
-                    account.PersonName = model.MyName;
+                    account.Name = model.Name;              
                     account.Id = model.Id;                    
                     Utils.WriteCookie("account", account, 7);
                     result.Code = Common.ClientCode.Succeed;
@@ -110,10 +109,14 @@ namespace Langben.App.Controllers
                     {
                         LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 
                         result.Code = Common.ClientCode.Succeed;
-                        result.Message ="注册成功"; 
-                        Langben.App.Models.Account_Resume ar = new Account_Resume();
 
-                        ar.account = entity;
+                        Common.Account account = new Common.Account();
+                        account.Name = model.Name;                        
+                        account.Id = entity.Id;
+                        Utils.WriteCookie("account", account, 7);
+
+                        Langben.App.Models.Account_Resume ar = new Account_Resume();
+                         
                         ar.resume = ResumeModel;
                         CurrentAccount = ar;
                         return result; //提示创建成功
@@ -178,7 +181,7 @@ namespace Langben.App.Controllers
                 if (string.IsNullOrWhiteSpace(entity.LiveCity))
                 {
                     result.Code = Common.ClientCode.Fail;
-                    result.Message = "现在所在地不能为空";
+                    result.Message = "现在居住地不能为空";
                     return result; //提示失败
                 }
 
@@ -198,7 +201,11 @@ namespace Langben.App.Controllers
                 {
                     return null;
                 }
-                DAL.Account model = m_BLL.GetById(CurrentAccount.account.Id);
+                if (CurrentPerson != entity.CreatePerson)
+                {
+                    return null;
+                }
+                DAL.Account model = m_BLL.GetById(CurrentPersonId);
                 model.AnmeldenCity = entity.AnmeldenCity;
                 model.AnmeldenProvince = entity.AnmeldenProvince;
                 model.Email = entity.Email;
@@ -216,8 +223,8 @@ namespace Langben.App.Controllers
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
-                    CurrentAccount.account = model;//重新设置Session
-                    result.Url = "/DegreeSchool";
+                   
+                    result.Url = "/";
                     return result; //提交成功
                 }
                 else

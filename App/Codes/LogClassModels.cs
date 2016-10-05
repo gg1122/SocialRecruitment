@@ -40,19 +40,13 @@ namespace Models
                 entity.Id = Result.GetNewId();
                 entity.CreateTime = DateTime.Now;
 
-                Langben.App.Models.Account_Resume currentAccount = null;
-                if (HttpContext.Current.Session["account"] != null)
+                var account = AccountModel.GetCurrentAccount();
+                if (account != null && !string.IsNullOrWhiteSpace(account.Name))
                 {
-                    currentAccount = HttpContext.Current.Session["account"] as Langben.App.Models.Account_Resume;
+                    entity.CreatePerson = account.Name;
+                    entity.AccountId = account.Id;
                 }
-                else
-                {
-                    HttpContext.Current.Session.Clear();
-                }
-                if (currentAccount != null && currentAccount.account != null && !string.IsNullOrWhiteSpace(currentAccount.account.Name))
-                {
-                    entity.CreatePerson = currentAccount.account.Name;
-                } 
+             
                 entity.Message = message;
                 using (SysNoticeBLL sysNoticeRepository = new SysNoticeBLL())
                 {

@@ -107,6 +107,7 @@
     <Compile Include="CommentRepository.cs" />
     <Compile Include="Recruitment\CommentRepository.cs" />
     <Compile Include="Recruitment\PreviewRepository.cs" />
+    <Compile Include="Recruitment\SysNoticeRepository.cs" />
     <Compile Include="Resume.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

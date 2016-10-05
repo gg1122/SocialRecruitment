@@ -27,16 +27,15 @@ namespace Models
         {
             get
             {
-                Langben.App.Models.Account_Resume account = CurrentAccount;
-                if (account != null && account.account != null && !string.IsNullOrWhiteSpace(account.account.Id))
+                var account = AccountModel.GetCurrentAccount();
+                if (account != null && !string.IsNullOrWhiteSpace(account.Id))
                 {
-                    return account.account.Id;
+                    return account.Id;
+
                 }
                 return string.Empty;
             }
-
-        }       
-
+        }
         /// <summary>
         /// 获取当前登陆人的名称
         /// </summary>
@@ -45,15 +44,14 @@ namespace Models
         {
             get
             {
-                Langben.App.Models.Account_Resume account = CurrentAccount;
-                if (account != null && account.account != null && !string.IsNullOrWhiteSpace(account.account.Name))
+                var account = AccountModel.GetCurrentAccount();
+                if (account != null && !string.IsNullOrWhiteSpace(account.Name))
                 {
-                    return account.account.Name;
+                    return account.Name;
+
                 }
                 return string.Empty;
             }
-
-
         }
         /// <summary>
         /// 获取当前登陆人的账户信息

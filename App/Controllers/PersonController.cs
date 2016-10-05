@@ -19,7 +19,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class PersonController : BaseController
     {
-       
+
         /// <summary>
         /// 首次编辑
         /// </summary>
@@ -27,13 +27,15 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-            if (CurrentAccount != null)
+            if (String.IsNullOrWhiteSpace(CurrentPersonId))
             {
-                ViewBag.Id = CurrentAccount.account.Id;
-                DAL.Account model = m_BLL.GetById(ViewBag.Id);
+                return RedirectToAction("Blog");
+            }
+            else
+            {
+                DAL.Account model = m_BLL.GetById(CurrentPersonId);
                 return View(model);
             }
-            return View();
         }
         /// <summary>
         /// 编辑保存
@@ -41,9 +43,9 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public ActionResult EditSave([FromBody]DAL.Account entity)
         {
-            if (CurrentAccount == null)
+            if (String.IsNullOrWhiteSpace(CurrentPersonId))
             {
-                return null;
+                return RedirectToAction("Blog");
             }
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null)
@@ -84,7 +86,7 @@ namespace Langben.App.Controllers
                     result.Message = "个人评价不能为空";
                     return Json(result); //提示失败
                 }
-                DAL.Account model = m_BLL.GetById(CurrentAccount.account.Id);
+                DAL.Account model = m_BLL.GetById(CurrentPersonId);
                 model.AnmeldenCity = entity.AnmeldenCity;
                 model.AnmeldenProvince = entity.AnmeldenProvince;
                 model.Email = entity.Email;
@@ -127,7 +129,7 @@ namespace Langben.App.Controllers
             result.Message = Suggestion.UpdateFail + "，请核对输入的数据的格式"; //提示输入的数据的格式不对 
             return Json(result);
         }
-       
+
         IBLL.IAccountBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();

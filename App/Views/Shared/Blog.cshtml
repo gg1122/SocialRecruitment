@@ -14,14 +14,13 @@
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  
+
     <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/JScriptForm.js"></script>
 
-    
+
 </head>
 <body>
     <div class="navbar navbar-default">
@@ -31,22 +30,23 @@
                 <a href="~/">
                     <img class="logo" src="~/images/logo.png" alt="" style="width: 207px;" />
                 </a>
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main"> 
-                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                 </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav navbar-right">
-                    @if (Session["account"] == null)
-                    {
-                        <li><a href="~/Logon" style="margin-right:20px;" id="aTopLogin">登录</a></li>
-                        <li><a href="~/Register" id="aTopRegister">注册</a></li>
-                    }
-                    else
+                    @if (HttpContext.Current.Request.Cookies != null && HttpContext.Current.Request.Cookies["account"] != null)
                     {
                         <li><a href="~/SysNotice" style="margin-right:20px;">我的消息</a></li>
                         <li><a href="~/Preview">个人资料</a></li>
                         <li><a href="~/Publish">炫技</a></li>
+
+                    }
+                    else
+                    {
+                        <li><a href="~/Logon" style="margin-right:20px;" id="aTopLogin">登录</a></li>
+                        <li><a href="~/Register" id="aTopRegister">注册</a></li>
                     }
                 </ul>
             </div>

@@ -62,6 +62,7 @@
     <Compile Include="Recruitment\IFileUploaderBLL.cs" />
     <Compile Include="Recruitment\IITAbilityBLL.cs" />
     <Compile Include="Recruitment\IPreviewBLL.cs" />
+    <Compile Include="Recruitment\ISysNoticeBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

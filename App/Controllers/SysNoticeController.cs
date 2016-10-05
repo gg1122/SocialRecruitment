@@ -26,54 +26,10 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-            var data = m_BLL.GetAll().OrderByDescending(o=>o.CreateTime);
+            var data = m_BLL.GetByAccountId(CurrentPersonId);
             return View(data);
         }
-        /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 查看详细
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Details(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-
-        }
-
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter]
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-        }
+       
         IBLL.ISysNoticeBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();
