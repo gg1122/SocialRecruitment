@@ -31,8 +31,7 @@ namespace Langben.App.Controllers
         }
        
         IBLL.ISysNoticeBLL m_BLL;
-
-        ValidationErrors validationErrors = new ValidationErrors();
+         
 
         public SysNoticeController()
             : this(new SysNoticeBLL()) { }

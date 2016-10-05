@@ -38,35 +38,7 @@ namespace Models
                 }
                 return string.Empty;                
             }
-        }
-        /// <summary>
-        /// 获取当前登陆人的账户信息
-        /// </summary>
-        /// <returns>账户信息</returns>
-        public Langben.App.Models.Account_Resume CurrentAccount
-        {
-            get
-            {
-                Langben.App.Models.Account_Resume currentAccount = null;
-
-                if (HttpContext.Current.Session["account"] != null)
-                {
-                    currentAccount = HttpContext.Current.Session["account"] as Langben.App.Models.Account_Resume;
-                }
-                else
-                {
-                    HttpContext.Current.Session.Clear();
-                 
-                }
-
-                return currentAccount;
-            }
-            set
-            {
-                HttpContext.Current.Session["account"] = value;
-            }
-
-        }
+        } 
 
         
         public class GetDataParam

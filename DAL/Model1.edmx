@@ -93,8 +93,8 @@
           <Property Name="ProfessionalType1" Type="nvarchar" MaxLength="200" />
           <Property Name="ProfessionalType2" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Education" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="SchoolNameRemark" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ProfessionalTypeRemark" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SchoolNameRemark" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProfessionalTypeRemark" Type="nvarchar" MaxLength="200" />
           <Property Name="Degree" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Sort" Type="int" />
           <Property Name="State" Type="varchar" MaxLength="200" />
@@ -661,8 +661,8 @@
           <Property Name="ProfessionalType1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ProfessionalType2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Education" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolNameRemark" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ProfessionalTypeRemark" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolNameRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProfessionalTypeRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Degree" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Sort" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />

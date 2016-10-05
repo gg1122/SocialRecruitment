@@ -27,52 +27,7 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-        
-            return View();
-        }
-         /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
 
-            return View();
-        }
-
-        /// <summary>
-        /// 查看详细
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SupportFilter]  
-        public ActionResult Details(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-
-        }
- 
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        { 
-            
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter] 
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
             return View();
         }
 
@@ -80,15 +35,12 @@ namespace Langben.App.Controllers
         /// 获取列表
         /// </summary>
         /// <returns></returns>
+        [SupportFilter]
         public string GetList()
         {
-            if (CurrentAccount!=null && CurrentAccount.resume != null)
-            {
-                List<InternshipExperience> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
-                return JsonObj.ObjToJson(list);
+            List<InternshipExperience> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+            return JsonObj.ObjToJson(list);
 
-            }
-            return null;
         }
         /// <summary>
         /// 创建保存
@@ -107,10 +59,8 @@ namespace Langben.App.Controllers
                     if (entity != null && ModelState.IsValid)
                     {
 
-                        if (CurrentAccount != null)
-                        {
-                            entity.ResumeId = CurrentAccount.resume.Id;
-                        }
+                        entity.ResumeId = CurrentResumeId;
+
                         entity.Id = Result.GetNewId();
                         entity.CreateTime = DateTime.Now;
                         entity.CreatePerson = CurrentPerson;

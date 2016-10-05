@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
- 
+
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using System.IO;
- 
+
 using System.Text.RegularExpressions;
 using Common;
 
@@ -134,21 +134,16 @@ namespace Models
         {
             string result = string.Empty;
             BinaryFormatter bf = new BinaryFormatter();
-            try
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    bf.Serialize(ms, obj);
-                    byte[] byt = new byte[ms.Length];
-                    byt = ms.ToArray();
-                    result = Convert.ToBase64String(byt);
-                    ms.Flush();
-                }
-            }
-            catch (Exception ex)
-            {
 
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                byte[] byt = new byte[ms.Length];
+                byt = ms.ToArray();
+                result = Convert.ToBase64String(byt);
+                ms.Flush();
             }
+
             return result;
         }
 

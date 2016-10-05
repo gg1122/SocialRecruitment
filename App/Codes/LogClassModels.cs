@@ -86,20 +86,20 @@ namespace Models
                 {
                     //此处实现日志的记录
 
-                    //SysLog sysLog = new SysLog();
-                    //sysLog.Id = Result.GetNewId();
-                    //sysLog.CreateTime = DateTime.Now;
-                    //sysLog.Ip = GetIP();
-                    //sysLog.Message = message;
-                    //sysLog.CreatePerson = AccountModel.GetCurrentPerson();
-                    //sysLog.MenuId = logType;//哪个模块生成的日志
+                    SysLog sysLog = new SysLog();
+                    sysLog.Id = Result.GetNewId();
+                    sysLog.CreateTime = DateTime.Now;
+                    sysLog.Ip = GetIP();
+                    sysLog.Message = message;
+                    sysLog.CreatePerson = AccountModel.GetCurrentPerson();
+                    sysLog.MenuId = logType;//哪个模块生成的日志
 
-                    //using (SysLogBLL sysLogRepository = new SysLogBLL())
-                    //{
-                    //    ValidationErrors validationErrors = new ValidationErrors();
-                    //    sysLogRepository.Create(ref validationErrors, sysLog);
-                    //    return;
-                    //}
+                    using (SysLogBLL sysLogRepository = new SysLogBLL())
+                    {
+                        ValidationErrors validationErrors = new ValidationErrors();
+                        sysLogRepository.Create(ref validationErrors, sysLog);
+                        return;
+                    }
                 }
             }
             catch (Exception ep)

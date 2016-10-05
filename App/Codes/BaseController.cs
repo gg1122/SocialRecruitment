@@ -57,24 +57,19 @@ namespace Models
         /// 获取当前登陆人的账户信息
         /// </summary>
         /// <returns>账户信息</returns>
-        public Langben.App.Models.Account_Resume CurrentAccount
+        public string CurrentResumeId
         {
             get
             {
-                Langben.App.Models.Account_Resume currentAccount = null;
-
-                if (Session["account"] != null)
+                var account = AccountModel.GetCurrentAccount();
+                if (account != null && !string.IsNullOrWhiteSpace(account.ResumeId))
                 {
-                    currentAccount = Session["account"] as Langben.App.Models.Account_Resume;
-                }
-                
-                return currentAccount;
-            }
-            set
-            {
-                Session["account"] = value;
-            }
+                    return account.ResumeId;
 
+                }
+                return string.Empty;
+            }
+            
         }
 
         public BaseController()

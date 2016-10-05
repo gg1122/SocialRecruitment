@@ -145,7 +145,6 @@
     <Compile Include="Codes\SysFieldModels.cs" />
     <Compile Include="Codes\UploadFiles.cs" />
     <Compile Include="Codes\Utils.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\LogonController.cs" />
@@ -957,7 +956,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Shared\Blog.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Blog\Details.cshtml" />
@@ -975,7 +973,6 @@
     <Content Include="Views\Logon\Index.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Preview\Show.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Publish\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1007,7 +1004,6 @@
     <Compile Include="Controllers\BlogApiController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CommentApiController.cs" />
-    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DegreeSchoolApiController.cs" />
     <Compile Include="Controllers\DegreeSchoolController.cs" />
@@ -1027,7 +1023,6 @@
     <Compile Include="Controllers\SysExceptionApiController.cs" />
     <Compile Include="Controllers\SysFieldApiController.cs" />
     <Compile Include="Controllers\SysLogApiController.cs" />
-    <Compile Include="Controllers\SysNoticeApiController.cs" />
     <Compile Include="Controllers\SysNoticeController.cs" />
   </ItemGroup>
   <PropertyGroup>

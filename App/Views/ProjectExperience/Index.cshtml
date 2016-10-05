@@ -8,7 +8,7 @@
 <div class="col-md-9 column">
     <h4 class="breadcrumb">
         谁没参加几个脑残的项目
-    </h4> 
+    </h4>
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
         <tr id="trTitle">
@@ -24,7 +24,7 @@
             <td id="tdBeginDate"> 2016-05-31 </td>
             <td id="tdEndDate"> 2016-07-01 </td>
             <td id="tdProjectName">电商网 </td>
-            <td id="tdJob"> 架构师 </td>          
+            <td id="tdJob"> 架构师 </td>
             <td><a href="#" id="aEdit" class="btn btn-link btn-xs " title="编辑"><i class="fa fa-pencil-square-o"></i><span class="sr-only">编辑</span></a> | <a id="aDelete" href="#" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a></td>
 
 
@@ -64,26 +64,26 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">项目名称<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtProjectName"  />                 
-                </div>
+            <div class="col-sm-9">
+                 
+                    <input type="text" class="form-control" id="txtProjectName" />
+              
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">职务<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtJob" />
-                </div>
+            <div class="col-sm-9">
+              
+                    <input type="text" class="form-control" id="txtJob" />
+               
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">项目简述<span class="required">* </span></label>
-            <div class=" col-sm-9">
-                <div class="">
-                    <textarea class="form-control" rows="3"  id="txtProjectDescription"></textarea>
-                </div>
+            <div class="col-sm-9">
+             
+                    <textarea class="form-control" rows="3" id="txtProjectDescription"></textarea>
+                
             </div>
         </div>
         <hr>
@@ -146,7 +146,7 @@
                         else {
                             $tr.find("#tdEndDate").html("");
                         }
-                        $tr.find("#tdProjectName").html(item.ProjectName); //项目名称                     
+                        $tr.find("#tdProjectName").html(item.ProjectName); //项目名称
                         $tr.find("#tdJob").html(item.Job); //职务
                         //编辑
                         $tr.find('#aEdit').click(function () {
@@ -211,7 +211,7 @@
         if (trimStr(ProjectDescription) == "") {
             Message += "项目描述不能为空\n\r";
         }
-        
+
         if (Message != "") {
             alert(Message);
             return false;
@@ -238,7 +238,7 @@
             var ProjectName = $("#txtProjectName").val();
             var Job = $("#txtJob").val();
             var ProjectDescription = $("#txtProjectDescription").val();
-            
+
             var ResumeId = $("#hideResumeId").val();
             var Sort = $("#hideSort").val();
             var State = $("#hideState").val();
@@ -253,7 +253,7 @@
                             ',"IsNow": "' + IsNow + '"' +
                             ',"ProjectName": "' + ProjectName + '"' +
                             ',"Job": "' + Job + '"' +
-                            ',"ProjectDescription": "' + ProjectDescription + '"' +                            
+                            ',"ProjectDescription": "' + ProjectDescription + '"' +
                             ',"ResumeId":"' + ResumeId + '"' +
                             ',"Sort":"' + Sort + '"' +
                             ',"State":"' + State + '"' +
@@ -312,7 +312,7 @@
                     $("#txtProjectName").val(data.ProjectName);
                     $("#txtJob").val(data.Job);
                     $("#txtProjectDescription").val(data.ProjectDescription);
-                   
+
                     $("#hideResumeId").val(data.ResumeId);
                     $("#hideSort").val(data.Sort);
                     $("#hideCreateTime").val(jsonDateTimeFormat(data.CreateTime));

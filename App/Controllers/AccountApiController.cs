@@ -16,16 +16,19 @@ namespace Langben.App.Controllers
     {
         public Common.ClientResult.Result Logon([FromBody]Langben.App.Models.LogonModel logonModel)
         {
-            Common.ClientResult.Result result = new Common.ClientResult.Result();          
+            Common.ClientResult.Result result = new Common.ClientResult.Result();
 
             if (ModelState.IsValid)
-            { 
+            {
                 DAL.Account model = m_BLL.ValidateUser(logonModel.PersonName, logonModel.Password);
                 if (model != null)
                 {//登录成功
+                    IBLL.IResumeBLL rBll = new ResumeBLL();
+                    var data = rBll.GetByAccountID(model.Id).FirstOrDefault();
                     Common.Account account = new Common.Account();
-                    account.Name = model.Name;              
-                    account.Id = model.Id;                    
+                    account.Name = model.Name;
+                    account.Id = model.Id;
+                    account.ResumeId = data.Id;
                     Utils.WriteCookie("account", account, 7);
                     result.Code = Common.ClientCode.Succeed;
                 }
@@ -37,8 +40,8 @@ namespace Langben.App.Controllers
             else
             {
                 result.Code = Common.ClientCode.Fail;
-                
-            }            
+
+            }
             return result;
 
         }
@@ -111,14 +114,10 @@ namespace Langben.App.Controllers
                         result.Code = Common.ClientCode.Succeed;
 
                         Common.Account account = new Common.Account();
-                        account.Name = model.Name;                        
+                        account.ResumeId = ResumeModel.Id;
+                        account.Name = model.PhoneNumber;
                         account.Id = entity.Id;
                         Utils.WriteCookie("account", account, 7);
-
-                        Langben.App.Models.Account_Resume ar = new Account_Resume();
-                         
-                        ar.resume = ResumeModel;
-                        CurrentAccount = ar;
                         return result; //提示创建成功
                     }
                     if (validationErrors != null && validationErrors.Count > 0)
@@ -136,7 +135,7 @@ namespace Langben.App.Controllers
                     return result; //提示插入失败
 
                 }
-                
+
             }
             if (validationErrors != null && validationErrors.Count > 0)
             {
@@ -146,7 +145,7 @@ namespace Langben.App.Controllers
                     return true;
                 });
             }
-            result.Code = Common.ClientCode.FindNull;   
+            result.Code = Common.ClientCode.FindNull;
             return result;
         }
         /// <summary>
@@ -197,13 +196,11 @@ namespace Langben.App.Controllers
                     result.Message = "电子邮箱不能为空或者格式不对";
                     return result; //提示失败
                 }
-                if (CurrentAccount == null)
+                if (CurrentPerson != entity.PhoneNumber)
                 {
-                    return null;
-                }
-                if (CurrentPerson != entity.CreatePerson)
-                {
-                    return null;
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "请登录";
+                    return result; //提示失败
                 }
                 DAL.Account model = m_BLL.GetById(CurrentPersonId);
                 model.AnmeldenCity = entity.AnmeldenCity;
@@ -223,7 +220,7 @@ namespace Langben.App.Controllers
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
-                   
+
                     result.Url = "/";
                     return result; //提交成功
                 }

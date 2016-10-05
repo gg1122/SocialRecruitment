@@ -23,6 +23,10 @@ namespace Common
         /// </summary>
         [DataMember]
         public string Name { get; set; }
-       
+        /// <summary>
+        /// 默认简历主键
+        /// </summary>
+        [DataMember]
+        public string ResumeId { get; set; }
     }
 }
