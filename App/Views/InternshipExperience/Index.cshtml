@@ -166,13 +166,13 @@
                             $tr.find("#tdBeginDate").html(""); //开始日期
                         }
                         if (item.IsNow != null && item.IsNow == "Y") {
-                            $tr.find("#tdEndDate").html(""); //结束日期
+                            $tr.find("#tdEndDate").html("至今"); //结束日期
                         }
                         else if (item.EndDate != null && item.EndDate.length >= 10) {
                             $tr.find("#tdEndDate").html(item.EndDate.substring(0, 10)); //结束日期
                         }
                         else {
-                            $tr.find("#tdEndDate").html("");
+                            $tr.find("#tdEndDate").html("至今");
                         }
                         $tr.find("#tdCompanyName").html(item.CompanyName); //公司名称
                         $tr.find("#tdJob").html(item.Job); //职务

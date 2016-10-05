@@ -27,21 +27,22 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         [SupportFilter]
         public ActionResult Index()
-        { 
-                List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentResumeId);
-                return View(list);
-            
+        {
+            List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+            return View(list);
+
         }
 
         /// <summary>
         /// 获取列表
         /// </summary>
         /// <returns></returns>
-        [SupportFilter]public string GetList()
-        { 
-                List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentResumeId);
-                return JsonObj.ObjToJson(list);
- 
+        [SupportFilter]
+        public string GetList()
+        {
+            List<DegreeSchool> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+            return JsonObj.ObjToJson(list);
+
         }
         /// <summary>
         /// 查看详细
@@ -69,7 +70,7 @@ namespace Langben.App.Controllers
             return jsonStr;
         }
 
-      
+
         /// <summary>
         /// 创建保存
         /// </summary>
@@ -140,67 +141,47 @@ namespace Langben.App.Controllers
         /// 编辑保存
         /// </summary>
         /// <returns></returns>
-        public ActionResult EditSave()
+        public ActionResult EditSave(Langben.DAL.DegreeSchool entity)
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-            try
-            {
-                if (Request["Model"] != null)
+
+            if (entity != null && ModelState.IsValid)
+            {   //数据校验
+
+                entity.UpdateTime = DateTime.Now;
+                entity.UpdatePerson = CurrentPerson;
+
+                string returnValue = string.Empty;
+                if (m_BLL.Edit(ref validationErrors, entity))
                 {
-                    string json = Request["Model"].ToString();
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    Langben.DAL.DegreeSchool entity = js.Deserialize<Langben.DAL.DegreeSchool>(json);
-                    if (entity != null && ModelState.IsValid)
-                    {   //数据校验
-
-                        entity.UpdateTime = DateTime.Now;
-                        entity.UpdatePerson = CurrentPerson;
-
-                        string returnValue = string.Empty;
-                        if (m_BLL.Edit(ref validationErrors, entity))
-                        {
-                            LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，学历学校信息的Id为" + entity.Id, "学历学校"
-                                );//写入日志                   
-                            result.Code = Common.ClientCode.Succeed;
-                            result.Message = Suggestion.UpdateSucceed;
-                            //return result; //提示更新成功 
-                        }
-                        else
-                        {
-                            if (validationErrors != null && validationErrors.Count > 0)
-                            {
-                                validationErrors.All(a =>
-                                {
-                                    returnValue += a.ErrorMessage;
-                                    return true;
-                                });
-                            }
-                            LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，学历学校信息的Id为" + entity.Id + "," + returnValue, "学历学校");//写入日志   
-                            result.Code = Common.ClientCode.Fail;
-                            result.Message = Suggestion.UpdateFail + returnValue;
-                            //return result; //提示更新失败
-                        }
-                    }
-                    else
-                    {
-                        result.Code = Common.ClientCode.FindNull;
-                        result.Message = Suggestion.UpdateFail + "请核对输入的数据的格式";
-                        //return result; //提示输入的数据的格式不对   
-                    }
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，学历学校信息的Id为" + entity.Id, "学历学校"
+                        );//写入日志                   
+                    result.Code = Common.ClientCode.Succeed;
+                    result.Message = Suggestion.UpdateSucceed;
+                    //return result; //提示更新成功 
                 }
                 else
                 {
-                    result.Code = Common.ClientCode.FindNull;
-                    result.Message = Suggestion.UpdateFail + "请核对输入的数据的格式";
-                    //return result; //提示输入的数据的格式不对   
+                    if (validationErrors != null && validationErrors.Count > 0)
+                    {
+                        validationErrors.All(a =>
+                        {
+                            returnValue += a.ErrorMessage;
+                            return true;
+                        });
+                    }
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，学历学校信息的Id为" + entity.Id + "," + returnValue, "学历学校");//写入日志   
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = Suggestion.UpdateFail + returnValue;
+                    //return result; //提示更新失败
                 }
             }
-            catch (Exception ex)
+            else
             {
                 result.Code = Common.ClientCode.FindNull;
-                result.Message = Suggestion.UpdateFail + ex.Message;
-                //return result; //提示输入的数据的格式不对  
-            }
+                result.Message = Suggestion.UpdateFail + "请核对输入的数据的格式";
+                //return result; //提示输入的数据的格式不对   
+            } 
             return Json(result);
         }
         /// <summary>
@@ -256,7 +237,7 @@ namespace Langben.App.Controllers
         ValidationErrors validationErrors = new ValidationErrors();
 
         public DegreeSchoolController()
-            : this(new DegreeSchoolBLL()) { }
+                : this(new DegreeSchoolBLL()) { }
 
         public DegreeSchoolController(DegreeSchoolBLL bll)
         {

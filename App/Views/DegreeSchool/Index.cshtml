@@ -214,13 +214,13 @@
                             $tr.find("#tdBeginDate").html(""); //开始日期
                         }
                         if (item.IsNow != null && item.IsNow == "Y") {
-                            $tr.find("#tdEndDate").html(""); //结束日期
+                            $tr.find("#tdEndDate").html("至今"); //结束日期
                         }
                         else if (item.EndDate != null && item.EndDate.length >= 10) {
                             $tr.find("#tdEndDate").html(item.EndDate.substring(0, 10)); //结束日期
                         }
                         else {
-                            $tr.find("#tdEndDate").html("");
+                            $tr.find("#tdEndDate").html("至今");
                         }
                         //$tr.find("#tdSchoolName").html(item.SchoolArea + "【" + item.SchoolName + "】"); //学校
                         //$tr.find("#tdProfessionalType2").html(item.ProfessionalType1 + "【" + item.ProfessionalType2 + "】"); //专业
@@ -360,41 +360,21 @@
             var CreateTime = $("#hideCreateTime").val();
             var CreatePerson = $("#hideCreatePerson").val();
 
-            //var Model=  jQuery.parseJSON('{"BeginDate": "'+BeginDate+'", "EndDate": "'+EndDate+'", "IsNow": "'+IsNow+'", "SchoolArea": "'+SchoolArea+'", "SchoolName": "'+SchoolName+'", "ProfessionalType1": "'+ProfessionalType1+'", "ProfessionalType2": "'+ProfessionalType2+'", "Education": "'+Education+'", "Degree": "'+Degree+'" }');
-            var Model = jQuery.parseJSON('{ ' +
-                            '"Id":"' + Id + '"' +
-                            ',"BeginDate": "' + BeginDate + '"' +
-                            ',"EndDate": "' + EndDate + '"' +
-                            ',"IsNow": "' + IsNow + '"' +
-                            ',"SchoolArea": "' + SchoolArea + '"' +
-                            ',"SchoolName": "' + SchoolName + '"' +
-                            ',"SchoolNameRemark": "' + SchoolNameRemark + '"' +
-                            ',"ProfessionalType1": "' + ProfessionalType1 + '"' +
-                            ',"ProfessionalType2": "' + ProfessionalType2 + '"' +
-                            ',"ProfessionalTypeRemark": "' + ProfessionalTypeRemark + '"' +
-                            ',"Education": "' + Education + '"' +
-                            ', "Degree": "' + Degree + '"' +
-                            ',"ResumeId":"' + ResumeId + '"' +
-                            ',"Sort":"' + Sort + '"' +
-                            ',"State":"' + State + '"' +
-                            ',"CreateTime":"' + CreateTime + '"' +
-                           ',"CreatePerson":"' + CreatePerson + '"' +
-            '}');
+           
             var url = "/DegreeSchool/CreateSave"
             if (Op == "Edit") {
                 url = "/DegreeSchool/EditSave"
             }
-
             $.ajax({
                 url: url,
                 type: "post",
                 dataType: "json",
-                data: {
+                data: {Id:Id,
                     BeginDate: BeginDate, EndDate: EndDate, IsNow: IsNow,
                     SchoolArea: SchoolArea, SchoolName: SchoolName, ProfessionalType1: ProfessionalType1, ProfessionalType2: ProfessionalType2,
-                    Education: Education, Degree: Degree, ProfessionalTypeRemark: ProfessionalTypeRemark, SchoolNameRemark: 'd'
-                },
-                // data: { "Model": JSON.stringify(Model) },
+                    Education: Education, Degree: Degree, ProfessionalTypeRemark: ProfessionalTypeRemark, SchoolNameRemark: SchoolNameRemark,
+                    ResumeId: ResumeId, Sort: Sort, State: State, CreateTime: CreateTime, CreatePerson: CreatePerson
+                }, 
                 success: function (data) {
                     if (data.Code == 1) {//成功
                         alert("操作成功");
