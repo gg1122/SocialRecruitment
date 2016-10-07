@@ -43,6 +43,7 @@ namespace Langben.DAL
         public virtual DbSet<SysField> SysField { get; set; }
         public virtual DbSet<SysLog> SysLog { get; set; }
         public virtual DbSet<SysNotice> SysNotice { get; set; }
+        public virtual DbSet<Invite> Invite { get; set; }
     
         public virtual ObjectResult<string> Proc_Update_Resume_CompletionPercentage(string resumeId, string accountId)
         {

@@ -22,7 +22,7 @@ namespace Common
         /// 绰号
         /// </summary>
         [DataMember]
-        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
         /// <summary>
         /// 默认简历主键
         /// </summary>

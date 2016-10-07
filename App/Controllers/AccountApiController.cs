@@ -26,7 +26,7 @@ namespace Langben.App.Controllers
                     IBLL.IResumeBLL rBll = new ResumeBLL();
                     var data = rBll.GetByAccountID(model.Id).FirstOrDefault();
                     Common.Account account = new Common.Account();
-                    account.Name = model.Name;
+                    account.PhoneNumber = model.Name;
                     account.Id = model.Id;
                     account.ResumeId = data.Id;
                     Utils.WriteCookie("account", account, 7);
@@ -53,98 +53,39 @@ namespace Langben.App.Controllers
         public Common.ClientResult.Result Register([FromBody]Langben.App.Models.RegisterModel model)
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-
+            string message = string.Empty;
             if (ModelState.IsValid)
             {
-                DAL.Account entity = new DAL.Account();
-
-                if (string.IsNullOrWhiteSpace(model.Name))
+                if (string.IsNullOrWhiteSpace(model.InviteCode))
                 {
-                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "邀请码不能为空";
+                }
+                else if (string.IsNullOrWhiteSpace(model.Name))
+                {
                     result.Message = "绰号不能为空";
-                    return result; //提示失败
                 }
-                else
+                else if (!Common.Validator.IsMobile(model.PhoneNumber))
                 {
-                    entity.Name = model.Name.Trim();
-                }
-                if (!Common.Validator.IsMobile(model.PhoneNumber))
-                {
-                    result.Code = Common.ClientCode.Fail;
                     result.Message = "手机号码格式不正确";
-                    return result; //提示失败
+                }
+                else if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
+                {
+                    result.Message = "密码长度至少6位";
                 }
                 else
                 {
-                    entity.PhoneNumber = model.PhoneNumber.ToString();
-                }
-
-                if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
-                {
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = "密码不能为空或长度至少6位";
-                    return result; //提示失败
-                }
-                else
-                {
-                    entity.Password = EncryptAndDecrypte.EncryptString(model.Password);//加密;
-                }
-                entity.LogonIP = IP.GetIP();
-                entity.CreateTime = DateTime.Now;
-                entity.UpdateTime = entity.CreateTime;
-                entity.Id = Result.GetNewId();
-
-                string returnValue = string.Empty;
-                if (m_BLL.Create(ref validationErrors, entity))
-                {//事务
-                    IBLL.IResumeBLL rBll = new ResumeBLL();
-                    Resume ResumeModel = new Resume();
-                    ResumeModel.AccountId = entity.Id;
-                    ResumeModel.CreateTime = entity.CreateTime;
-                    ResumeModel.Id = Result.GetNewId();
-                    ResumeModel.Name = "默认";
-                    ResumeModel.Remark = "注册账号自动创建";
-                    ResumeModel.Sort = 0;
-                    ResumeModel.State = StateEnums.QY;
-                    ResumeModel.UpdateTime = ResumeModel.CreateTime;
-                    ResumeModel.CompletionPercentage = 0;
-                    if (rBll.Create(ref validationErrors, ResumeModel))
+                    Common.Account account = m_BLL.Register(model.Name.Trim(), model.PhoneNumber.Trim(), model.Password.Trim(), model.InviteCode, ref message);
+                    result.Message = message;
+                    if (string.IsNullOrWhiteSpace(message))
                     {
-                        LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 
-                        result.Code = Common.ClientCode.Succeed;
-
-                        Common.Account account = new Common.Account();
-                        account.ResumeId = ResumeModel.Id;
-                        account.Name = model.PhoneNumber;
-                        account.Id = entity.Id;
                         Utils.WriteCookie("account", account, 7);
+                        result.Code = Common.ClientCode.Succeed;
                         return result; //提示创建成功
                     }
-                    if (validationErrors != null && validationErrors.Count > 0)
-                    {
-                        validationErrors.All(a =>
-                        {
-                            returnValue += a.ErrorMessage;
-                            return true;
-                        });
-                    }
-                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，会员的信息，" + returnValue, "会员"
-                        );//写入日志                      
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = Suggestion.InsertFail + returnValue;
-                    return result; //提示插入失败
 
                 }
+            }
 
-            }
-            if (validationErrors != null && validationErrors.Count > 0)
-            {
-                validationErrors.All(a =>
-                {
-                    result.Message += a.ErrorMessage;
-                    return true;
-                });
-            }
             result.Code = Common.ClientCode.FindNull;
             return result;
         }
@@ -220,8 +161,7 @@ namespace Langben.App.Controllers
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
-
-                    result.Url = "/";
+                     
                     return result; //提交成功
                 }
                 else

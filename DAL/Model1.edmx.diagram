@@ -28,6 +28,7 @@
         <AssociationConnector Association="SysModel.FK_ITABILIT_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_LANGUAGE_REFERENCE_RESUME" />
         <AssociationConnector Association="SysModel.FK_PROJECTE_REFERENCE_RESUME" />
+        <EntityTypeShape EntityType="SysModel.Invite" Width="1.5" PointX="13.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

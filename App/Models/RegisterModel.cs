@@ -11,6 +11,11 @@ namespace Langben.App.Models
     /// </summary>
     public class RegisterModel
     {
+        [Display(Name = "邀请码")]
+        [Required(ErrorMessage = "邀请码不能为空")]
+        [StringLength(200, ErrorMessage = "长度不可超过200")]
+        public string InviteCode { get; set; }
+
         [Display(Name = "绰号")]
         [Required(ErrorMessage = "绰号不能为空")]
         [StringLength(200, ErrorMessage = "长度不可超过200")]

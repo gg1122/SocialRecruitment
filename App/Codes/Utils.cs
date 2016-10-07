@@ -157,18 +157,13 @@ namespace Models
         {
             T t = default(T);
             BinaryFormatter bf = new BinaryFormatter();
-            try
-            {
-                byte[] byt = Convert.FromBase64String(str);
-                using (MemoryStream ms = new MemoryStream(byt, 0, byt.Length))
-                {
-                    t = bf.Deserialize(ms) as T;
-                }
-            }
-            catch (Exception ex)
-            {
 
+            byte[] byt = Convert.FromBase64String(str);
+            using (MemoryStream ms = new MemoryStream(byt, 0, byt.Length))
+            {
+                t = bf.Deserialize(ms) as T;
             }
+
             return t;
         }
 

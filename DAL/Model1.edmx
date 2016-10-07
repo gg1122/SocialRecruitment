@@ -145,6 +145,18 @@
           <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="200" />
+          <Property Name="State" Type="varchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreatePerson" Type="varchar" MaxLength="200" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdatePerson" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="ITAbility">
           <Key>
             <PropertyRef Name="Id" />
@@ -437,6 +449,7 @@
           <EntitySet Name="DegreeSchool" EntityType="Self.DegreeSchool" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FileUploader" EntityType="Self.FileUploader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InternshipExperience" EntityType="Self.InternshipExperience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invite" EntityType="Self.Invite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITAbility" EntityType="Self.ITAbility" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguageCompetence" EntityType="Self.LanguageCompetence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectExperience" EntityType="Self.ProjectExperience" Schema="dbo" store:Type="Tables" />
@@ -559,6 +572,7 @@
             <End Role="Resume" EntitySet="Resume" />
             <End Role="ProjectExperience" EntitySet="ProjectExperience" />
           </AssociationSet>
+          <EntitySet Name="Invite" EntityType="SysModel.Invite" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -975,6 +989,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1324,6 +1350,19 @@
                 <ScalarProperty Name="LostTime" ColumnName="LostTime" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invite">
+            <EntityTypeMapping TypeName="SysModel.Invite">
+              <MappingFragment StoreEntitySet="Invite">
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

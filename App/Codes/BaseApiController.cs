@@ -31,9 +31,9 @@ namespace Models
             get
             {
                 var account = AccountModel.GetCurrentAccount();
-                if (account != null && !string.IsNullOrWhiteSpace(account.Name))
+                if (account != null && !string.IsNullOrWhiteSpace(account.PhoneNumber))
                 {
-                    return account.Name;
+                    return account.PhoneNumber;
 
                 }
                 return string.Empty;                
