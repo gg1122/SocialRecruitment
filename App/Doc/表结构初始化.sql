@@ -1055,7 +1055,7 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
-   '实习经验',
+   '工作经验',
    'user', @CurrentUser, 'table', 'InternshipExperience'
 go
 

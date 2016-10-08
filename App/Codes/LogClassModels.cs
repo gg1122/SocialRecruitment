@@ -41,9 +41,9 @@ namespace Models
                 entity.CreateTime = DateTime.Now;
 
                 var account = AccountModel.GetCurrentAccount();
-                if (account != null && !string.IsNullOrWhiteSpace(account.PhoneNumber))
+                if (account != null && !string.IsNullOrWhiteSpace(account.Name))
                 {
-                    entity.CreatePerson = account.PhoneNumber;
+                    entity.CreatePerson = account.Name;
                     entity.AccountId = account.Id;
                 }
              

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2005                    */
-/* Created on:     2016/9/29 11:00:03                           */
+/* Created on:     2016/10/8 9:25:47                            */
 /*==============================================================*/
 
 
@@ -184,6 +184,13 @@ if exists (select 1
 go
 
 if exists (select 1
+            from  sysobjects
+           where  id = object_id('Invite')
+            and   type = 'U')
+   drop table Invite
+go
+
+if exists (select 1
             from  sysindexes
            where  id    = object_id('LanguageCompetence')
             and   name  = 'Index_ResumeId_State'
@@ -229,22 +236,6 @@ if exists (select 1
            where  id = object_id('Resume')
             and   type = 'U')
    drop table Resume
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('SysAnnouncement')
-            and   name  = 'Index_State'
-            and   indid > 0
-            and   indid < 255)
-   drop index SysAnnouncement.Index_State
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('SysAnnouncement')
-            and   type = 'U')
-   drop table SysAnnouncement
 go
 
 if exists (select 1
@@ -343,7 +334,8 @@ create table Account (
    UpdatePerson         varchar(200)         null,
    Version              timestamp            null,
    constraint PK_ACCOUNT primary key nonclustered (Id)
-         on "PRIMARY"
+         on "PRIMARY",
+   constraint AK_KEY_2_ACCOUNT unique (PhoneNumber)
 )
 on "PRIMARY"
 go
@@ -1076,6 +1068,8 @@ create table DegreeSchool (
    ProfessionalType1    nvarchar(200)        null,
    ProfessionalType2    nvarchar(200)        not null,
    Education            nvarchar(200)        not null,
+   SchoolNameRemark     nvarchar(200)        null,
+   ProfessionalTypeRemark nvarchar(200)        null,
    Degree               nvarchar(200)        not null,
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
@@ -1255,6 +1249,44 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Education'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'SchoolNameRemark')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolNameRemark'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'DropDown',
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolNameRemark'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ProfessionalTypeRemark')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalTypeRemark'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'DropDown',
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalTypeRemark'
 go
 
 if exists(select 1 from sys.extended_properties p where
@@ -2210,6 +2242,153 @@ State ASC
 go
 
 /*==============================================================*/
+/* Table: Invite                                                */
+/*==============================================================*/
+create table Invite (
+   Id                   nvarchar(36)         not null default newid(),
+   Code                 nvarchar(200)        null,
+   State                varchar(200)         null default '启用',
+   CreateTime           datetime             null default getdate(),
+   CreatePerson         varchar(200)         null,
+   UpdateTime           datetime             null default getdate(),
+   UpdatePerson         varchar(200)         null,
+   constraint PK_INVITE primary key (Id)
+)
+on "PRIMARY"
+go
+
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('Invite') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'Invite' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '邀请码', 
+   'user', @CurrentUser, 'table', 'Invite'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'Id'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'Id'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'State'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'State'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreateTime'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreateTime'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreatePerson'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreatePerson'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdateTime'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdateTime'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdatePerson'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdatePerson'
+go
+
+/*==============================================================*/
 /* Table: LanguageCompetence                                    */
 /*==============================================================*/
 create table LanguageCompetence (
@@ -2879,184 +3058,6 @@ go
 /*==============================================================*/
 create index Index_AccountId_State on Resume (
 AccountId ASC,
-State ASC
-)
-go
-
-/*==============================================================*/
-/* Table: SysAnnouncement                                       */
-/*==============================================================*/
-create table SysAnnouncement (
-   Id                   nvarchar(36)         not null,
-   Title                nvarchar(100)        null,
-   Message              nvarchar(4000)       null,
-   Sort                 int                  null default 0,
-   State                varchar(200)         null default '启用',
-   CreateTime           datetime             null default getdate(),
-   CreatePerson         varchar(200)         null,
-   UpdateTime           datetime             null default getdate(),
-   UpdatePerson         varchar(200)         null,
-   Version              timestamp            null,
-   constraint PK_SYSANNOUNCEMENT primary key nonclustered (Id)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
-
-if exists (select 1 from  sys.extended_properties
-           where major_id = object_id('SysAnnouncement') and minor_id = 0)
-begin 
-   declare @CurrentUser sysname 
-select @CurrentUser = user_name() 
-execute sp_dropextendedproperty 'MS_Description',  
-   'user', @CurrentUser, 'table', 'SysAnnouncement' 
- 
-end 
-
-
-select @CurrentUser = user_name() 
-execute sp_addextendedproperty 'MS_Description',  
-   '公告管理', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Sort'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Sort'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'State'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'State'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreateTime'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreateTime'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreatePerson'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreatePerson'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdateTime'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdateTime'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdatePerson'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdatePerson'
-go
-
-if exists(select 1 from sys.extended_properties p where
-      p.major_id = object_id('SysAnnouncement')
-  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
-)
-begin
-   declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_dropextendedproperty 'MS_Description', 
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Version'
-
-end
-
-
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Version'
-go
-
-/*==============================================================*/
-/* Index: Index_State                                           */
-/*==============================================================*/
-create index Index_State on SysAnnouncement (
 State ASC
 )
 go

@@ -26,7 +26,7 @@ namespace Langben.App.Controllers
                     IBLL.IResumeBLL rBll = new ResumeBLL();
                     var data = rBll.GetByAccountID(model.Id).FirstOrDefault();
                     Common.Account account = new Common.Account();
-                    account.PhoneNumber = model.Name;
+                    account.Name = model.Name;
                     account.Id = model.Id;
                     account.ResumeId = data.Id;
                     Utils.WriteCookie("account", account, 7);
@@ -64,7 +64,7 @@ namespace Langben.App.Controllers
                 {
                     result.Message = "绰号不能为空";
                 }
-                else if (!Common.Validator.IsMobile(model.PhoneNumber))
+                else if ((string.IsNullOrWhiteSpace(model.PhoneNumber)) || (model.PhoneNumber.Substring(0, 1) != "1") || (model.PhoneNumber.Length != 11))
                 {
                     result.Message = "手机号码格式不正确";
                 }
@@ -161,7 +161,7 @@ namespace Langben.App.Controllers
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
-                     
+
                     return result; //提交成功
                 }
                 else

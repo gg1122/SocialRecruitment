@@ -36,7 +36,7 @@ namespace Langben.BLL
                     if (dataAccount == null)
                     {
                         data.State = StateEnums.JY;
-                        data.UpdatePerson = phoneNumber;
+                        data.UpdatePerson = name;
                         data.UpdateTime = DateTime.Now;
                         Invite invite = new Invite()
                         {
@@ -45,7 +45,7 @@ namespace Langben.BLL
                             State = StateEnums.QY
                             ,
                             CreateTime = DateTime.Now,
-                            CreatePerson = phoneNumber
+                            CreatePerson = name
                         };
                         db.Invite.Add(invite);
                         Invite invite2 = new Invite()
@@ -55,7 +55,7 @@ namespace Langben.BLL
                             State = StateEnums.QY
         ,
                             CreateTime = DateTime.Now,
-                            CreatePerson = phoneNumber
+                            CreatePerson = name
                         };
                         db.Invite.Add(invite2);
                         var account = new DAL.Account()
@@ -76,7 +76,7 @@ namespace Langben.BLL
                             Id = Common.Result.GetNewId(),
                             AccountId = account.Id,
                             CreateTime = DateTime.Now,
-                            CreatePerson = phoneNumber,
+                            CreatePerson = name,
                             Name = "默认",
                             Remark = "注册账号自动创建",
                             Sort = 0,
@@ -87,7 +87,7 @@ namespace Langben.BLL
 
                         SysNotice notice = new SysNotice();
                         notice.Id = Result.GetNewId();
-                        notice.CreatePerson = phoneNumber;
+                        notice.CreatePerson = name;
                         notice.CreateTime = DateTime.Now;
                         notice.AccountId = account.Id;
                         notice.Message = "您的邀请码为：" + invite.Code + "，另一个为：" + invite2.Code;
@@ -97,7 +97,7 @@ namespace Langben.BLL
 
                         Common.Account accountCommon = new Common.Account();
                         accountCommon.ResumeId = resume.Id;
-                        accountCommon.PhoneNumber = phoneNumber;
+                        accountCommon.Name = name;
                         accountCommon.Id = account.Id;
                         return accountCommon;
 

@@ -7,7 +7,7 @@
 
 <div class="col-md-9 column">
     <h4 class="breadcrumb">
-        实习的生活其实只有苟且！
+        工作的生活其实不只有苟且！
     </h4>
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
@@ -175,6 +175,8 @@
                         }
                         $tr.find("#tdCompanyName").html(item.CompanyName); //公司名称
                         $tr.find("#tdJob").html(item.Job); //职务
+                        $tr.find("#tdCompanyNature").html(item.CompanyNature); //公司性质
+                        $tr.find("#tdCompanyScale").html(item.CompanyScale); //公司规模
                         //编辑
                         $tr.find('#aEdit').click(function () {
                             EditShow(item.Id)

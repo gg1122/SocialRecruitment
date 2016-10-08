@@ -23,9 +23,9 @@ namespace Models
         public static string GetCurrentPerson()
         {
             Common.Account account = GetCurrentAccount();
-            if (account != null && !string.IsNullOrWhiteSpace(account.PhoneNumber))
+            if (account != null && !string.IsNullOrWhiteSpace(account.Name))
             {
-                return account.PhoneNumber;
+                return account.Name;
             }
             return string.Empty;
         }
