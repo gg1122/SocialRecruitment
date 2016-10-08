@@ -18,30 +18,22 @@ namespace Langben.App.Controllers
     /// </summary>
     public class PublishController : BaseController
     {
+        [SupportFilter]
         public ActionResult Edit(string id)
         {
-            if (string.IsNullOrWhiteSpace(id)|| string.IsNullOrWhiteSpace(CurrentPerson))
-            {
-                return RedirectToAction("Index","Login");
-            }
-            else
-            {
                 Blog item = m_BLL.GetById(id);
 
                 return View(item);
-            }
-
+          
         }
         /// <summary>
         /// 第一次加载
         /// </summary>
         /// <returns></returns>
+        [SupportFilter]
         public ActionResult Index()
         {
-            if (string.IsNullOrWhiteSpace(CurrentPerson))
-            {
-                return RedirectToAction("Index", "Login");
-            }
+          
             return View();
 
         }
@@ -56,7 +48,7 @@ namespace Langben.App.Controllers
             UploadFiles upFiles = new UploadFiles();
             string msg = upFiles.fileSaveAs(pstFile, upfile);
             string outPut = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum;
-            outPut += ",'" +url+ msg + "','')</script>";
+            outPut += ",'" + msg + "','')</script>";
             // 返回"图像"选项卡并显示图片  request.getContextPath()为web项目名   
 
 

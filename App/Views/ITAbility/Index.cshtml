@@ -41,10 +41,8 @@
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
             <label class="col-sm-3 control-label">技能<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" style="width:300px" id="txtAbility" />
-                </div>
+            <div class="col-sm-5">                
+                    <input type="text" class="form-control input-inline" id="txtAbility" />               
             </div>
         </div>
         <div class="form-group">
@@ -62,7 +60,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">熟练程度<span class="required">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-5">
                 <select class="form-control  input-inline" id="ddlProficiency">
                     <option value="">-- 请选择 --</option>
                     <option value="一般">一般</option>
@@ -92,15 +90,9 @@
 <script type="text/javascript">
     var $tbList = $('#tbList');
     var $trList = $('#trList');
-    $(function () {
-      
+    $(function () {      
         //列表
-        GetList();
-
-         
-
-
-
+        GetList();    
     });
     //技能
     var defaultcountry = [];
@@ -138,7 +130,7 @@
 
                 }
                 else {//无数据
-                    // alert(data.Message);
+                     alert("出错了");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -151,7 +143,6 @@
         $("#tbList").find("tr").each(function (i, data) {
             if (i > 1) {
                 $(this).remove();
-
             }
         });
         $.ajax({

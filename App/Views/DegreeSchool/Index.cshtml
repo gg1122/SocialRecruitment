@@ -46,7 +46,7 @@
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
             <label class="col-sm-3 control-label">开始日期<span class="required">*</span></label>
-            <div class=" col-sm-5">
+            <div class="col-sm-5">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtBeginDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtBeginDate' })"><i class="fa fa-calendar"></i></span>
@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">结束日期<span class="required">*</span></label>
-            <div class=" col-sm-6">
+            <div class="col-sm-6">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtEndDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtEndDate' })"><i class="fa fa-calendar"></i></span>
@@ -67,31 +67,33 @@
 
         <div class="form-group">
             <label class="col-sm-3 control-label">学校<span class="required">*</span></label>
-            <div class="col-md-9">
-                <select class="form-control  input-inline" id="ddlSchoolArea" style="max-width:105px">
+            <div class="col-md-5">
+                <select class="form-control  input-inline" id="ddlSchoolArea" >
                     <option>请选择</option>
                     <option>北京</option>
                     <option>河北</option>
                 </select>
-                <select class="form-control  input-inline" id="ddlSchoolName" style="max-width:200px;">
+            </div>  <div class="col-sm-4">
+                <select class="form-control  input-inline" id="ddlSchoolName">
                     <option>请选择</option>
                 </select>
-                <input type="text" class="form-control input-inline" id="txtSchoolNameRemark" style="display:none;margin-left:330px;margin-top:-55px" />
+                <input type="text" class="form-control input-inline" id="txtSchoolNameRemark" style="display:none;" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label">专业<span class="required">*</span></label>
             <div class="col-sm-5">
-                <select class="form-control  input-inline" id="ddlProfessionalType1" style="max-width:105px">
+                <select class="form-control  input-inline" id="ddlProfessionalType1">
                     <option>请选择</option>
                     <option>哲学类</option>
                     <option>经济学类</option>
                 </select>
-                <select class="form-control  input-inline" id="ddlProfessionalType2" style="max-width:200px;">
+            </div>  <div class="col-sm-4">
+                <select class="form-control  input-inline" id="ddlProfessionalType2">
                     <option>请选择</option>
                 </select>
-                <input type="text" class="form-control input-inline" id="txtProfessionalTypeRemark" style="display:none;margin-left:330px;margin-top:-55px" />
+                <input type="text" class="form-control input-inline" id="txtProfessionalTypeRemark" style="display:none;" />
             </div>
         </div>
 
@@ -112,7 +114,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">学位<span class="required">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-5">
                 <select class="form-control  input-inline" id="ddlDegree">
                     <option value="">请选择</option>
                     <option value="10">无</option>
