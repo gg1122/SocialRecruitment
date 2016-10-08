@@ -1,5 +1,4 @@
-﻿
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 namespace Models
 {
     public class SupportFilter
@@ -14,13 +13,18 @@ namespace Models
         /// <param name="filterContext">请求上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
-            //if (filterContext.HttpContext.Session["account"] == null)
-            //{
-            //    filterContext.HttpContext.Response.Write(" <script type='text/javascript'> window.top.location='Account'; </script>");
-            //    filterContext.Result = new EmptyResult();
-            //    return;
-            //}
+            if (System.Web.HttpContext.Current.Request.Cookies == null)
+            {
+                filterContext.HttpContext.Response.Write(" <script type='text/javascript'> window.top.location='/'; </script>");
+                filterContext.Result = new EmptyResult();
+                return;
+            }
+            if (System.Web.HttpContext.Current.Request.Cookies != null && System.Web.HttpContext.Current.Request.Cookies["account"] == null)
+            {
+                filterContext.HttpContext.Response.Write(" <script type='text/javascript'> window.top.location='/'; </script>");
+                filterContext.Result = new EmptyResult();
+                return;
+            }
 
         }
 

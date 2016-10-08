@@ -15,10 +15,7 @@ namespace Common
         {
             public ClientCode Code { get; set; }
             public string Message { get; set; }
-            /// <summary>
-            /// 跳转地址
-            /// </summary>
-            public string Url { get; set; }
+     
         }
 
         /// <summary>

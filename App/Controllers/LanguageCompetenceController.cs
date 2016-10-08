@@ -27,10 +27,10 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-        
+
             return View();
         }
-         /// <summary>
+        /// <summary>
         /// 列表
         /// </summary>
         /// <returns></returns>
@@ -43,22 +43,20 @@ namespace Langben.App.Controllers
         /// 获取列表
         /// </summary>
         /// <returns></returns>
+        [SupportFilter]
         public string GetList()
         {
-            if (CurrentAccount!=null && CurrentAccount.resume != null)
-            {
-                List<LanguageCompetence> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
-                return JsonObj.ObjToJson(list);
+            List<LanguageCompetence> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+            return JsonObj.ObjToJson(list);
 
-            }
-            return null;
+
         }
         /// <summary>
         /// 查看详细
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [SupportFilter]  
+        [SupportFilter]
         public ActionResult Details(string id)
         {
             ViewBag.Id = id;
@@ -93,11 +91,9 @@ namespace Langben.App.Controllers
                     Langben.DAL.LanguageCompetence entity = js.Deserialize<Langben.DAL.LanguageCompetence>(json);
                     if (entity != null && ModelState.IsValid)
                     {
-
-                        if (CurrentAccount != null)
-                        {
-                            entity.ResumeId = CurrentAccount.resume.Id;
-                        }
+                         
+                            entity.ResumeId = CurrentResumeId;
+                        
                         entity.Id = Result.GetNewId();
                         entity.CreateTime = DateTime.Now;
                         entity.CreatePerson = CurrentPerson;
@@ -267,8 +263,8 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         [SupportFilter]
         public ActionResult Create(string id)
-        { 
-            
+        {
+
             return View();
         }
 
@@ -277,7 +273,7 @@ namespace Langben.App.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns> 
-        [SupportFilter] 
+        [SupportFilter]
         public ActionResult Edit(string id)
         {
             ViewBag.Id = id;

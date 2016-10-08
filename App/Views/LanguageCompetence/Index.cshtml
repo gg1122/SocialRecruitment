@@ -8,7 +8,7 @@
 <div class="col-md-9 column">
     
     <h4 class="breadcrumb">
-        All for one, one for all. 
+        All for one, one for all
     </h4> 
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
@@ -30,7 +30,7 @@
     </table>
     <p>
         <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
-        <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" id="divNoOp"/>
+        <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility')" value="下一步" id="divNoOp"/>
     </p>
     <div class="form-horizontal" role="form" id="divEdit" style="display:none">
         <input type="hidden" id="hideID" value="" /><!--编号-->
@@ -46,19 +46,19 @@
             <label class="col-sm-3 control-label">语言名称</label>
             <div class="col-sm-5">
                 <select class="form-control input-inline" id="ddlLanguage">
-                    <option value="10">英语</option>
-                    <option value="20">德语</option>                   
+                    <option value="英语">英语</option>
+                    <option value="日语">日语</option>                   
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">语言水平<span class="required"> </span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-5">
                 <select class="form-control  input-inline" id="ddlLevel">
-                    <option value="10">母语</option>
-                    <option value="20">流利</option>
-                    <option value="30">可面试</option>
-                    <option value="40">简单会话</option>
+                    <option value="母语">母语</option>
+                    <option value="流利">流利</option>
+                    <option value="可面试">可面试</option>
+                    <option value="简单会话">简单会话</option>
                 </select>
             </div>
         </div>
@@ -68,14 +68,14 @@
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Create');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility')" value="下一步" />
             </div>
         </div>
         <div class="form-group" id="divEditOp" style="display:none">
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Edit');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ITAbility')" value="下一步" />
             </div>
         </div>
     </div>
@@ -88,11 +88,11 @@
         //列表
         GetList();       
 
-        //语言
-        GetSysField("#ddlLanguage", "LanguageCompetence", "Language");
+        ////语言
+        //GetSysField("#ddlLanguage", "LanguageCompetence", "Language");
 
-        //语言水平
-        GetSysField("#ddlLevel", "LanguageCompetence", "Level");
+        ////语言水平
+        //GetSysField("#ddlLevel", "LanguageCompetence", "Level");
 
 
 
@@ -210,7 +210,7 @@
                     if (data.Code == 1) {//成功
                         alert("操作成功");
                         if (IsNext == "Y") {
-                            window.location.href = "/ITAbility/Index";
+                            window.location.href = "/ITAbility";
                         }
                         else {
                             GetList();

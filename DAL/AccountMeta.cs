@@ -31,12 +31,12 @@ namespace Langben.DAL
 			[StringLength(200, ErrorMessage = "长度不可超过200")]
 			[DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
 			public object Password { get; set; }
-
-			[ScaffoldColumn(true)]
+        [Required(ErrorMessage = "不能为空")]
+        [ScaffoldColumn(true)]
 			[Display(Name = "手机号码", Order = 4)]
 			[StringLength(200, ErrorMessage = "长度不可超过200")]
-			[DataType(System.ComponentModel.DataAnnotations.DataType.PhoneNumber,ErrorMessage="号码格式不正确")]
-			public object PhoneNumber { get; set; }
+        [RegularExpression(@"^1[3458][0-9]{9}$", ErrorMessage = "手机号格式不正确")]
+        public object PhoneNumber { get; set; }
 
 			[ScaffoldColumn(true)]
 			[Display(Name = "邀请码", Order = 5)]
@@ -118,10 +118,11 @@ namespace Langben.DAL
 			[Display(Name = "个人评价", Order = 19)]
 			[StringLength(400, ErrorMessage = "长度不可超过400")]
 			public object PersonalAssessment { get; set; }
-
-			[ScaffoldColumn(true)]
+        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "邮箱格式不正确")]
+        [ScaffoldColumn(true)]
 			[Display(Name = "电子邮件", Order = 20)]
-			[StringLength(400, ErrorMessage = "长度不可超过400")]
+         
+        [StringLength(400, ErrorMessage = "长度不可超过400")]
 			public object Email { get; set; }
 
 			[ScaffoldColumn(true)]

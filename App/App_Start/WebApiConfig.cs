@@ -8,10 +8,7 @@ namespace App
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
-        {
-            config.MapHttpAttributeRoutes();
-
-            //自定义路由 wp 20150720
+        {  
             config.Routes.MapHttpRoute(
                name: "InsusApi",
                routeTemplate: "api/{controller}/{action}/{id}",

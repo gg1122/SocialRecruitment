@@ -11,6 +11,11 @@ namespace Langben.App.Models
     /// </summary>
     public class RegisterModel
     {
+        [Display(Name = "邀请码")]
+        [Required(ErrorMessage = "邀请码不能为空")]
+        [StringLength(200, ErrorMessage = "长度不可超过200")]
+        public string InviteCode { get; set; }
+
         [Display(Name = "绰号")]
         [Required(ErrorMessage = "绰号不能为空")]
         [StringLength(200, ErrorMessage = "长度不可超过200")]
@@ -20,7 +25,7 @@ namespace Langben.App.Models
         [Display(Name = "手机号码")]
         [StringLength(11, ErrorMessage = "长度为11位")]
         [Required(ErrorMessage = "手机号码不能为空")]
-        [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessage = "手机格式不正确")]
+       // [RegularExpression(@"((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)", ErrorMessage = "手机格式不正确")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "密码不能为空")]

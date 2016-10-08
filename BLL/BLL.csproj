@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\AccountBLL.cs" />
     <Compile Include="Framework\DataOfDiffrent.cs" />
     <Compile Include="Framework\ExceptionsHander.cs" />
     <Compile Include="Framework\SysFieldHander.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Recruitment\CommentBLL.cs" />
     <Compile Include="Recruitment\PreviewBLL.cs" />
     <Compile Include="Recruitment\SysFieldBLL.cs" />
+    <Compile Include="Recruitment\SysNoticeBLL.cs" />
     <Compile Include="SysLogBLL.cs" />
     <Compile Include="SysNoticeBLL.cs" />
     <Compile Include="SysExceptionBLL.cs" />

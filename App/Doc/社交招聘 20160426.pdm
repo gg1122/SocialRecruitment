@@ -7590,17 +7590,17 @@ TableComment 0 新宋体,8,N</a:FontList>
 </o:Table>
 <o:Table Id="o42">
 <a:ObjectID>1785C658-A3C2-46A8-B9E5-792336F351F1</a:ObjectID>
-<a:Name>实习经验</a:Name>
+<a:Name>工作经验</a:Name>
 <a:Code>InternshipExperience</a:Code>
 <a:CreationDate>1458723354</a:CreationDate>
 <a:Creator>hilary</a:Creator>
 <a:ModificationDate>1461590351</a:ModificationDate>
 <a:Modifier>hilary</a:Modifier>
-<a:Comment>实习经验</a:Comment>
+<a:Comment>工作经验</a:Comment>
 <c:Columns>
 <o:Column Id="o236">
 <a:ObjectID>B0812553-65CD-4EC1-9A4A-0CAF88F60013</a:ObjectID>
-<a:Name>实习经验编号</a:Name>
+<a:Name>工作经验编号</a:Name>
 <a:Code>Id</a:Code>
 <a:CreationDate>1458723354</a:CreationDate>
 <a:Creator>hilary</a:Creator>
@@ -8802,7 +8802,7 @@ TableComment 0 新宋体,8,N</a:FontList>
 </o:Reference>
 <o:Reference Id="o17">
 <a:ObjectID>E1CC262A-27AF-48B4-943A-A1B20A671FDA</a:ObjectID>
-<a:Name>简历管理_实习经验</a:Name>
+<a:Name>简历管理_工作经验</a:Name>
 <a:Code>Reference_5</a:Code>
 <a:CreationDate>1461590351</a:CreationDate>
 <a:Creator>hilary</a:Creator>

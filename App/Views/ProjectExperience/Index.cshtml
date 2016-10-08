@@ -8,7 +8,7 @@
 <div class="col-md-9 column">
     <h4 class="breadcrumb">
         谁没参加几个脑残的项目
-    </h4> 
+    </h4>
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
         <tr id="trTitle">
@@ -24,7 +24,7 @@
             <td id="tdBeginDate"> 2016-05-31 </td>
             <td id="tdEndDate"> 2016-07-01 </td>
             <td id="tdProjectName">电商网 </td>
-            <td id="tdJob"> 架构师 </td>          
+            <td id="tdJob"> 架构师 </td>
             <td><a href="#" id="aEdit" class="btn btn-link btn-xs " title="编辑"><i class="fa fa-pencil-square-o"></i><span class="sr-only">编辑</span></a> | <a id="aDelete" href="#" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a></td>
 
 
@@ -33,7 +33,7 @@
     </table>
     <p>
         <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
-        <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" id="divNoOp" />
+        <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience')" value="下一步" id="divNoOp" />
     </p>
     <div class="form-horizontal" role="form" id="divEdit" style="display:none">
         <input type="hidden" id="hideID" value="" /><!--编号-->
@@ -44,7 +44,7 @@
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
             <label class="col-sm-3 control-label">开始日期<span class="required">* </span></label>
-            <div class=" col-sm-5">
+            <div class="col-sm-5">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtBeginDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtBeginDate' })"><i class="fa fa-calendar"></i></span>
@@ -53,7 +53,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">结束日期<span class="required">*</span></label>
-            <div class=" col-sm-6">
+            <div class="col-sm-6">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtEndDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtEndDate' })"><i class="fa fa-calendar"></i></span>
@@ -64,26 +64,20 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">项目名称<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtProjectName"  />                 
-                </div>
+            <div class="col-sm-5">                 
+                    <input type="text" class="form-control input-inline" id="txtProjectName" />              
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">职务<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtJob" />
-                </div>
+            <div class="col-sm-5">              
+                    <input type="text" class="form-control input-inline" id="txtJob" />               
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">项目简述<span class="required">* </span></label>
-            <div class=" col-sm-9">
-                <div class="">
-                    <textarea class="form-control" rows="3"  id="txtProjectDescription"></textarea>
-                </div>
+            <div class="col-sm-9">             
+                    <textarea class="form-control" rows="3" id="txtProjectDescription"></textarea>                
             </div>
         </div>
         <hr>
@@ -91,14 +85,14 @@
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Create');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience')" value="下一步" />
             </div>
         </div>
         <div class="form-group" id="divEditOp" style="display:none">
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Edit');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/InternshipExperience')" value="下一步" />
             </div>
         </div>
     </div>
@@ -138,7 +132,7 @@
                             $tr.find("#tdBeginDate").html(""); //开始日期
                         }
                         if (item.IsNow != null && item.IsNow == "Y") {
-                            $tr.find("#tdEndDate").html(""); //结束日期
+                            $tr.find("#tdEndDate").html("至今"); //结束日期
                         }
                         else if (item.EndDate != null && item.EndDate.length >= 10) {
                             $tr.find("#tdEndDate").html(item.EndDate.substring(0, 10)); //结束日期
@@ -146,7 +140,7 @@
                         else {
                             $tr.find("#tdEndDate").html("");
                         }
-                        $tr.find("#tdProjectName").html(item.ProjectName); //项目名称                     
+                        $tr.find("#tdProjectName").html(item.ProjectName); //项目名称
                         $tr.find("#tdJob").html(item.Job); //职务
                         //编辑
                         $tr.find('#aEdit').click(function () {
@@ -211,7 +205,7 @@
         if (trimStr(ProjectDescription) == "") {
             Message += "项目描述不能为空\n\r";
         }
-        
+
         if (Message != "") {
             alert(Message);
             return false;
@@ -238,7 +232,7 @@
             var ProjectName = $("#txtProjectName").val();
             var Job = $("#txtJob").val();
             var ProjectDescription = $("#txtProjectDescription").val();
-            
+
             var ResumeId = $("#hideResumeId").val();
             var Sort = $("#hideSort").val();
             var State = $("#hideState").val();
@@ -253,7 +247,7 @@
                             ',"IsNow": "' + IsNow + '"' +
                             ',"ProjectName": "' + ProjectName + '"' +
                             ',"Job": "' + Job + '"' +
-                            ',"ProjectDescription": "' + ProjectDescription + '"' +                            
+                            ',"ProjectDescription": "' + ProjectDescription + '"' +
                             ',"ResumeId":"' + ResumeId + '"' +
                             ',"Sort":"' + Sort + '"' +
                             ',"State":"' + State + '"' +
@@ -275,7 +269,7 @@
                     if (data.Code == 1) {//成功
                         alert("操作成功");
                         if (IsNext == "Y") {
-                            window.location.href = "/InternshipExperience/Index";
+                            window.location.href = "/InternshipExperience";
                         }
                         else {
                             GetList();
@@ -312,7 +306,7 @@
                     $("#txtProjectName").val(data.ProjectName);
                     $("#txtJob").val(data.Job);
                     $("#txtProjectDescription").val(data.ProjectDescription);
-                   
+
                     $("#hideResumeId").val(data.ResumeId);
                     $("#hideSort").val(data.Sort);
                     $("#hideCreateTime").val(jsonDateTimeFormat(data.CreateTime));

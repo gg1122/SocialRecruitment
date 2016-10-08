@@ -1,27 +1,31 @@
 ﻿@model PagedList<Langben.DAL.Blog>
-@{ Layout = "~/Views/Shared/Blog.cshtml"; }
 @using Webdiyer.WebControls.Mvc
 @using Common
 @using Models
+@{
+    ViewBag.Title = "狼奔";
+    Layout = "~/Views/Shared/Blog.cshtml";
+}
 
-@if (Model != null && Model.Count>0)
+<link href="~/Content/pagerstyles.css" rel="stylesheet" />
+@if (Model != null && Model.Count > 0)
 {
     foreach (var item in Model)
     {
         <div class="row">
             <div class="col-md-3">
                 <a href="/Blog/Details/@item.Id">
-                    @if(string.IsNullOrEmpty(item.Picture))
+                    @if (string.IsNullOrEmpty(item.Picture))
                     {
-                       item.Picture="/images/portfolio_2_column_img_01.jpg";
-                    }                    
-                    @if(item.ReadNumber==null)
-                    {
-                        item.ReadNumber=0;
+                        item.Picture = "/images/portfolio_2_column_img_01.jpg";
                     }
-                    @if(item.CommentNumber==null)
+                    @if (item.ReadNumber == null)
                     {
-                        item.CommentNumber=0;
+                        item.ReadNumber = 0;
+                    }
+                    @if (item.CommentNumber == null)
+                    {
+                        item.CommentNumber = 0;
                     }
                     <img src="@item.Picture" alt="" class="img-rounded img-responsive" />
 
@@ -36,7 +40,7 @@
                     @item.CreateTime.Value.ToString("yyyy年MM月dd日") 发榜，围观：@item.ReadNumber，评论：@item.CommentNumber
                 </div>
                 <div class="portofolio-imageGridContent">
-                    @item.Content
+                    @item.Abstract
                 </div>
             </div>
         </div>

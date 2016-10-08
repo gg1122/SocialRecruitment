@@ -30,7 +30,7 @@
     </table>
     <p>
         <input class="btn btn-primary" type="button" value="添 加" onclick="AddShow()" />
-        <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience/Index')" value="下一步" id="divNoOp" />
+        <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience')" value="下一步" id="divNoOp" />
     </p>
     <div class="form-horizontal" role="form" id="divEdit" style="display:none">
         <input type="hidden" id="hideID" value="" /><!--编号-->
@@ -41,10 +41,8 @@
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
             <label class="col-sm-3 control-label">技能<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" style="width:300px" id="txtAbility" />
-                </div>
+            <div class="col-sm-5">                
+                    <input type="text" class="form-control input-inline" id="txtAbility" />               
             </div>
         </div>
         <div class="form-group">
@@ -52,23 +50,22 @@
             <div class="col-sm-5">
                 <select class="form-control input-inline" id="ddlUseTime">
                     <option value="">-- 请选择 --</option>
-                    <option value="10">3个月</option>
-                    <option value="20">6个月</option>
-                    <option value="30">1年</option>
-                    <option value="40">2年</option>
-                    <option value="50">3-5年</option>
-                    <option value="60">5年以上</option>
+                    <option value="3个月">3个月</option>                   
+                    <option value="1年">1年</option>
+                    <option value="2年">2年</option>
+                    <option value="3-5年">3-5年</option>
+                    <option value="5年以上">5年以上</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">熟练程度<span class="required">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-5">
                 <select class="form-control  input-inline" id="ddlProficiency">
                     <option value="">-- 请选择 --</option>
-                    <option value="10">一般</option>
-                    <option value="20">熟练</option>
-                    <option value="30">精通</option>
+                    <option value="一般">一般</option>
+                    <option value="熟练">熟练</option>
+                    <option value="精通">精通</option>
                 </select>
             </div>
         </div>
@@ -78,14 +75,14 @@
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存继续添加" onclick="Save('N','Create');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Create');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience')" value="下一步" />
             </div>
         </div>
         <div class="form-group" id="divEditOp" style="display:none">
             <div class="col-sm-offset-3 col-sm-9">
                 <input class="btn btn-primary" type="button" value="保存" onclick="Save('N','Edit');" />
                 <input class="btn btn-primary" type="submit" value="保存，并跳转到下一步" onclick="Save('Y','Edit');" />
-                <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience/Index')" value="下一步" />
+                <input class="btn btn-primary" type="button" onclick="BackList('/ProjectExperience')" value="下一步" />
             </div>
         </div>
     </div>
@@ -93,22 +90,9 @@
 <script type="text/javascript">
     var $tbList = $('#tbList');
     var $trList = $('#trList');
-    $(function () {
-
+    $(function () {      
         //列表
-        GetList();
-
-        //技能
-        GetAbility("ITAbility", "Ability", "#txtAbility");
-
-        //使用时间
-        GetSysField("#ddlUseTime", "ITAbility", "UseTime");
-
-        //熟练程度
-        GetSysField("#ddlProficiency", "ITAbility", "Proficiency");
-
-
-
+        GetList();    
     });
     //技能
     var defaultcountry = [];
@@ -146,7 +130,7 @@
 
                 }
                 else {//无数据
-                    // alert(data.Message);
+                     alert("出错了");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -159,7 +143,6 @@
         $("#tbList").find("tr").each(function (i, data) {
             if (i > 1) {
                 $(this).remove();
-
             }
         });
         $.ajax({

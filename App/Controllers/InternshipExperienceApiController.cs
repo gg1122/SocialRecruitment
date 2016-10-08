@@ -15,7 +15,7 @@ using Langben.App.Models;
 namespace Langben.App.Controllers
 {
     /// <summary>
-    /// 实习经验
+    /// 工作经验
     /// </summary>
     public class InternshipExperienceApiController : BaseApiController
     {
@@ -88,7 +88,7 @@ namespace Langben.App.Controllers
                 string returnValue = string.Empty;
                 if (m_BLL.Create(ref validationErrors, entity))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.InsertSucceed  + "，实习经验的信息的Id为" + entity.Id,"实习经验"
+                    LogClassModels.WriteServiceLog(Suggestion.InsertSucceed  + "，工作经验的信息的Id为" + entity.Id,"工作经验"
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = Suggestion.InsertSucceed;
@@ -104,7 +104,7 @@ namespace Langben.App.Controllers
                             return true;
                         });
                     }
-                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，实习经验的信息，" + returnValue,"实习经验"
+                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，工作经验的信息，" + returnValue,"工作经验"
                         );//写入日志                      
                     result.Code = Common.ClientCode.Fail;
                     result.Message = Suggestion.InsertFail + returnValue;
@@ -136,7 +136,7 @@ namespace Langben.App.Controllers
                 string returnValue = string.Empty;
                 if (m_BLL.Edit(ref validationErrors, entity))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，实习经验信息的Id为" + entity.Id,"实习经验"
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，工作经验信息的Id为" + entity.Id,"工作经验"
                         );//写入日志                   
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = Suggestion.UpdateSucceed;
@@ -152,7 +152,7 @@ namespace Langben.App.Controllers
                             return true;
                         });
                     }
-                    LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，实习经验信息的Id为" + entity.Id + "," + returnValue, "实习经验"
+                    LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，工作经验信息的Id为" + entity.Id + "," + returnValue, "工作经验"
                         );//写入日志   
                     result.Code = Common.ClientCode.Fail;
                     result.Message = Suggestion.UpdateFail + returnValue;

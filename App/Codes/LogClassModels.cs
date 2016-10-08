@@ -6,6 +6,8 @@ using System.Configuration;
 using Common;
 using System.IO;
 using System.Text;
+using Langben.DAL;
+using Langben.BLL;
 
 namespace Models
 {
@@ -30,11 +32,51 @@ namespace Models
 
     public class LogClassModels : System.Web.SessionState.IRequiresSessionState
     {
+        public static void WriteNotice(string message)
+        {
+            try
+            {
+                SysNotice entity = new SysNotice();
+                entity.Id = Result.GetNewId();
+                entity.CreateTime = DateTime.Now;
+
+                var account = AccountModel.GetCurrentAccount();
+                if (account != null && !string.IsNullOrWhiteSpace(account.Name))
+                {
+                    entity.CreatePerson = account.Name;
+                    entity.AccountId = account.Id;
+                }
+             
+                entity.Message = message;
+                using (SysNoticeBLL sysNoticeRepository = new SysNoticeBLL())
+                {
+                    ValidationErrors validationErrors = new ValidationErrors();
+                    sysNoticeRepository.Create(ref validationErrors, entity);
+                    return;
+                }
+            }
+            catch (Exception ep)
+            {
+                try
+                {
+                    string path = @"mylog.txt";
+                    string txtPath = System.Web.HttpContext.Current.Server.MapPath(path);//获取绝对路径
+                    using (StreamWriter sw = new StreamWriter(txtPath, true, Encoding.Default))
+                    {
+                        sw.WriteLine((ep.Message + "|" + message + "|" + GetIP() + DateTime.Now.ToString()).ToString());
+                        sw.Close();
+                    }
+                    return;
+                }
+                catch { return; }
+            }
+
+        }
         public static void WriteServiceLog(string message, string logType, LogOpration logOpration = LogOpration.Default)
         {
             try
             {
-                 //logOpration设置优先级高于配置节logEnabled
+                //logOpration设置优先级高于配置节logEnabled
                 bool logEnabled = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["LogEnabled"]);
                 if (logOpration == LogOpration.Fobid || (logOpration == LogOpration.Default && !logEnabled))
                 {
@@ -44,20 +86,20 @@ namespace Models
                 {
                     //此处实现日志的记录
 
-                    //SysLog sysLog = new SysLog();
-                    //sysLog.Id = Result.GetNewId();
-                    //sysLog.CreateTime = DateTime.Now;
-                    //sysLog.Ip = GetIP();
-                    //sysLog.Message = message;
-                    //sysLog.CreatePerson = AccountModel.GetCurrentPerson();
-                    //sysLog.MenuId = logType;//哪个模块生成的日志
+                    SysLog sysLog = new SysLog();
+                    sysLog.Id = Result.GetNewId();
+                    sysLog.CreateTime = DateTime.Now;
+                    sysLog.Ip = GetIP();
+                    sysLog.Message = message;
+                    sysLog.CreatePerson = AccountModel.GetCurrentPerson();
+                    sysLog.MenuId = logType;//哪个模块生成的日志
 
-                    //using (SysLogBLL sysLogRepository = new SysLogBLL())
-                    //{
-                    //    ValidationErrors validationErrors = new ValidationErrors();
-                    //    sysLogRepository.Create(ref validationErrors, sysLog);
-                    //    return;
-                    //}
+                    using (SysLogBLL sysLogRepository = new SysLogBLL())
+                    {
+                        ValidationErrors validationErrors = new ValidationErrors();
+                        sysLogRepository.Create(ref validationErrors, sysLog);
+                        return;
+                    }
                 }
             }
             catch (Exception ep)

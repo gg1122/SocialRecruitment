@@ -22,18 +22,14 @@ namespace Langben.App.Controllers
         public Common.ClientResult.Result HDpic()//头像上传
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-
-            if (CurrentAccount != null && CurrentAccount.resume != null)
-            {
-
-                //byte[] FileByte = Request.BinaryRead(Request.TotalBytes);
+             
                 string upfile = Request.Form["name"]; //取得上传的对象名称
                 HttpPostedFileBase pstFile = Request.Files["file"];
                 UploadFiles upFiles = new UploadFiles();
                 string newFileName = upFiles.fileSaveAs(pstFile, upfile);
 
                 FileUploader entity = new FileUploader();
-                entity.ResumeId = CurrentAccount.resume.Id;
+                entity.ResumeId = CurrentResumeId;
                 string currentPerson = this.CurrentPerson;
                 entity.CreateTime = DateTime.Now;
                 entity.CreatePerson = currentPerson;
@@ -67,13 +63,7 @@ namespace Langben.App.Controllers
                     result.Message = Suggestion.InsertFail + returnValue;
                     return result; //提示插入失败
                 }
-            }
-            else
-            {
-                result.Code = Common.ClientCode.FindNull;
-                result.Message = Suggestion.InsertFail + "，没有登陆"; //提示输入的数据的格式不对 
-                return result;
-            }
+            
             
         }
 
@@ -83,59 +73,12 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         [SupportFilter]
         public ActionResult Index()
-        {
-            if (CurrentAccount != null && CurrentAccount.resume != null)
-            {
-                List<FileUploader> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
+        { 
+                List<FileUploader> list = m_BLL.GetByRefResumeId(CurrentResumeId);
                 return View(list);
-            }
-            return View();
+            
         }
-        /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 查看详细
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Details(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-
-        }
-
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter]
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-        }
+       
         IBLL.IFileUploaderBLL m_BLL;
 
         ValidationErrors validationErrors = new ValidationErrors();

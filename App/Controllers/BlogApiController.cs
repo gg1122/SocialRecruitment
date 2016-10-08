@@ -19,42 +19,7 @@ namespace Langben.App.Controllers
     /// </summary>
     public class BlogApiController : BaseApiController
     {
-        /// <summary>
-        /// 异步加载数据
-        /// </summary>
-        /// <param name="getParam"></param>
-        /// <returns></returns>
-        public Common.ClientResult.DataResult PostData([FromBody]GetDataParam getParam)
-        {
-            int total = 0;
-            List<Blog> queryData = m_BLL.GetByParam(null, getParam.page, getParam.rows, getParam.order, getParam.sort, getParam.search, ref total);
-            var data = new Common.ClientResult.DataResult
-            {
-                total = total,
-                rows = queryData.Select(s => new
-                {
-                    Id = s.Id
-					,Title = s.Title
-					,Content = s.Content
-					,CommentNumber = s.CommentNumber
-					,ReadNumber = s.ReadNumber
-					,Picture3 = s.Picture3
-					,Picture2 = s.Picture2
-					,Picture = s.Picture
-					,Sort = s.Sort
-					,State = s.State
-					,CreateTime = s.CreateTime
-					,CreatePerson = s.CreatePerson
-					,UpdateTime = s.UpdateTime
-					,UpdatePerson = s.UpdatePerson
-					,Version = s.Version
-					
-
-                })
-            };
-            return data;
-        }
-
+       
         /// <summary>
         /// 根据ID获取数据模型
         /// </summary>
@@ -70,25 +35,26 @@ namespace Langben.App.Controllers
         /// 创建
         /// </summary>
         /// <param name="entity">实体对象</param>
-        /// <returns></returns>
+        /// <returns></returns>        
+        /// 
+        [System.Web.Http.HttpPost]
         public Common.ClientResult.Result Post([FromBody]Blog entity)
         {           
 
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null && ModelState.IsValid)
-            {
-                //string currentPerson = GetCurrentPerson();
-                //entity.CreateTime = DateTime.Now;
-                //entity.CreatePerson = currentPerson;
-              
+            { 
+                entity.CreateTime = DateTime.Now;
+                entity.CreatePerson = CurrentPerson;
+                entity.State = "启用";
                 entity.Id = Result.GetNewId();   
                 string returnValue = string.Empty;
                 if (m_BLL.Create(ref validationErrors, entity))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.InsertSucceed  + "，博客的信息的Id为" + entity.Id,"博客"
-                        );//写入日志 
+                                    
+                    LogClassModels.WriteNotice("你成功的炫出了<a href='/Blog/Details/" + entity.Id + "'>" + entity.Title + "</a>，<a  class='btn btn-default' href='/Publish/Edit/" + entity.Id + "'>修改</a>");//写入消息
                     result.Code = Common.ClientCode.Succeed;
-                    result.Message = Suggestion.InsertSucceed;
+                    result.Message = entity.Id;
                     return result; //提示创建成功
                 }
                 else
@@ -125,11 +91,15 @@ namespace Langben.App.Controllers
             Common.ClientResult.Result result = new Common.ClientResult.Result();
             if (entity != null && ModelState.IsValid)
             {   //数据校验
-
-                //string currentPerson = GetCurrentPerson();
-                //entity.UpdateTime = DateTime.Now;
-                //entity.UpdatePerson = currentPerson;
-
+                string currentPerson = CurrentPerson;
+                entity.UpdateTime = DateTime.Now;
+                entity.UpdatePerson = currentPerson;
+                if (currentPerson!=entity.CreatePerson)
+                {
+                    result.Code = Common.ClientCode.FindNull;
+                    result.Message = Suggestion.UpdateFail + "你无权修改，请联系管理员";
+                    return result; //         
+                }
                 string returnValue = string.Empty;
                 if (m_BLL.Edit(ref validationErrors, entity))
                 {
@@ -160,46 +130,7 @@ namespace Langben.App.Controllers
             result.Message = Suggestion.UpdateFail + "请核对输入的数据的格式";
             return result; //提示输入的数据的格式不对         
         }
-
-        // DELETE api/<controller>/5
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <returns></returns>  
-        public Common.ClientResult.Result Delete(string query)
-        {
-            Common.ClientResult.Result result = new Common.ClientResult.Result();
-
-            string returnValue = string.Empty;
-            string[] deleteId = query.GetString().Split(',');
-            if (deleteId != null && deleteId.Length > 0)
-            {
-                if (m_BLL.DeleteCollection(ref validationErrors, deleteId))
-                {
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteSucceed + "，信息的Id为" + string.Join(",", deleteId), "消息"
-                        );//删除成功，写入日志
-                    result.Code = Common.ClientCode.Succeed;
-                    result.Message = Suggestion.DeleteSucceed;
-                }
-                else
-                {
-                    if (validationErrors != null && validationErrors.Count > 0)
-                    {
-                        validationErrors.All(a =>
-                        {
-                            returnValue += a.ErrorMessage;
-                            return true;
-                        });
-                    }
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteFail + "，信息的Id为" + string.Join(",", deleteId)+ "," + returnValue, "消息"
-                        );//删除失败，写入日志
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = Suggestion.DeleteFail + returnValue;
-                }
-            }
-            return result;
-        }
+         
 
         IBLL.IBlogBLL m_BLL;
 

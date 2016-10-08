@@ -1,45 +1,90 @@
 ﻿@model Langben.App.Models.RegisterModel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "注册";
     Layout = "~/Views/Shared/Blog.cshtml";
 }
-
+ 
 @using (Html.BeginForm("", "api/AccountApi/Register"))
 {
     <div class="form-horizontal">
         @Html.AntiForgeryToken()
-        <h4>您的注册，我的动力</h4>
+        <h4>所有项都是必填的</h4>
         <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.InviteCode, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.InviteCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.InviteCode)
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber)
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>密码不能为空或长度至少6位
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit"  class="btn btn-lg btn-primary btn-block"value="注 册" />
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="注 册" />
             </div>
         </div>
     </div>
-} 
+}
+<script type="text/javascript">
+    function ajaxFrom(form, url) {
+        $.ajax({
+            url: url,
+            type: "Post",
+            data: $(form).serialize(),
+            dataType: "json",
+            success: function (data) {
+
+                if (data.Code == 1) {
+                    window.location.href = "../Person";
+                } else if (data.Code == 0) {
+                    alert(data.Message);
+                } else if (data.Code == 2) {
+                    alert(data.Message);
+                }
+                $("input[type='submit']").attr('disabled', false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("网络故障");
+                $("input[type='submit']").attr('disabled', false);
+                return false;
+            }
+        });
+    }
+    $(function () {
+        $("form").submit(function (form) {
+            if (form.result) {
+                $("input[type='submit']").attr('disabled', true);
+                ajaxFrom(this, this.action);
+            }
+            return false;
+        });
+    });
+</script>

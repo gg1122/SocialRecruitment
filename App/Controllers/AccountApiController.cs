@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using Models;
 using Common;
 using Langben.DAL;
@@ -16,7 +14,37 @@ namespace Langben.App.Controllers
     /// </summary>
     public class AccountApiController : BaseApiController
     {
+        public Common.ClientResult.Result Logon([FromBody]Langben.App.Models.LogonModel logonModel)
+        {
+            Common.ClientResult.Result result = new Common.ClientResult.Result();
 
+            if (ModelState.IsValid)
+            {
+                DAL.Account model = m_BLL.ValidateUser(logonModel.PersonName, logonModel.Password);
+                if (model != null)
+                {//登录成功
+                    IBLL.IResumeBLL rBll = new ResumeBLL();
+                    var data = rBll.GetByAccountID(model.Id).FirstOrDefault();
+                    Common.Account account = new Common.Account();
+                    account.Name = model.Name;
+                    account.Id = model.Id;
+                    account.ResumeId = data.Id;
+                    Utils.WriteCookie("account", account, 7);
+                    result.Code = Common.ClientCode.Succeed;
+                }
+                else
+                {
+                    result.Code = Common.ClientCode.FindNull;
+                }
+            }
+            else
+            {
+                result.Code = Common.ClientCode.Fail;
+
+            }
+            return result;
+
+        }
         /// <summary>
         /// 注册
         /// </summary>
@@ -25,93 +53,40 @@ namespace Langben.App.Controllers
         public Common.ClientResult.Result Register([FromBody]Langben.App.Models.RegisterModel model)
         {
             Common.ClientResult.Result result = new Common.ClientResult.Result();
-
-            if (model != null && ModelState.IsValid)
+            string message = string.Empty;
+            if (ModelState.IsValid)
             {
-                DAL.Account entity = new DAL.Account();
-
-                if (string.IsNullOrWhiteSpace(model.Name))
+                if (string.IsNullOrWhiteSpace(model.InviteCode))
                 {
-                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "邀请码不能为空";
+                }
+                else if (string.IsNullOrWhiteSpace(model.Name))
+                {
                     result.Message = "绰号不能为空";
-                    return result; //提示失败
                 }
-                else
+                else if ((string.IsNullOrWhiteSpace(model.PhoneNumber)) || (model.PhoneNumber.Substring(0, 1) != "1") || (model.PhoneNumber.Length != 11))
                 {
-                    entity.Name = model.Name.Trim();
-                }
-                if (!Common.Validator.IsMobile(model.PhoneNumber))
-                {
-                    result.Code = Common.ClientCode.Fail;
                     result.Message = "手机号码格式不正确";
-                    return result; //提示失败
+                }
+                else if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
+                {
+                    result.Message = "密码长度至少6位";
                 }
                 else
                 {
-                    entity.PhoneNumber = model.PhoneNumber.ToString();
-                }
-
-                if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
-                {
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = "密码不能为空或长度至少6位";
-                    return result; //提示失败
-                }
-                else
-                {
-                    entity.Password = EncryptAndDecrypte.EncryptString(model.Password);//加密;
-                }
-                entity.LogonIP = IP.GetIP();
-                entity.CreateTime = DateTime.Now;
-                entity.UpdateTime = entity.CreateTime;
-                entity.Id = Result.GetNewId();
-
-                string returnValue = string.Empty;
-                if (m_BLL.Create(ref validationErrors, entity))
-                {//事务
-                    IBLL.IResumeBLL rBll = new ResumeBLL();
-                    Resume ResumeModel = new Resume();
-                    ResumeModel.AccountId = entity.Id;
-                    ResumeModel.CreateTime = entity.CreateTime;
-                    ResumeModel.Id = Result.GetNewId();
-                    ResumeModel.Name = "默认";
-                    ResumeModel.Remark = "注册账号自动创建";
-                    ResumeModel.Sort = 0;
-                    ResumeModel.State = StateEnums.QY;
-                    ResumeModel.UpdateTime = ResumeModel.CreateTime;
-                    ResumeModel.CompletionPercentage = 0;
-                    if (rBll.Create(ref validationErrors, ResumeModel))
+                    Common.Account account = m_BLL.Register(model.Name.Trim(), model.PhoneNumber.Trim(), model.Password.Trim(), model.InviteCode, ref message);
+                    result.Message = message;
+                    if (string.IsNullOrWhiteSpace(message))
                     {
-                        LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，会员的信息的Id为" + entity.Id, "会员");//写入日志 
+                        Utils.WriteCookie("account", account, 7);
                         result.Code = Common.ClientCode.Succeed;
-                        result.Message ="注册成功";
-                        result.Url = "../Person";//(正式需要修改)注册成功后，跳转到填写简历
-                        Langben.App.Models.Account_Resume ar = new Account_Resume();
-
-                        ar.account = entity;
-                        ar.resume = ResumeModel;
-                        CurrentAccount = ar;
                         return result; //提示创建成功
                     }
-                    if (validationErrors != null && validationErrors.Count > 0)
-                    {
-                        validationErrors.All(a =>
-                        {
-                            returnValue += a.ErrorMessage;
-                            return true;
-                        });
-                    }
-                    LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，会员的信息，" + returnValue, "会员"
-                        );//写入日志                      
-                    result.Code = Common.ClientCode.Fail;
-                    result.Message = Suggestion.InsertFail + returnValue;
-                    return result; //提示插入失败
 
                 }
             }
 
             result.Code = Common.ClientCode.FindNull;
-            result.Message = Suggestion.InsertFail + "，请核对输入的数据的格式"; //提示输入的数据的格式不对 
             return result;
         }
         /// <summary>
@@ -146,7 +121,7 @@ namespace Langben.App.Controllers
                 if (string.IsNullOrWhiteSpace(entity.LiveCity))
                 {
                     result.Code = Common.ClientCode.Fail;
-                    result.Message = "现在所在地不能为空";
+                    result.Message = "现在居住地不能为空";
                     return result; //提示失败
                 }
 
@@ -156,17 +131,19 @@ namespace Langben.App.Controllers
                     result.Message = "个人评价不能为空";
                     return result; //提示失败
                 }
-                if (string.IsNullOrWhiteSpace(entity.Email) || Validator.IsEmail(entity.Email))
+                if (string.IsNullOrWhiteSpace(entity.Email) || !Validator.IsEmail(entity.Email))
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "电子邮箱不能为空或者格式不对";
                     return result; //提示失败
                 }
-                if (CurrentAccount == null)
+                if (CurrentPerson != entity.PhoneNumber)
                 {
-                    return null;
+                    result.Code = Common.ClientCode.Fail;
+                    result.Message = "请登录";
+                    return result; //提示失败
                 }
-                DAL.Account model = m_BLL.GetById(CurrentAccount.account.Id);
+                DAL.Account model = m_BLL.GetById(CurrentPersonId);
                 model.AnmeldenCity = entity.AnmeldenCity;
                 model.AnmeldenProvince = entity.AnmeldenProvince;
                 model.Email = entity.Email;
@@ -184,8 +161,7 @@ namespace Langben.App.Controllers
                         );//写入日志 
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = "提交成功";
-                    CurrentAccount.account = model;//重新设置Session
-                    result.Url = "/DegreeSchool/Index";
+
                     return result; //提交成功
                 }
                 else

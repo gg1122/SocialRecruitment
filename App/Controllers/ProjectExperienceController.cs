@@ -30,64 +30,15 @@ namespace Langben.App.Controllers
         
             return View();
         }
-         /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// 查看详细
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SupportFilter]  
-        public ActionResult Details(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-
-        }
- 
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        { 
-            
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter] 
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-        }
+      
         /// <summary>
         /// 获取列表
         /// </summary>
         /// <returns></returns>
-        public string GetList()
-        {
-            if (CurrentAccount!=null && CurrentAccount.resume != null)
-            {
-                List<ProjectExperience> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
-                return JsonObj.ObjToJson(list);
-
-            }
-            return null;
+        [SupportFilter]public string GetList()
+        { 
+                List<ProjectExperience> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+                return JsonObj.ObjToJson(list);           
         }
         /// <summary>
         /// 创建保存
@@ -104,12 +55,9 @@ namespace Langben.App.Controllers
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     Langben.DAL.ProjectExperience entity = js.Deserialize<Langben.DAL.ProjectExperience>(json);
                     if (entity != null && ModelState.IsValid)
-                    {
-
-                        if (CurrentAccount != null)
-                        {
-                            entity.ResumeId = CurrentAccount.resume.Id;
-                        }
+                    { 
+                            entity.ResumeId = CurrentResumeId;
+                       
                         entity.Id = Result.GetNewId();
                         entity.CreateTime = DateTime.Now;
                         entity.CreatePerson = CurrentPerson;

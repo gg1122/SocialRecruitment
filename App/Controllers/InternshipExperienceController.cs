@@ -15,7 +15,7 @@ using System.Web.Script.Serialization;
 namespace Langben.App.Controllers
 {
     /// <summary>
-    /// 实习经验
+    /// 工作经验
     /// </summary>
     public class InternshipExperienceController : BaseController
     {
@@ -27,52 +27,7 @@ namespace Langben.App.Controllers
         [SupportFilter]
         public ActionResult Index()
         {
-        
-            return View();
-        }
-         /// <summary>
-        /// 列表
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexSef()
-        {
 
-            return View();
-        }
-
-        /// <summary>
-        /// 查看详细
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SupportFilter]  
-        public ActionResult Details(string id)
-        {
-            ViewBag.Id = id;
-            return View();
-
-        }
- 
-        /// <summary>
-        /// 首次创建
-        /// </summary>
-        /// <returns></returns>
-        [SupportFilter]
-        public ActionResult Create(string id)
-        { 
-            
-            return View();
-        }
-
-        /// <summary>
-        /// 首次编辑
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns> 
-        [SupportFilter] 
-        public ActionResult Edit(string id)
-        {
-            ViewBag.Id = id;
             return View();
         }
 
@@ -80,15 +35,12 @@ namespace Langben.App.Controllers
         /// 获取列表
         /// </summary>
         /// <returns></returns>
+        [SupportFilter]
         public string GetList()
         {
-            if (CurrentAccount!=null && CurrentAccount.resume != null)
-            {
-                List<InternshipExperience> list = m_BLL.GetByRefResumeId(CurrentAccount.resume.Id);
-                return JsonObj.ObjToJson(list);
+            List<InternshipExperience> list = m_BLL.GetByRefResumeId(CurrentResumeId);
+            return JsonObj.ObjToJson(list);
 
-            }
-            return null;
         }
         /// <summary>
         /// 创建保存
@@ -107,10 +59,8 @@ namespace Langben.App.Controllers
                     if (entity != null && ModelState.IsValid)
                     {
 
-                        if (CurrentAccount != null)
-                        {
-                            entity.ResumeId = CurrentAccount.resume.Id;
-                        }
+                        entity.ResumeId = CurrentResumeId;
+
                         entity.Id = Result.GetNewId();
                         entity.CreateTime = DateTime.Now;
                         entity.CreatePerson = CurrentPerson;
@@ -122,7 +72,7 @@ namespace Langben.App.Controllers
                         string returnValue = string.Empty;
                         if (m_BLL.Create(ref validationErrors, entity))
                         {
-                            LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，实习经验的信息的Id为" + entity.Id, "实习经验"
+                            LogClassModels.WriteServiceLog(Suggestion.InsertSucceed + "，工作经验的信息的Id为" + entity.Id, "工作经验"
                                 );//写入日志 
                             result.Code = Common.ClientCode.Succeed;
                             result.Message = Suggestion.InsertSucceed;
@@ -138,7 +88,7 @@ namespace Langben.App.Controllers
                                     return true;
                                 });
                             }
-                            LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，实习经验的信息，" + returnValue, "实习经验"
+                            LogClassModels.WriteServiceLog(Suggestion.InsertFail + "，工作经验的信息，" + returnValue, "工作经验"
                                 );//写入日志                      
                             result.Code = Common.ClientCode.Fail;
                             result.Message = Suggestion.InsertFail + returnValue;
@@ -161,13 +111,10 @@ namespace Langben.App.Controllers
             }
             catch (Exception ex)
             {
-
                 result.Code = Common.ClientCode.FindNull;
-                result.Message = Suggestion.InsertFail + "，" + ex.Message; //提示输入的数据的格式不对 
-                                                                           //return result;
+                result.Message = Suggestion.InsertFail + "，" + ex.Message; //提示输入的数据的格式不对                                                                        
             }
-            return Json(result);
-            //return result;
+            return Json(result);             
         }
 
         /// <summary>
@@ -193,7 +140,7 @@ namespace Langben.App.Controllers
                         string returnValue = string.Empty;
                         if (m_BLL.Edit(ref validationErrors, entity))
                         {
-                            LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，实习经验信息的Id为" + entity.Id, "实习经验"
+                            LogClassModels.WriteServiceLog(Suggestion.UpdateSucceed + "，工作经验信息的Id为" + entity.Id, "工作经验"
                                 );//写入日志                   
                             result.Code = Common.ClientCode.Succeed;
                             result.Message = Suggestion.UpdateSucceed;
@@ -209,7 +156,7 @@ namespace Langben.App.Controllers
                                     return true;
                                 });
                             }
-                            LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，实习经验信息的Id为" + entity.Id + "," + returnValue, "实习经验");//写入日志   
+                            LogClassModels.WriteServiceLog(Suggestion.UpdateFail + "，工作经验信息的Id为" + entity.Id + "," + returnValue, "工作经验");//写入日志   
                             result.Code = Common.ClientCode.Fail;
                             result.Message = Suggestion.UpdateFail + returnValue;
                             //return result; //提示更新失败
@@ -251,7 +198,7 @@ namespace Langben.App.Controllers
                 string deleteId = Request["ID"].ToString().Trim();
                 if (m_BLL.Delete(ref validationErrors, deleteId))
                 {
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteSucceed + "，实习经验信息的Id为" + string.Join(",", deleteId), "消息"
+                    LogClassModels.WriteServiceLog(Suggestion.DeleteSucceed + "，工作经验信息的Id为" + string.Join(",", deleteId), "消息"
                         );//删除成功，写入日志
                     result.Code = Common.ClientCode.Succeed;
                     result.Message = Suggestion.DeleteSucceed;
@@ -266,7 +213,7 @@ namespace Langben.App.Controllers
                             return true;
                         });
                     }
-                    LogClassModels.WriteServiceLog(Suggestion.DeleteFail + "，实习经验好信息的Id为" + string.Join(",", deleteId) + "," + returnValue, "消息"
+                    LogClassModels.WriteServiceLog(Suggestion.DeleteFail + "，工作经验好信息的Id为" + string.Join(",", deleteId) + "," + returnValue, "消息"
                         );//删除失败，写入日志
                     result.Code = Common.ClientCode.Fail;
                     result.Message = Suggestion.DeleteFail + returnValue;

@@ -10,6 +10,7 @@ namespace Common
     /// 登录的用户信息
     /// </summary>
     [DataContract]
+    [Serializable]
     public class Account
     {
         /// <summary>
@@ -18,27 +19,14 @@ namespace Common
         [DataMember]
         public string Id { get; set; }
         /// <summary>
-        /// 姓名
+        /// 绰号
         /// </summary>
         [DataMember]
         public string Name { get; set; }
         /// <summary>
-        /// 登录的用户名
+        /// 默认简历主键
         /// </summary>
         [DataMember]
-        public string PersonName { get; set; }
-        /// <summary>
-        /// 角色的集合
-        /// </summary>
-        [DataMember]
-        public List<string> RoleIds { get; set; }
-
-        /// <summary>
-        /// 菜单的集合
-        /// </summary>
-        [DataMember]
-        public List<string> MenuIds { get; set; }
-
-
+        public string ResumeId { get; set; }
     }
 }

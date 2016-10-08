@@ -1,0 +1,182 @@
+﻿@model  Langben.DAL.Blog
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/Blog.cshtml";
+}
+<script src="~/Res/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Res/webuploader/css/webuploader.css")" />
+
+
+<script type="text/javascript" src="@Url.Content("~/Res/webuploader/js/webuploader.nolog.min.js")"></script>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "标题" })
+    </div>
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Picture2, new { @class = "form-control", placeholder = "出处" })
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.Content, new { @class = "ckeditor" })
+    </div>
+    <div class="form-group">
+        <div id="filePicker">首页图片1张</div>
+        <div id="fileList" class="uploader-list">
+        </div>
+    </div>
+    <div class="form-group">
+        <input id="xuanji" type="button" onclick="publish();" class="btn btn-lg btn-primary btn-block" value="炫了个技" />
+    </div>
+</div>
+<div id="hiddenPicture"></div>
+<script>
+    function publish() {
+        var title = $("#Title").val().replace(/(^\s*)|(\s*$)/g, "");//删除左右两端的空格
+        if (title == null || title == '') {
+            alert('标题不能为空');
+            return false;
+        }
+
+        var Content = CKEDITOR.instances.Content.getData();
+        if (Content == null || Content == '') {
+            alert('内容不能为空');
+            return false;
+        }
+
+        var Abstract = CKEDITOR.instances.Content.document.getBody().getText();//取得纯文本
+        if (Abstract.length > 60) {
+            Abstract = Abstract.substring(0, 60);
+        }
+        $("#xuanji").attr('disabled', true);
+      
+        $.ajax({
+            url: "/api/BlogApi/Post",
+            type: "Post",
+            dataType: "json",
+            data: {
+                Title: $("#Title").val(), Content: Content, Abstract: Abstract
+            , PictureName: $(".pictureName").val()
+             , Picture: $(".picture").val()
+                  , Picture2: $("#Picture2").val()
+            },
+            success: function (data) {
+                if (data.Code == 1) {
+               
+                    window.location.href = '/Blog/Details/' + data.Message;
+                } else {
+                    alert('发布失败，请联系管理员ben@langben.com');
+
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#xuanji").attr('disabled', false);
+                alert("获取数据失败");
+            }
+        });
+    }
+
+    var $list = $('#fileList'), state = 'pending';
+    var ValidateIndex, ratio = window.devicePixelRatio || 1, thumbnailWidth = 100 * ratio,
+    thumbnailHeight = 100 * ratio;
+
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+        auto: true,
+
+        // swf文件路径
+        swf: '/Res/webuploader/Uploader.swf',
+
+        // 文件接收服务端。
+        server: '/Publish/HDpic',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false,
+        // 只允许选择图片文件。
+        accept: {
+            title: '图片文件',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        },
+        fileNumLimit: 1,
+        fileSizeLimit: 6 * 1024 * 1024,
+        fileSingleSizeLimit: 5 * 1024 * 1024
+    });
+    uploader.on('beforeFileQueued', function (file) {
+        if ($(".picture").length > 0) { alert("最多上传1张"); return false; }
+
+        switch (file.ext.toLowerCase()) {
+            case "gif": return true;
+            case "jpg": return true;
+            case "jpeg": return true;
+            case "bmp": return true;
+            case "png": return true;
+        }
+
+        alert("请选择图片文件");
+        return false;
+    });
+    function deletediv(id) {
+        $(".picture").remove();
+        $(".pictureName").remove();
+        $("#"+id).remove();
+    }
+    uploader.on('fileQueued', function (file) {
+
+        var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail col-md-4">' +
+                    '<img>' +
+                    '<div id="info">' + file.name + '</div>' +
+                    　'<div onclick=\'deletediv("' + file.id + '")\'class="del">删除</div>' +
+                '</div>'
+                ),
+            $img = $li.find('img');
+
+        // $list为容器jQuery实例
+        $list.append($li);
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        uploader.makeThumb(file, function (error, src) {
+            if (error) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+
+            $img.attr('src', src);
+        }, thumbnailWidth, thumbnailHeight);
+
+    });
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on('uploadSuccess', function (file, responseText) {
+   
+        for (var d in responseText) {
+            validate = responseText[d];
+            $("#hiddenPicture").append('<input type="hidden" class="picture" value="' + validate + '" /><input type="hidden" class="pictureName" value="' + file.name + '" />');
+        }
+
+        uploader.reset();
+    });
+   
+    // 文件上传失败，显示上传出错。
+    uploader.on('uploadError', function (file) {
+        var $li = $('#' + file.id),
+            $error = $li.find('div.error');
+
+        // 避免重复创建
+        if (!$error.length) {
+            $error = $('<div class="error"></div>').appendTo($li);
+        }
+
+        $error.text('上传失败');
+    });
+
+
+
+</script>
+

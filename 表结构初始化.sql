@@ -1,3 +1,9 @@
+/*==============================================================*/
+/* DBMS name:      Microsoft SQL Server 2005                    */
+/* Created on:     2016/10/8 9:25:47                            */
+/*==============================================================*/
+
+
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('Comment') and o.name = 'FK_COMMENT_REFERENCE_BLOG')
@@ -178,6 +184,13 @@ if exists (select 1
 go
 
 if exists (select 1
+            from  sysobjects
+           where  id = object_id('Invite')
+            and   type = 'U')
+   drop table Invite
+go
+
+if exists (select 1
             from  sysindexes
            where  id    = object_id('LanguageCompetence')
             and   name  = 'Index_ResumeId_State'
@@ -223,22 +236,6 @@ if exists (select 1
            where  id = object_id('Resume')
             and   type = 'U')
    drop table Resume
-go
-
-if exists (select 1
-            from  sysindexes
-           where  id    = object_id('SysAnnouncement')
-            and   name  = 'Index_State'
-            and   indid > 0
-            and   indid < 255)
-   drop index SysAnnouncement.Index_State
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('SysAnnouncement')
-            and   type = 'U')
-   drop table SysAnnouncement
 go
 
 if exists (select 1
@@ -337,110 +334,289 @@ create table Account (
    UpdatePerson         varchar(200)         null,
    Version              timestamp            null,
    constraint PK_ACCOUNT primary key nonclustered (Id)
-         on "PRIMARY"
+         on "PRIMARY",
+   constraint AK_KEY_2_ACCOUNT unique (PhoneNumber)
 )
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '会员',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('Account') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'Account' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '会员', 
    'user', @CurrentUser, 'table', 'Account'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Name')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'Name'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'Account', 'column', 'Name'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sex')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'Sex'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'RadioButton',
    'user', @CurrentUser, 'table', 'Account', 'column', 'Sex'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'AnmeldenProvince')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'AnmeldenProvince'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'Account', 'column', 'AnmeldenProvince'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'AnmeldenCity')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'AnmeldenCity'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'AnmeldenProvinceCascade',
    'user', @CurrentUser, 'table', 'Account', 'column', 'AnmeldenCity'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'LiveProvince')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'LiveProvince'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'Account', 'column', 'LiveProvince'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'LiveCity')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'LiveCity'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'LiveProvinceCascade',
    'user', @CurrentUser, 'table', 'Account', 'column', 'LiveCity'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Account', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Account')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Account', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -478,10 +654,14 @@ create table Blog (
    Id                   nvarchar(36)         not null,
    Title                nvarchar(200)        not null,
    Content              nvarchar(4000)       not null,
+   Abstract             nvarchar(4000)       null,
    CommentNumber        int                  null default 0,
    ReadNumber           int                  null default 0,
    Picture3             nvarchar(200)        null,
    Picture2             nvarchar(200)        null,
+   PictureName          nvarchar(200)        null,
+   Picture2Name         nvarchar(200)        null,
+   Picture3Name         nvarchar(200)        null,
    Picture              nvarchar(200)        null,
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
@@ -496,63 +676,169 @@ create table Blog (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '博客',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('Blog') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'Blog' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '博客', 
    'user', @CurrentUser, 'table', 'Blog'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Blog', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Blog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Blog', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -579,6 +865,7 @@ create table Comment (
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
    CreateTime           datetime             null default getdate(),
+   CreatePersonId       varchar(200)         null,
    CreatePerson         varchar(200)         null,
    UpdateTime           datetime             null default getdate(),
    UpdatePerson         varchar(200)         null,
@@ -589,56 +876,169 @@ create table Comment (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '评论',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('Comment') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'Comment' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '评论', 
    'user', @CurrentUser, 'table', 'Comment'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePersonId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'CreatePersonId'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'CreatePersonId'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Comment', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Comment')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Comment', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -668,6 +1068,8 @@ create table DegreeSchool (
    ProfessionalType1    nvarchar(200)        null,
    ProfessionalType2    nvarchar(200)        not null,
    Education            nvarchar(200)        not null,
+   SchoolNameRemark     nvarchar(200)        null,
+   ProfessionalTypeRemark nvarchar(200)        null,
    Degree               nvarchar(200)        not null,
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
@@ -680,119 +1082,359 @@ create table DegreeSchool (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '学历学校',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('DegreeSchool') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'DegreeSchool' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '学历学校', 
    'user', @CurrentUser, 'table', 'DegreeSchool'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'IsNow')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'IsNow'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'CheckBox',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'IsNow'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'SchoolArea')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolArea'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolArea'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'SchoolName')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolName'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'SchoolAreaCascade',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolName'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ProfessionalType1')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalType1'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalType1'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ProfessionalType2')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalType2'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'ProfessionalType1Cascade',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalType2'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Education')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Education'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Education'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'SchoolNameRemark')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolNameRemark'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'DropDown',
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'SchoolNameRemark'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ProfessionalTypeRemark')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalTypeRemark'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'DropDown',
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'ProfessionalTypeRemark'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Degree')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Degree'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Degree'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('DegreeSchool')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'DegreeSchool', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -815,6 +1457,8 @@ create table FileUploader (
    Id                   nvarchar(36)         not null default newid(),
    ResumeId             nvarchar(36)         null,
    PictureUrl           nvarchar(400)        null,
+   PictureName          nvarchar(400)        null,
+   ResumeName           nvarchar(400)        null,
    ResumeUrl            nvarchar(400)        null,
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
@@ -827,70 +1471,188 @@ create table FileUploader (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '上传文件',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('FileUploader') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'FileUploader' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '上传文件', 
    'user', @CurrentUser, 'table', 'FileUploader'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'FileUploader', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('FileUploader')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'FileUploader', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -926,91 +1688,245 @@ create table ITAbility (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'IT技能爱好',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('ITAbility') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'ITAbility' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   'IT技能爱好', 
    'user', @CurrentUser, 'table', 'ITAbility'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Ability')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Ability'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Ability'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UseTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UseTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UseTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Proficiency')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Proficiency'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Proficiency'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ITAbility', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ITAbility')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ITAbility', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1052,98 +1968,264 @@ create table InternshipExperience (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '实习经验',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('InternshipExperience') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'InternshipExperience' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '实习经验', 
    'user', @CurrentUser, 'table', 'InternshipExperience'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'IsNow')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'IsNow'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'CheckBox',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'IsNow'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CompanyNature')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CompanyNature'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CompanyNature'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CompanyScale')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CompanyScale'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CompanyScale'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'JobType')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'JobType'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'RadioButton',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'JobType'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('InternshipExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'InternshipExperience', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1157,6 +2239,153 @@ create index Index_ResumeId_State on InternshipExperience (
 ResumeId ASC,
 State ASC
 )
+go
+
+/*==============================================================*/
+/* Table: Invite                                                */
+/*==============================================================*/
+create table Invite (
+   Id                   nvarchar(36)         not null default newid(),
+   Code                 nvarchar(200)        null,
+   State                varchar(200)         null default '启用',
+   CreateTime           datetime             null default getdate(),
+   CreatePerson         varchar(200)         null,
+   UpdateTime           datetime             null default getdate(),
+   UpdatePerson         varchar(200)         null,
+   constraint PK_INVITE primary key (Id)
+)
+on "PRIMARY"
+go
+
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('Invite') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'Invite' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '邀请码', 
+   'user', @CurrentUser, 'table', 'Invite'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'Id'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'Id'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'State'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'State'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreateTime'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreateTime'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreatePerson'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'CreatePerson'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdateTime'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdateTime'
+go
+
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Invite')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdatePerson'
+
+end
+
+
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'NotDisplay',
+   'user', @CurrentUser, 'table', 'Invite', 'column', 'UpdatePerson'
 go
 
 /*==============================================================*/
@@ -1178,84 +2407,226 @@ create table LanguageCompetence (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '语言能力',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('LanguageCompetence') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'LanguageCompetence' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '语言能力', 
    'user', @CurrentUser, 'table', 'LanguageCompetence'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Language')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Language'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Language'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Level')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Level'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'DropDown',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Level'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('LanguageCompetence')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'LanguageCompetence', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1294,77 +2665,207 @@ create table ProjectExperience (
 )
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '项目经验',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('ProjectExperience') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'ProjectExperience' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '项目经验', 
    'user', @CurrentUser, 'table', 'ProjectExperience'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Id')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'Id'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'Id'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ResumeId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'ResumeId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'ResumeId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'IsNow')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'IsNow'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'CheckBox',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'IsNow'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('ProjectExperience')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'ProjectExperience', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1387,6 +2888,7 @@ create table Resume (
    Id                   nvarchar(36)         not null,
    AccountId            nvarchar(36)         null,
    Name                 nvarchar(50)         null,
+   CompletionPercentage int                  null,
    Remark               nvarchar(400)        null,
    Sort                 int                  null default 0,
    State                varchar(200)         null default '启用',
@@ -1399,56 +2901,152 @@ create table Resume (
 )
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'AccountId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'AccountId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'AccountId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'Resume', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('Resume')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'Resume', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1460,90 +3058,6 @@ go
 /*==============================================================*/
 create index Index_AccountId_State on Resume (
 AccountId ASC,
-State ASC
-)
-go
-
-/*==============================================================*/
-/* Table: SysAnnouncement                                       */
-/*==============================================================*/
-create table SysAnnouncement (
-   Id                   nvarchar(36)         not null,
-   Title                nvarchar(100)        null,
-   Message              nvarchar(4000)       null,
-   Sort                 int                  null default 0,
-   State                varchar(200)         null default '启用',
-   CreateTime           datetime             null default getdate(),
-   CreatePerson         varchar(200)         null,
-   UpdateTime           datetime             null default getdate(),
-   UpdatePerson         varchar(200)         null,
-   Version              timestamp            null,
-   constraint PK_SYSANNOUNCEMENT primary key nonclustered (Id)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '公告管理',
-   'user', @CurrentUser, 'table', 'SysAnnouncement'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Sort'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'State'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreateTime'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'CreatePerson'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdateTime'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'UpdatePerson'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   'NotDisplay',
-   'user', @CurrentUser, 'table', 'SysAnnouncement', 'column', 'Version'
-go
-
-/*==============================================================*/
-/* Index: Index_State                                           */
-/*==============================================================*/
-create index Index_State on SysAnnouncement (
 State ASC
 )
 go
@@ -1570,56 +3084,150 @@ create table SysException (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '异常处理',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('SysException') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'SysException' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '异常处理', 
    'user', @CurrentUser, 'table', 'SysException'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysException', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysException')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysException', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1657,63 +3265,169 @@ create table SysField (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '数据字典',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('SysField') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'SysField' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '数据字典', 
    'user', @CurrentUser, 'table', 'SysField'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'ParentId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'ParentId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '父节点',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'ParentId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysField', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysField')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysField', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1753,56 +3467,150 @@ create table SysLog (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '日志',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('SysLog') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'SysLog' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '日志', 
    'user', @CurrentUser, 'table', 'SysLog'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysLog', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysLog')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysLog', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1840,63 +3648,169 @@ create table SysNotice (
 on "PRIMARY"
 go
 
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '通知中心',
+if exists (select 1 from  sys.extended_properties
+           where major_id = object_id('SysNotice') and minor_id = 0)
+begin 
+   declare @CurrentUser sysname 
+select @CurrentUser = user_name() 
+execute sp_dropextendedproperty 'MS_Description',  
+   'user', @CurrentUser, 'table', 'SysNotice' 
+ 
+end 
+
+
+select @CurrentUser = user_name() 
+execute sp_addextendedproperty 'MS_Description',  
+   '通知中心', 
    'user', @CurrentUser, 'table', 'SysNotice'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'AccountId')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'AccountId'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'Equal',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'AccountId'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Sort')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'Sort'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'Sort'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'State')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'State'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'State'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'CreateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'CreateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'CreatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'CreatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'CreatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdateTime')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'UpdateTime'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'UpdateTime'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'UpdatePerson')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'UpdatePerson'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
    'user', @CurrentUser, 'table', 'SysNotice', 'column', 'UpdatePerson'
 go
 
-declare @CurrentUser sysname
+if exists(select 1 from sys.extended_properties p where
+      p.major_id = object_id('SysNotice')
+  and p.minor_id = (select c.column_id from sys.columns c where c.object_id = p.major_id and c.name = 'Version')
+)
+begin
+   declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_dropextendedproperty 'MS_Description', 
+   'user', @CurrentUser, 'table', 'SysNotice', 'column', 'Version'
+
+end
+
+
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    'NotDisplay',
@@ -1946,3 +3860,4 @@ alter table ProjectExperience
    add constraint FK_PROJECTE_REFERENCE_RESUME foreign key (ResumeId)
       references Resume (Id)
 go
+

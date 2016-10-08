@@ -6,8 +6,8 @@
 }
 
 <div class="col-md-9 column">
-    <h4 class="breadcrumb">     
-        实习的生活其实只有苟且！
+    <h4 class="breadcrumb">
+        工作的生活其实不只有苟且！
     </h4>
     <!--列表开始 -->
     <table class="table table-bordered table-striped" id="tbList">
@@ -17,6 +17,8 @@
             <th>结束日期</th>
             <th>工作单位</th>
             <th>职务</th>
+            <th>公司性质</th>
+            <th>公司规模</th>
             <th>操作</th>
         </tr>
         <tr id="trList" style="display:none">
@@ -25,6 +27,8 @@
             <td id="tdEndDate"> 2016-07-01 </td>
             <td id="tdCompanyName">浪奔 </td>
             <td id="tdJob"> 架构师 </td>
+            <td id="tdCompanyNature">浪奔 </td>
+            <td id="tdCompanyScale"> 架构师 </td>
             <td><a href="#" id="aEdit" class="btn btn-link btn-xs " title="编辑"><i class="fa fa-pencil-square-o"></i><span class="sr-only">编辑</span></a> | <a id="aDelete" href="#" class="btn btn-link btn-xs" title="删除"><i class="fa fa-trash"></i><span class="sr-only">删除</span></a></td>
         </tr>
 
@@ -42,7 +46,7 @@
         <input type="hidden" id="hideCreatePerson" value="" /><!--创建人-->
         <div class="form-group">
             <label class="col-sm-3 control-label">开始日期<span class="required">* </span></label>
-            <div class=" col-sm-5">
+            <div class="col-sm-5">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtBeginDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtBeginDate' })"><i class="fa fa-calendar"></i></span>
@@ -51,7 +55,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">结束日期<span class="required">*</span></label>
-            <div class=" col-sm-6">
+            <div class="col-sm-6">
                 <div class="input-group">
                     <input type="text" class="form-control input-inline" id="txtEndDate" onclick="WdatePicker()" />
                     <span class="input-group-addon" onclick="WdatePicker({ el: 'txtEndDate' })"><i class="fa fa-calendar"></i></span>
@@ -62,41 +66,51 @@
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">工作单位<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtCompanyName" />
-                </div>
+            <div class="col-sm-5">
+               
+                    <input type="text" class="form-control" id="txtCompanyName" />
+               
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">职务<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
-                    <input type="text" class="form-control input-inline" id="txtJob" />
-                </div>
+            <div class="col-sm-5">
+              
+                    <input type="text" class="form-control" id="txtJob" />
+               
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">公司性质<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
+            <div class="col-sm-5">
+                
                     <select class="form-control input-inline" id="ddlCompanyNature">
-                        <option value="10">国营</option>
-                        <option value="20">民营</option>                        
+                        <option value="">请选择</option>
+                        <option value="外商独资．外企办事处">外商独资．外企办事处</option>
+                        <option value="中外合营(合资．合作)">中外合营(合资．合作)</option>
+                        <option value="私营．民营企业">私营．民营企业</option>
+                        <option value="国有企业">国有企业</option>
+                        <option value="国内上市公司">国内上市公司</option>
+                        <option value="政府机关／非盈利机构">政府机关／非盈利机构</option>
+                        <option value="事业单位">事业单位</option>
                     </select>
-                </div>
+                 
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">公司规模<span class="required">* </span></label>
-            <div class=" col-sm-5">
-                <div class="input-group">
+            <div class="col-sm-5">
+                
                     <select class="form-control input-inline" id="ddlCompanyScale">
-                        <option value="10">国营</option>
-                        <option value="20">民营</option>
+                        <option value="">请选择</option>
+                        <option value="1-49人">1-49人</option>
+                        <option value="50-99人">50-99人</option>
+                        <option value="100-499人">100-499人</option>
+                        <option value="500-999人">500-999人</option>
+                        <option value="1000人以上">1000人以上</option>
                     </select>
                 </div>
-            </div>
+             
         </div>
         <hr>
         <div class="form-group" id="divAddOp" style="display:none">
@@ -122,12 +136,6 @@
         //列表
         GetList();
 
-        //公司性质
-        GetSysField("#ddlCompanyNature", "InternshipExperience", "CompanyNature");
-
-        //公司规模
-        GetSysField("#ddlCompanyScale", "InternshipExperience", "CompanyScale");
-        
     });
     //列表
     function GetList() {
@@ -157,16 +165,18 @@
                             $tr.find("#tdBeginDate").html(""); //开始日期
                         }
                         if (item.IsNow != null && item.IsNow == "Y") {
-                            $tr.find("#tdEndDate").html(""); //结束日期
+                            $tr.find("#tdEndDate").html("至今"); //结束日期
                         }
                         else if (item.EndDate != null && item.EndDate.length >= 10) {
                             $tr.find("#tdEndDate").html(item.EndDate.substring(0, 10)); //结束日期
                         }
                         else {
-                            $tr.find("#tdEndDate").html("");
+                            $tr.find("#tdEndDate").html("至今");
                         }
                         $tr.find("#tdCompanyName").html(item.CompanyName); //公司名称
                         $tr.find("#tdJob").html(item.Job); //职务
+                        $tr.find("#tdCompanyNature").html(item.CompanyNature); //公司性质
+                        $tr.find("#tdCompanyScale").html(item.CompanyScale); //公司规模
                         //编辑
                         $tr.find('#aEdit').click(function () {
                             EditShow(item.Id)
@@ -197,7 +207,7 @@
         $("#txtCompanyName").val("");
         $("#txtJob").val("");
         $("#ddlCompanyNature").get(0).selectedIndex = 0;
-        $("#ddlCompanyScale").get(0).selectedIndex = 0;        
+        $("#ddlCompanyScale").get(0).selectedIndex = 0;
         $('#divEdit').show();
         $('#divAddOp').show();
         $('#divEditOp').hide();
@@ -221,7 +231,7 @@
         var Job = $("#txtJob").val();
         var CompanyNature = $("#ddlCompanyNature").val();
         var CompanyScale = $("#ddlCompanyScale").val();
-        
+
         var Message = "";
         if (trimStr(CompanyName) == "") {
             Message += "公司名称不能为空\n\r";
@@ -262,7 +272,7 @@
             var Job = $("#txtJob").val();
             var CompanyNature = $("#ddlCompanyNature").val();
             var CompanyScale = $("#ddlCompanyScale").val();
-            
+
             var ResumeId = $("#hideResumeId").val();
             var Sort = $("#hideSort").val();
             var State = $("#hideState").val();
@@ -338,7 +348,7 @@
                     $("#txtJob").val(data.Job);
                     $("#ddlCompanyNature").val(data.CompanyNature);
                     $("#ddlCompanyScale").val(data.CompanyScale);
-                    
+
                     $("#hideResumeId").val(data.ResumeId);
                     $("#hideSort").val(data.Sort);
                     $("#hideCreateTime").val(jsonDateTimeFormat(data.CreateTime));

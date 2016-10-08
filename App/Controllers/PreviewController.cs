@@ -27,11 +27,7 @@ namespace Langben.App.Controllers
         public ActionResult Index()
         {
             Langben.DAL.PreviewModel model = null;
-            if (CurrentAccount != null && CurrentAccount.resume != null)
-            {
-                model = m_BLL.GetPreviewInfo(CurrentAccount.resume.Id);
-
-            }
+            model = m_BLL.GetPreviewInfo(CurrentResumeId);
             return View(model);
         }
 
@@ -43,11 +39,7 @@ namespace Langben.App.Controllers
         public ActionResult Show(string id)
         {
             Langben.DAL.PreviewModel model = null;
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                model = m_BLL.GetPreviewInfoByAccountId(id);
-
-            }
+            model = m_BLL.GetPreviewInfoByAccountId(id);
             return View(model);
         }
         IBLL.IPreviewBLL m_BLL;

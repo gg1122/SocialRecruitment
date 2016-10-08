@@ -24,6 +24,8 @@ namespace Langben.DAL
         public string ProfessionalType1 { get; set; }
         public string ProfessionalType2 { get; set; }
         public string Education { get; set; }
+        public string SchoolNameRemark { get; set; }
+        public string ProfessionalTypeRemark { get; set; }
         public string Degree { get; set; }
         public Nullable<int> Sort { get; set; }
         public string State { get; set; }
@@ -32,8 +34,6 @@ namespace Langben.DAL
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string UpdatePerson { get; set; }
         public byte[] Version { get; set; }
-        public string ProfessionalTypeRemark { get; set; }
-        public string SchoolNameRemark { get; set; }
     
         public virtual Resume Resume { get; set; }
     }
