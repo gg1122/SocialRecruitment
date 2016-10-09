@@ -15,7 +15,7 @@ using System.Web.Script.Serialization;
 namespace Langben.App.Controllers
 {
     /// <summary>
-    /// IT技能爱好
+    /// IT技能爱好 
     /// </summary>
     public class ITAbilityController : BaseController
     {
