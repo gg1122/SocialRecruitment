@@ -137,7 +137,7 @@ namespace Langben.App.Controllers
                     result.Message = "电子邮箱不能为空或者格式不对";
                     return result; //提示失败
                 }
-                if (CurrentPerson != entity.PhoneNumber)
+                if (CurrentPersonId != entity.Id)
                 {
                     result.Code = Common.ClientCode.Fail;
                     result.Message = "请登录";
