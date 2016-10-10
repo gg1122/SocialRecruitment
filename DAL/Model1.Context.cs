@@ -33,6 +33,7 @@ namespace Langben.DAL
         public virtual DbSet<DegreeSchool> DegreeSchool { get; set; }
         public virtual DbSet<FileUploader> FileUploader { get; set; }
         public virtual DbSet<InternshipExperience> InternshipExperience { get; set; }
+        public virtual DbSet<Invite> Invite { get; set; }
         public virtual DbSet<ITAbility> ITAbility { get; set; }
         public virtual DbSet<LanguageCompetence> LanguageCompetence { get; set; }
         public virtual DbSet<ProjectExperience> ProjectExperience { get; set; }
@@ -43,7 +44,6 @@ namespace Langben.DAL
         public virtual DbSet<SysField> SysField { get; set; }
         public virtual DbSet<SysLog> SysLog { get; set; }
         public virtual DbSet<SysNotice> SysNotice { get; set; }
-        public virtual DbSet<Invite> Invite { get; set; }
     
         public virtual ObjectResult<string> Proc_Update_Resume_CompletionPercentage(string resumeId, string accountId)
         {

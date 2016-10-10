@@ -29,7 +29,7 @@ namespace Langben.DAL
 			[ScaffoldColumn(true)]
 			[Display(Name = "内容", Order = 3)]
 			[Required(ErrorMessage = "不能为空")]
-			[StringLength(4000, ErrorMessage = "长度不可超过4000")]
+		
 			public object Content { get; set; }
 
 			[ScaffoldColumn(true)]

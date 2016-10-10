@@ -1,7 +1,7 @@
 ﻿@model  Langben.DAL.Blog
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "炫出你的一技之长";
     Layout = "~/Views/Shared/Blog.cshtml";
 }
 <script src="~/Res/ckeditor/ckeditor.js"></script>
@@ -68,6 +68,7 @@
                     alert('发布失败，请联系管理员ben@langben.com');
 
                 }
+                $("#xuanji").attr('disabled', false);
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

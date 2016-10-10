@@ -10,6 +10,23 @@ namespace Langben.BLL
 {
     public partial class AccountBLL : IAccountBLL
     {
+        //取随机产生的认证码(数字)
+        public string GetByRndNum(int VcodeNum)
+        {
+
+            string VNum = "";
+
+            Random rand = new Random();
+
+            for (int i = 0; i < VcodeNum; i++)
+            {
+                VNum += VcArray[rand.Next(0, 9)];
+            }
+            
+            return VNum;
+        }
+        private static readonly string[] VcArray = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
         /// <summary>
         /// 注册
         /// </summary>
@@ -41,7 +58,7 @@ namespace Langben.BLL
                         Invite invite = new Invite()
                         {
                             Id = Common.Result.GetNewId(),
-                            Code = data.Id.Substring(10, 5),
+                            Code = GetByRndNum(5),
                             State = StateEnums.QY
                             ,
                             CreateTime = DateTime.Now,
@@ -51,7 +68,7 @@ namespace Langben.BLL
                         Invite invite2 = new Invite()
                         {
                             Id = Common.Result.GetNewId(),
-                            Code = data.Id.Substring(14, 5),
+                            Code = GetByRndNum(5),
                             State = StateEnums.QY
         ,
                             CreateTime = DateTime.Now,

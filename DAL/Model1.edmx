@@ -43,7 +43,7 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="Abstract" Type="nvarchar" MaxLength="4000" />
           <Property Name="CommentNumber" Type="int" />
           <Property Name="ReadNumber" Type="int" />
@@ -534,6 +534,7 @@
           <EntitySet Name="DegreeSchool" EntityType="SysModel.DegreeSchool" />
           <EntitySet Name="FileUploader" EntityType="SysModel.FileUploader" />
           <EntitySet Name="InternshipExperience" EntityType="SysModel.InternshipExperience" />
+          <EntitySet Name="Invite" EntityType="SysModel.Invite" />
           <EntitySet Name="ITAbility" EntityType="SysModel.ITAbility" />
           <EntitySet Name="LanguageCompetence" EntityType="SysModel.LanguageCompetence" />
           <EntitySet Name="ProjectExperience" EntityType="SysModel.ProjectExperience" />
@@ -572,8 +573,7 @@
             <End Role="Resume" EntitySet="Resume" />
             <End Role="ProjectExperience" EntitySet="ProjectExperience" />
           </AssociationSet>
-          <EntitySet Name="Invite" EntityType="SysModel.Invite" />
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -623,7 +623,7 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Abstract" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="CommentNumber" Type="Int32" />
           <Property Name="ReadNumber" Type="Int32" />
@@ -729,6 +729,18 @@
           <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Resume" Relationship="SysModel.FK_INTERNSH_REFERENCE_RESUME" FromRole="InternshipExperience" ToRole="Resume" />
+        </EntityType>
+        <EntityType Name="Invite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ITAbility">
           <Key>
@@ -989,18 +1001,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Invite">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdatePerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1174,6 +1174,19 @@
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
                 <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invite">
+            <EntityTypeMapping TypeName="SysModel.Invite">
+              <MappingFragment StoreEntitySet="Invite">
+                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1354,20 +1367,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Invite">
-            <EntityTypeMapping TypeName="SysModel.Invite">
-              <MappingFragment StoreEntitySet="Invite">
-                <ScalarProperty Name="UpdatePerson" ColumnName="UpdatePerson" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="CreatePerson" ColumnName="CreatePerson" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
