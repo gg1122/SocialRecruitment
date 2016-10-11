@@ -71,7 +71,7 @@
                 }
                 $("input[type='submit']").attr('disabled', false);
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {                
                 alert("网络故障");
                 $("input[type='submit']").attr('disabled', false);
                 return false;
