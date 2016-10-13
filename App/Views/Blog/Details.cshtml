@@ -78,7 +78,7 @@
                                     </div>
                                 </footer>
                                 <div class="comment-content">
-                                    @item.Content
+                                    @(new HtmlString(item.Content))    
                                 </div>
                             </article>
                         </li>
@@ -97,19 +97,22 @@
 
             <aside>
                 <h3>码农有话说</h3>
-                <p><textarea class="form-control" rows="3" id="txtContent"></textarea></p>
+                <p><textarea class="form-control ckeditor" rows="3" id="Content"></textarea></p>
                 <button class="btn btn-large btn-block btn-primary" type="button" onclick="AddContent('@Model.Id');">码砖</button>
             </aside>
         </div>
     </div>}
+<script src="~/Res/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
     //添加评论
     function AddContent(blogId) {
-        var Content = $('#txtContent').val();
-        if (trimStr(Content) == "") {
-            alert("请输入码转内容");
-            return;
+        var Content = CKEDITOR.instances.Content.getData();
+        if (Content == null || Content == '') {
+            alert('请输入码转内容');
+            return false;
         }
+
+      
         $.ajax({
             async: false,
             url: "/api/CommentApi/Post",
@@ -144,13 +147,10 @@
             data: "id=" + id,
             success: function (data) {
                 if (data.Message == "请登录")
-                    window.location.href = "~/Login";
-                else
-                    alert("待审核！");
+                    window.location.href = "~/Login";              
 
             },
             error: function (data) {
-
                 alert("提交失败！" + data);
             }
         });
