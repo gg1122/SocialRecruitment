@@ -52,6 +52,7 @@
     <Compile Include="AccountBLL.cs" />
     <Compile Include="BlogBLL.cs" />
     <Compile Include="CommentBLL.cs" />
+    <Compile Include="Recruitment\BlogBLL.cs" />
     <Compile Include="Recruitment\CommentBLL.cs" />
     <Compile Include="Recruitment\PreviewBLL.cs" />
     <Compile Include="Recruitment\SysFieldBLL.cs" />

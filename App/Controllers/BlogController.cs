@@ -10,7 +10,7 @@ using Common;
 using Langben.DAL;
 using Langben.BLL;
 using Langben.App.Models;
-using Webdiyer.WebControls.Mvc;
+ 
 namespace Langben.App.Controllers
 {
     /// <summary>
@@ -25,16 +25,13 @@ namespace Langben.App.Controllers
         /// <returns></returns>
         public ActionResult Index(string id)
         { 
-            int pIndex = 1;
+            int pageIndex = 1;
             if (!string.IsNullOrEmpty(id))
-                int.TryParse(id, out pIndex);
-            int pageSize = 10;
-            int total = 0;
-            StringBuilder search = new StringBuilder();
-            search.AppendFormat("State{0}&{1}", ArgEnums.DDL_String, StateEnums.QY);
-            List<Blog> list = m_BLL.GetByParam(null, pIndex, pageSize, "desc", "CreateTime", search.ToString(), ref total);
-            var model = new PagedList<Blog>(list, pIndex, pageSize, total);
-            return View(model);
+                int.TryParse(id, out pageIndex);
+            
+            List<Blog> list = m_BLL.GetByPage(pageIndex);
+                       ViewBag.pageIndex = pageIndex;
+            return View(list);
         }
         
 

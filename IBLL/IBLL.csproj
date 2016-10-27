@@ -58,6 +58,7 @@
     <Compile Include="ISysAnnouncementBLL.cs" />
     <Compile Include="ISysFieldBLL.cs" />
     <Compile Include="IResumeBLL.cs" />
+    <Compile Include="Recruitment\IBlogBLL.cs" />
     <Compile Include="Recruitment\ICommentBLL.cs" />
     <Compile Include="Recruitment\IFileUploaderBLL.cs" />
     <Compile Include="Recruitment\IITAbilityBLL.cs" />
