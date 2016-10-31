@@ -759,7 +759,7 @@
     <Content Include="Images\login_midbg.gif" />
     <Content Include="Images\login_pic.gif" />
     <Content Include="Images\login_top.gif" />
-    <Content Include="Images\logo.png" />
+    <Content Include="logo.png" />
     <Content Include="Images\mimaxiugai.gif" />
     <Content Include="Images\noscript.gif" />
     <Content Include="Images\notfound.gif" />
