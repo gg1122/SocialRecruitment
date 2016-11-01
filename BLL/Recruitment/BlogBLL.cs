@@ -30,11 +30,11 @@ namespace Langben.BLL
                 var queryData = db.Blog.Where(w => w.State == StateEnums.QY);
                 if (page <= 1)
                 {
-                    queryData = queryData.OrderBy(c => c.CreateTime).Take(15);
+                    queryData = queryData.OrderByDescending(c => c.CreateTime).Take(15);
                 }
                 else
                 {
-                    queryData = queryData.OrderBy(c => c.CreateTime).Skip((page - 1) * 15).Take(15);
+                    queryData = queryData.OrderByDescending(c => c.CreateTime).Skip((page - 1) * 15).Take(15);
                 }
 
 
