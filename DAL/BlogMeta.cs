@@ -49,7 +49,7 @@ namespace Langben.DAL
 
 			[ScaffoldColumn(true)]
 			[Display(Name = "图片2", Order = 7)]
-			[StringLength(200, ErrorMessage = "长度不可超过200")]
+			[StringLength(2000, ErrorMessage = "长度不可超过200")]
 			public object Picture2 { get; set; }
 
 			[ScaffoldColumn(true)]
