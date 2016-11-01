@@ -177,6 +177,7 @@
     <Content Include="Content\main.css" />
     <Content Include="Content\pagerstyles.css" />
     <Content Include="Content\StyleSheet.css" />
+    <Content Include="weixin.jpg" />
     <Content Include="Res\ckeditor\adapters\jquery.js" />
     <Content Include="Res\ckeditor\build-config.js" />
     <Content Include="Res\ckeditor\ckeditor.js" />
@@ -945,7 +946,9 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="up\b.xls" />
     <Content Include="Views\Publish\Index.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
