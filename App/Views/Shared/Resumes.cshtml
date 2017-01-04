@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>狼奔</title>
+    <title>@System.Configuration.ConfigurationManager.AppSettings["Title"]</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -31,7 +31,7 @@
             <div class="navbar-header">
                 <!-- logo -->
                 <a href="~/">
-                    <img class="logo" src="~/images/logo.png" alt="" style="width: 207px;" />
+                    <img class="logo" src="~/logo.png" />
                 </a>
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
             </div>
@@ -46,32 +46,37 @@
         </div>
     </div>
 
-    <div>
-        <div class="container">
-            <div class="row clearfix">
-                @RenderBody()
-                @RenderSection("SubMenu")
-            </div>
+
+    <div class="container">
+        <div class="row clearfix">
+            @RenderBody()
+            @RenderSection("SubMenu")
         </div>
-        <hr />
-        <footer>
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="footer-company"><a target="_blank" title="北京狼奔科技有限公司" href="http://www.langben.com/">北京狼奔科技有限公司</a></span>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="footer-right">
-                                <span class="footer-company">邮箱</span> ben@langben.com
-                            </div>
-                        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-right" style="padding-top:20px;">
+                        <span class="footer-company"> <a target="_blank" title="北京狼奔科技有限公司" href="http://www.langben.com/">北京狼奔科技有限公司</a></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-right">
+                        <img class="logo" src="~/weixin.jpg" alt="" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-right" style="padding-top:20px;">
+                        <span class="footer-company">邮箱</span> ben@langben.com<br /><span class="footer-company">电话</span> 010-57235222
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
-    
+
+
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=19223986" charset="UTF-8"></script>
 </body>
 </html>

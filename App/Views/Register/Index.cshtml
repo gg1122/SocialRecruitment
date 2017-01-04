@@ -9,12 +9,12 @@
 {
     <div class="form-horizontal">
         @Html.AntiForgeryToken()
-        <h4>所有项都是必填的</h4>
+        <h4>给自己安个家</h4>
         <hr />
         <div class="form-group">
             @Html.LabelFor(m => m.InviteCode, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.InviteCode, new { @class = "form-control" })
+              @Html.TextBoxFor(m => m.InviteCode, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.InviteCode)
             </div>
         </div>

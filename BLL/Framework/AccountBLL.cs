@@ -22,7 +22,7 @@ namespace Langben.BLL
             {
                 VNum += VcArray[rand.Next(0, 9)];
             }
-            
+
             return VNum;
         }
         private static readonly string[] VcArray = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -32,18 +32,12 @@ namespace Langben.BLL
         /// </summary>
         public Common.Account Register(string name, string phoneNumber, string password, string inviteCode, ref string message)
         {
-            if (String.IsNullOrWhiteSpace(inviteCode))
-                return null;
-
             //获取用户信息,请确定web.config中的连接字符串正确
             using (SysEntities db = new SysEntities())
             {
+                bool invites = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["InviteCodeEnabled"]);
 
-                var data = (from p in db.Invite
-                            where p.Code == inviteCode
-                             && p.State == StateEnums.QY
-                            select p).FirstOrDefault();
-                if (data != null)
+                if (!invites)
                 {
                     password = EncryptAndDecrypte.EncryptString(password);
                     var dataAccount = (from p in db.Account
@@ -52,9 +46,7 @@ namespace Langben.BLL
                                        select p).FirstOrDefault();
                     if (dataAccount == null)
                     {
-                        data.State = StateEnums.JY;
-                        data.UpdatePerson = name;
-                        data.UpdateTime = DateTime.Now;
+
                         Invite invite = new Invite()
                         {
                             Id = Common.Result.GetNewId(),
@@ -133,11 +125,106 @@ namespace Langben.BLL
                 }
                 else
                 {
-                    message = "邀请码不正确";
-                }
 
-                return null;
+                    var data = (from p in db.Invite
+                                where p.Code == inviteCode
+                                 && p.State == StateEnums.QY
+                                select p).FirstOrDefault();
+                    if (data != null)
+                    {
+                        password = EncryptAndDecrypte.EncryptString(password);
+                        var dataAccount = (from p in db.Account
+                                           where p.PhoneNumber == phoneNumber
+                                           || p.Name == name
+                                           select p).FirstOrDefault();
+                        if (dataAccount == null)
+                        {
+                            data.State = StateEnums.JY;
+                            data.UpdatePerson = name;
+                            data.UpdateTime = DateTime.Now;
+                            Invite invite = new Invite()
+                            {
+                                Id = Common.Result.GetNewId(),
+                                Code = GetByRndNum(5),
+                                State = StateEnums.QY
+                                ,
+                                CreateTime = DateTime.Now,
+                                CreatePerson = name
+                            };
+                            db.Invite.Add(invite);
+                            Invite invite2 = new Invite()
+                            {
+                                Id = Common.Result.GetNewId(),
+                                Code = GetByRndNum(5),
+                                State = StateEnums.QY
+            ,
+                                CreateTime = DateTime.Now,
+                                CreatePerson = name
+                            };
+                            db.Invite.Add(invite2);
+                            var account = new DAL.Account()
+                            {
+                                Id = Common.Result.GetNewId(),
+                                State = StateEnums.QY,
+                                PhoneNumber = phoneNumber,
+                                Name = name,
+                                Password = password
+
+                                ,
+                                CreateTime = DateTime.Now,
+                                CreatePerson = phoneNumber
+                            };
+                            db.Account.Add(account);
+                            Resume resume = new Resume()
+                            {
+                                Id = Common.Result.GetNewId(),
+                                AccountId = account.Id,
+                                CreateTime = DateTime.Now,
+                                CreatePerson = name,
+                                Name = "默认",
+                                Remark = "注册账号自动创建",
+                                Sort = 0,
+                                State = StateEnums.QY,
+                                CompletionPercentage = 0
+                            };
+                            db.Resume.Add(resume);
+
+                            SysNotice notice = new SysNotice();
+                            notice.Id = Result.GetNewId();
+                            notice.CreatePerson = name;
+                            notice.CreateTime = DateTime.Now;
+                            notice.AccountId = account.Id;
+                            notice.Message = "您的邀请码为：" + invite.Code + "，另一个为：" + invite2.Code;
+                            db.SysNotice.Add(notice);
+
+                            db.SaveChanges();
+
+                            Common.Account accountCommon = new Common.Account();
+                            accountCommon.ResumeId = resume.Id;
+                            accountCommon.Name = name;
+                            accountCommon.Id = account.Id;
+                            return accountCommon;
+
+                        }
+                        else
+                        {
+                            if (phoneNumber == dataAccount.PhoneNumber)
+                            {
+                                message = "手机号码已经存在";
+                            }
+                            else if (name == dataAccount.Name)
+                            {
+                                message = "绰号已经存在";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        message = "邀请码不正确";
+                    }
+                }
             }
+            return null;
         }
         /// <summary>
         /// 验证用户名和密码是否正确

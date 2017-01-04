@@ -56,9 +56,14 @@ namespace Langben.App.Controllers
             string message = string.Empty;
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrWhiteSpace(model.InviteCode))
+                bool invite = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["InviteCodeEnabled"]);
+                
+                if (invite)
                 {
-                    result.Message = "邀请码不能为空";
+                    if (string.IsNullOrWhiteSpace(model.InviteCode))
+                    {
+                        result.Message = "邀请码不能为空";
+                    }
                 }
                 else if (string.IsNullOrWhiteSpace(model.Name))
                 {
